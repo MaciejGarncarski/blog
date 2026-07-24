@@ -1,0 +1,14 @@
+---
+title: "TIL: WSL, Windows i npm — nie mieszaj środowisk"
+publishedDate: 2026-07-24
+---
+
+Zdarzył mi się dzisiaj chyba najdziwniejszy bug w mojej karierze.
+
+`npm create storybook` w żadnym przypadku nie chciał zadziałać. Po kilkugodzinnym debugowaniu, w końcu znalazłem przyczynę. Okazało się, że w moim systemie Windows mam zainstalowane dwa środowiska Node.js: jedno w WSL (Windows Subsystem for Linux), a drugie w samym Windowsie.
+
+W jakiś sposób WSL odpalał windowsowego npm, który nie powinien się w ogóle uruchamiać w tym środowisku.
+
+Dopiero po odinstalowaniu windowsowego Node.js i npm, wszystko zaczęło działać poprawnie.
+
+Morał: jeśli używasz WSL do developmentu, instaluj Node/npm tylko wewnątrz WSL. Nie mieszaj środowisk.
