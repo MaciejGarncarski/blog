@@ -1,0 +1,70 @@
+---
+title: "Overengineering - dlaczego trudno pisać prosty kod"
+description: "Dlaczego prosty kod nie zawsze jest naturalnym wyborem."
+publishedDate: 2026-07-27
+tags: ["Kariera"]
+---
+
+## Prosty kod jako domyślny wybór
+
+Im dłużej programuję, tym coraz częściej spotykam się z tym, że programiści tworzą nowe funkcjonalności z nadmiernym bagażem na przyszłość.
+
+Co mam na myśli mówiąc o nadmiernym bagażu? Chodzi mi o to, że programiści często tworzą kod, który nie jest oczywisty i prosty, a zamiast tego dodają abstrakcje, warstwy i mechanizmy, które być może nigdy nie będą potrzebne.
+
+Problem polega na tym, że bardzo łatwo jest uzasadnić takie podejście. "Przyda się później", "może kiedyś będziemy obsługiwać więcej przypadków", "lepiej przygotować się teraz". W teorii brzmi rozsądnie, ale w praktyce często prowadzi do kodu, który trudniej zrozumieć, zmienić i utrzymać.
+
+Prosty kod nie oznacza kodu prymitywnego. Oznacza kod, który rozwiązuje aktualny problem bez dokładania dodatkowej złożoności, której jeszcze nie potrzebujemy.
+
+Najtrudniejszą częścią programowania często nie jest napisanie większej ilości kodu, ale podjęcie decyzji, czego nie pisać. W praktyce, najlepszy kod to taki, którego nie ma.
+
+
+## Era AI a klienci
+
+AI powoduje, że proces tworzenia i wdrażania oprogramowania jest szybszy. Klienta wprawdzie nie interesuje, co programista musiał zrobić, żeby stworzyć funkcjonalność, ale interesuje go, jak szybko może ją otrzymać. Utrzymanie balansu między jakością kodu, a szybkością dostarczania funkcjonalności jest trudne, ale nie niemożliwe.
+
+Chodzi mi o to, że jeżeli piszemy prosty kod, to inne osoby w zespole (oraz LLM) mogą go łatwiej zrozumieć i szybciej wprowadzać zmiany. To oznacza, że klient otrzymuje funkcjonalność szybciej, a my mamy mniej problemów z utrzymaniem kodu w przyszłości.
+
+
+## Premature optimizations
+
+Przedwczesna optymalizacja dawniej była dla mnie czymś dobrym. Wydawało mi się, że jeżeli od razu mogę napisać kod, który będzie działał szybciej, to dlaczego nie skorzystać z tej okazji? W praktyce jednak zazwyczaj prowadziło to do tego, że kod stawał się okropnie trudny do czytania i zrozumienia, a w dodatku nie zawsze przynosiło to kolosalne zyski w wydajności. W większości przypadków, lepiej jest najpierw napisać prosty kod, a dopiero później, jeśli okaże się to konieczne, zoptymalizować go.
+
+Przykładowo co robiłem źle: używając Next.js z app routerem, myślałem, że inwalidacja cache'u będzie dużym problemem wydajnościowym, no bo przecież wysyła się wtedy kolejne zapytania.
+
+Było to bardzo bardzo złe myślenie, bo w praktyce wąskim gardłem nie jest renderowanie strony, ani czas odpowiedzi API, tylko baza danych, lub inne rzeczy które nie są oczywiste na pierwszy rzut oka.
+
+Jaki jest tego morał? Analiza jest bardzo potrzebna, zanim zaczniemy optymalizować kod, warto zastanowić się, co jest problemem, czy ten problem jest istotny, czy w ogóle jest problemem, i najważniejsze, czy wdrożenie optymalizacji nie przyniesie problemów w innym miejscu.
+
+Może kolejny kontener redisa nie będzie potrzebny, bo w praktyce endpoint, który chcesz optymalizować zwraca więcej danych niż potrzebuje klient?
+
+## Jak rozpoznać overengineering?
+
+Overengineering często nie wygląda jak zły kod. Wręcz przeciwnie — na początku może wyglądać bardzo profesjonalnie. Dużo abstrakcji, wzorce projektowe, osobne warstwy i rozbudowana architektura mogą sprawiać wrażenie przemyślanego rozwiązania.
+
+Problem pojawia się wtedy, gdy poziom skomplikowania nie wynika z realnych potrzeb, tylko z przewidywania problemów, które być może nigdy nie wystąpią.
+
+Kilka sygnałów, że możemy mieć do czynienia z overengineeringiem:
+
+- **Tworzymy rozwiązanie pod hipotetyczny przypadek** — dodajemy możliwość obsługi dziesięciu scenariuszy, mimo że obecnie potrzebujemy jednego.
+- **Abstrakcja pojawia się zanim pojawi się potrzeba** — tworzymy generyczne komponenty, interfejsy czy warstwy "na przyszłość", ale nie mamy jeszcze drugiego przypadku użycia.
+- **Prosty problem wymaga dużo kodu** — jeżeli dodanie małej funkcjonalności wymaga zmiany wielu plików i zrozumienia całej architektury, prawdopodobnie poszliśmy za daleko.
+- **Kod wymaga dodatkowego tłumaczenia** — jeżeli trzeba długo wyjaśniać, dlaczego coś zostało napisane w konkretny sposób, być może rozwiązanie nie jest wystarczająco oczywiste.
+- **Konfiguracja jest większa niż logika biznesowa** — czasami więcej czasu spędzamy na zarządzaniu strukturą systemu niż na rozwiązywaniu właściwego problemu.
+
+Dobrym testem jest zadanie sobie pytania: "Czy gdybym miał usunąć połowę tego kodu, czy nadal spełniałby swoje zadanie?". Jeżeli odpowiedź brzmi "tak", być może mamy za dużo niepotrzebnej złożoności.
+
+Prostota nie polega na tym, żeby zawsze pisać najmniej kodu. Chodzi o to, żeby każdy element miał uzasadnienie. Kod powinien być przygotowany na rzeczywiste potrzeby, a nie na wszystkie możliwe scenariusze, które mogą nigdy nie nadejść.
+
+## DDD i lekcja prostoty
+
+Do napisania tego artykułu skłoniło mnie trochę DDD (Domain-Driven Design). Przez długi czas patrzyłem na różne techniki projektowania głównie przez pryzmat tego, jak bardzo pomagają przygotować system na przyszłość.
+
+DDD jest świetnym narzędziem, ale łatwo zapomnieć o jego podstawowej idei. Nie chodzi w nim o tworzenie jak największej liczby warstw, abstrakcji i wzorców. Chodzi o lepsze zrozumienie domeny i stworzenie modelu, który pomaga rozwiązać konkretny problem biznesowy, oraz porozumieć się z klientem.
+
+Paradoksalnie, próba zastosowania DDD wszędzie może prowadzić do dokładnie tego, przed czym powinno chronić — nadmiernej komplikacji.
+
+Nie każda aplikacja potrzebuje agregatów, encji, value objectów, eventów domenowych czy osobnej warstwy dla każdego elementu systemu. Jeżeli domena jest prosta, rozwiązanie również powinno takie być.
+
+Największą wartością DDD nie jest ilość zastosowanych wzorców, ale umiejętność zadania sobie pytania: "Czy ta abstrakcja faktycznie pomaga nam lepiej rozwiązać problem?".
+
+W mojej ostatniej aplikacji, którą zacząłem programować z myślą o DDD, po kilu dniach zrozumiałem, że w praktyce wystarczą mi proste patterny jak service, controller, kilka value objectów i repository. Nie potrzebowałem agregatów, eventów domenowych, CQRS i dużo innych rzeczy, które w teorii mogłyby się przydać. Wystarczyło skupić się na tym, co faktycznie rozwiązuje problem biznesowy.
