@@ -1,0 +1,51 @@
+---
+title: "Proces programowania jest powolny"
+publishedDate: 2026-08-01
+description: "Z natury proces programowania jest powolny, a jego tempo zależy od wielu czynników. W tym artykule przyglądam się, dlaczego tak jest i jak można to poprawić."
+tags: ["Kariera", "Myślenie"]
+relatedPosts: ["wiecej-pracy-daje-gorsze-efekty"]
+---
+
+import BlogImage from '@/components/blog/blog-image.astro';
+import diagram from '@/assets/blog/proces-programowania/diagram.png';
+
+## Co to jest programowanie?
+
+**Programowanie to nie pisanie kodu.** To proces rozwiązywania złożonych problemów, który wymaga analizy, planowania, testowania, myślenia przed i po napisaniu kodu.
+
+Tak naprawdę, pisanie kodu to mała część całego procesu. Ogromną większość czasu spędza się na myśleniu i analizowaniu problemu.
+
+## Dlaczego tak jest?
+
+Odpowiedź jest prosta: niektórych procesów nie da się przyspieszyć, dokładając do nich więcej zasobów. Programowanie jest właśnie takim procesem — jego tempo nie zależy od "przepustowości" ludzi, tylko od czasu potrzebnego na myślenie.
+
+Co dokładnie mam na myśli?
+
+Oto przykład: Załóżmy, że chcesz upiec sernik. Standardowo piecze się go ponad 60 minut. Niby, jeśli chcesz, to możesz podkręcić temperaturę i upiec go w 30 minut. Jednak w praktyce, jeśli zrobisz to, sernik będzie niedopieczony w środku i spali się na zewnątrz. Chcąc usprawnić "przepustowość", to musisz kupić więcej piekarników i więcej osób do pracy. Wtedy możesz upiec więcej serników w tym samym czasie, ale nie przyspieszysz samego procesu pieczenia.
+
+Ten sam mechanizm opisuje prawo Brooksa: dodanie kolejnych programistów do opóźnionego projektu tylko go bardziej opóźnia. Podobnie jak nie upieczesz sernika szybciej, kupując więcej piekarników, tak nie rozwiążesz złożonego problemu szybciej, dokładając więcej rąk do pracy — problem trzeba najpierw zrozumieć, a to wymaga czasu jednej głowy, nie wielu par rąk naraz.
+
+
+<BlogImage 
+  alt='Proces programowania'
+  src={diagram}
+  caption='Czas a złożoność' 
+/>
+
+## Mój przykład
+
+Mogę to potwierdzić na własnym przykładzie. Swój side project zacząłem w maju. Jest sierpień, a ja nadal nie mam nawet MVP.
+
+Na papierze to prosty projekt. Gdybym miał tylko pisać kod, prawdopodobnie skończyłbym go w kilka weekendów. Problem w tym, że większość czasu nie spędzam na pisaniu kodu, tylko na myśleniu — czy to dobre podejście, czy ta struktura ma sens, czy za pół roku będę tego żałował. Kilka razy zacząłem coś od zera, bo w trakcie pracy zrozumiałem problem lepiej niż na początku.
+
+To nie jest lenistwo ani brak dyscypliny. To po prostu naturalne tempo procesu myślowego, o którym pisałem wyżej — nie da się go przyspieszyć, siadając do klawiatury na dłużej albo pisząc szybciej.
+
+## Czy da się to poprawić?
+
+Częściowo tak, ale nie ma na to magicznego rozwiązania.
+
+* **Lepsze narzędzia** mogą przyspieszyć samo pisanie kodu — autouzupełnianie, generowanie boilerplate'u, AI-asystenci. Ale to tylko ułamek całego procesu.
+* **Doświadczenie** pomaga myśleć szybciej — doświadczony programista rozpoznaje wzorce, unika ślepych uliczek, wie, kiedy nie warto optymalizować przedwcześnie. To nie znaczy, że myśli mniej, tylko że myśli sprawniej.
+* **Jasność problemu** to często największy czynnik. Im lepiej rozumiesz, co właściwie chcesz zbudować, tym mniej czasu tracisz na analizę i przeprojektowywanie w trakcie pracy. Dobre planowanie na starcie potrafi zaoszczędzić więcej czasu niż jakiekolwiek narzędzie.
+
+Czego nie da się zrobić, to ścisnąć proces myślowy tak, jak ściska się linię produkcyjną. Można go tylko robić mądrzej, a nie szybciej.
