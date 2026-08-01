@@ -1,7 +1,7 @@
 ---
 title: "Proces programowania jest powolny"
 publishedDate: 2026-08-01
-description: "Z natury proces programowania jest powolny, a jego tempo zależy od wielu czynników. W tym artykule przyglądam się, dlaczego tak jest i jak można to poprawić."
+description: "Programowanie nie polega tylko na pisaniu kodu. Najwięcej czasu często zajmuje zrozumienie problemu, podejmowanie decyzji i unikanie złych rozwiązań."
 tags: ["Kariera", "Myślenie"]
 relatedPosts: ["wiecej-pracy-daje-gorsze-efekty"]
 ---
@@ -11,20 +11,37 @@ import diagram from '@/assets/blog/proces-programowania/diagram.png';
 
 ## Co to jest programowanie?
 
-**Programowanie to nie pisanie kodu.** To proces rozwiązywania złożonych problemów, który wymaga analizy, planowania, testowania, myślenia przed i po napisaniu kodu.
+**Programowanie to nie pisanie kodu.** To proces rozwiązywania złożonych problemów, który wymaga analizy, planowania, testowania i podejmowania decyzji przed oraz po napisaniu kodu.
 
-Tak naprawdę, pisanie kodu to mała część całego procesu. Ogromną większość czasu spędza się na myśleniu i analizowaniu problemu.
+Samo pisanie kodu jest tylko częścią całego procesu. Duża część pracy odbywa się poza edytorem, bo podczas poznawania problemu, projektowania rozwiązania i sprawdzania, czy obrana droga ma sens.
 
 ## Dlaczego tak jest?
 
-Odpowiedź jest prosta: niektórych procesów nie da się przyspieszyć, dokładając do nich więcej zasobów. Programowanie jest właśnie takim procesem — jego tempo nie zależy od "przepustowości" ludzi, tylko od czasu potrzebnego na myślenie.
+Odpowiedź jest prosta: programowanie to przede wszystkim proces zdobywania wiedzy, a nie proces produkcyjny.
+
+Można go przyspieszyć lepszymi narzędziami, doświadczeniem czy dobrą dokumentacją. Nie da się go jednak skalować tak samo jak pracy fizycznej, ponieważ w pewnym momencie dodatkowa osoba zaczyna wymagać więcej koordynacji, niż wnosi realnej wartości.
 
 Co dokładnie mam na myśli?
 
-Oto przykład: Załóżmy, że chcesz upiec sernik. Standardowo piecze się go ponad 60 minut. Niby, jeśli chcesz, to możesz podkręcić temperaturę i upiec go w 30 minut. Jednak w praktyce, jeśli zrobisz to, sernik będzie niedopieczony w środku i spali się na zewnątrz. Chcąc usprawnić "przepustowość", to musisz kupić więcej piekarników i więcej osób do pracy. Wtedy możesz upiec więcej serników w tym samym czasie, ale nie przyspieszysz samego procesu pieczenia.
+Wyobraź sobie, że projektujesz budynek. Możesz zatrudnić więcej architektów, użyć gotowych elementów konstrukcyjnych albo szybciej tworzyć prototypy. Wszystko to pomaga.
 
-Ten sam mechanizm opisuje prawo Brooksa: dodanie kolejnych programistów do opóźnionego projektu tylko go bardziej opóźnia. Podobnie jak nie upieczesz sernika szybciej, kupując więcej piekarników, tak nie rozwiążesz złożonego problemu szybciej, dokładając więcej rąk do pracy — problem trzeba najpierw zrozumieć, a to wymaga czasu jednej głowy, nie wielu par rąk naraz.
+Nie unikniesz jednak czasu potrzebnego na zrozumienie, co właściwie budujesz, jakie obciążenia musi wytrzymać konstrukcja, jak rozplanować instalacje, gdzie powinny znajdować się wejścia i jakie ograniczenia trzeba uwzględnić.
 
+Możesz podzielić pracę między dziesięciu architektów, ale jeśli nikt jeszcze nie rozumie dokładnie problemu, powstanie po prostu dziesięć różnych wersji tego samego nieporozumienia.
+
+Ten sam mechanizm opisuje prawo Brooksa: dodanie kolejnych programistów do opóźnionego projektu często powoduje jego dalsze opóźnienie.
+
+Nie oznacza to, że większe zespoły są zawsze gorsze. Przy dobrze podzielonych zadaniach współpraca realnie przyspiesza pracę. Problem pojawia się wtedy, gdy największym wyzwaniem nie jest samo wykonanie zadania, ale zrozumienie problemu i podjęcie właściwych decyzji.
+
+W takiej sytuacji każda nowa osoba musi najpierw zdobyć wiedzę, którą posiada obecny zespół. A zdobywanie tej wiedzy kosztuje czas.
+
+Jest jeszcze jeden powód, dla którego programowanie bywa wolne: informacja jest droga.
+
+Zanim napiszesz dobre rozwiązanie, musisz odkryć, czego naprawdę potrzebuje użytkownik, jak działa istniejący system, jakie są ukryte ograniczenia i jakie decyzje będą miały sens za rok.
+
+Największym kosztem w programowaniu często nie jest napisanie rozwiązania. Jest nim skuteczne uniknięcie napisania złego rozwiązania.
+
+A żeby tego uniknąć, trzeba najpierw zdobyć wiedzę, której na początku po prostu nie masz.
 
 <BlogImage 
   alt='Proces programowania'
@@ -36,16 +53,28 @@ Ten sam mechanizm opisuje prawo Brooksa: dodanie kolejnych programistów do opó
 
 Mogę to potwierdzić na własnym przykładzie. Swój side project zacząłem w maju. Jest sierpień, a ja nadal nie mam nawet MVP.
 
-Na papierze to prosty projekt. Gdybym miał tylko pisać kod, prawdopodobnie skończyłbym go w kilka weekendów. Problem w tym, że większość czasu nie spędzam na pisaniu kodu, tylko na myśleniu — czy to dobre podejście, czy ta struktura ma sens, czy za pół roku będę tego żałował. Kilka razy zacząłem coś od zera, bo w trakcie pracy zrozumiałem problem lepiej niż na początku.
+Na papierze projekt wyglądał prosto. Gdybym miał tylko pisać kod według pierwszego pomysłu, prawdopodobnie skończyłbym go w kilka weekendów.
 
-To nie jest lenistwo ani brak dyscypliny. To po prostu naturalne tempo procesu myślowego, o którym pisałem wyżej — nie da się go przyspieszyć, siadając do klawiatury na dłużej albo pisząc szybciej.
+Problem w tym, że większość czasu nie spędzam na pisaniu kodu, tylko na podejmowaniu decyzji:
+
+Czy to dobre podejście?  
+Czy ta struktura ma sens?  
+Czy za pół roku nie będę musiał wszystkiego przebudować?
+
+Kilka razy zaczynałem część projektu od zera, ponieważ w trakcie pracy lepiej rozumiałem problem niż na początku.
+
+To nie oznacza braku postępu. Częścią programowania jest właśnie odkrywanie, co powinno zostać zbudowane.
 
 ## Czy da się to poprawić?
 
-Częściowo tak, ale nie ma na to magicznego rozwiązania.
+Częściowo tak, ale nie istnieje jedno rozwiązanie, które nagle sprawi, że programowanie stanie się kilka razy szybsze.
 
-* **Lepsze narzędzia** mogą przyspieszyć samo pisanie kodu — autouzupełnianie, generowanie boilerplate'u, AI-asystenci. Ale to tylko ułamek całego procesu.
-* **Doświadczenie** pomaga myśleć szybciej — doświadczony programista rozpoznaje wzorce, unika ślepych uliczek, wie, kiedy nie warto optymalizować przedwcześnie. To nie znaczy, że myśli mniej, tylko że myśli sprawniej.
-* **Jasność problemu** to często największy czynnik. Im lepiej rozumiesz, co właściwie chcesz zbudować, tym mniej czasu tracisz na analizę i przeprojektowywanie w trakcie pracy. Dobre planowanie na starcie potrafi zaoszczędzić więcej czasu niż jakiekolwiek narzędzie.
+* **Lepsze narzędzia** mogą przyspieszyć techniczną część pracy — autouzupełnianie, generowanie boilerplate'u czy AI-asystenci pozwalają szybciej tworzyć kod. Nadal jednak rozwiązują tylko część problemu.
+* **Doświadczenie** pomaga podejmować lepsze decyzje. Doświadczony programista szybciej rozpoznaje wzorce, unika ślepych uliczek i wie, kiedy nie warto poświęcać czasu na przedwczesną optymalizację.
+* **Jasność problemu** jest często największym przyspieszeniem. Im lepiej rozumiesz, co właściwie chcesz zbudować, tym mniej czasu tracisz na późniejsze zmiany i przebudowy.
 
-Czego nie da się zrobić, to ścisnąć proces myślowy tak, jak ściska się linię produkcyjną. Można go tylko robić mądrzej, a nie szybciej.
+Nie da się zamienić procesu myślowego w linię produkcyjną.
+
+Można jednak sprawić, że będzie przebiegał sprawniej, dzięki lepszym decyzjom, większej wiedzy i odpowiednim narzędziom.
+
+Programowanie nie jest wolne dlatego, że programiści piszą kod za wolno. Jest wolne dlatego, że dobre rozwiązania wymagają zrozumienia problemu.
