@@ -142,9 +142,9 @@ export const groups: TechnologyGroup[] = [
          },
          {
             name: "TanStack",
-            color: "#BCF124",
-            iconColor: "#28384f",
-            darkIconColor: "#BCF124",
+            color: "#ECE8D1",
+            iconColor: "#3a3a38",
+            darkIconColor: "#ECE8D1",
             icon: tanstack,
             link: "https://tanstack.com",
          },
