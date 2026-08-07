@@ -77,6 +77,10 @@
       @apply text-foreground-body relative z-10 m-0 text-[1.05rem] leading-[1.85];
    }
 
+   & hr:not([data-tab-panel="demo"] *) {
+      @apply my-12 h-px w-full border-none bg-linear-to-r from-accent/15 via-accent/30 to-accent/15;
+   }
+
    & ul:not([data-tab-panel="demo"] *) {
       @apply marker:text-accent/70 marker:font-bold text-foreground-body list-hyphen my-8 flex list-inside flex-col gap-5;
    }

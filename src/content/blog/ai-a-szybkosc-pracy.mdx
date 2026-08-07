@@ -1,0 +1,118 @@
+---
+title: "Kiedy AI faktycznie przyspiesza moją pracę"
+publishedDate: 2026-08-07
+description: "Analiza przypadków, w których sztuczna inteligencja przyspiesza lub spowalnia proces programowania."
+tags: ["AI"]
+---
+
+Postanowiłem spisać różne przypadki, w których AI przyspiesza i **spowalnia** moją pracę.
+
+Dlaczego taki post? Im częściej sięgam po tego typu narzędzia, tym więcej zauważam różnic w podejściu do implementacji różnych zadań.
+
+## Trochę o tym jakie to są narzędzia
+
+Pierwsze i najczęściej używane przeze mnie narzędzie to <a href="https://opencode.ai/" target="_blank">OpenCode</a>.
+
+Jest to agent/harness działający jako TUI (Text User Interface), który pozwala na interakcję z różnymi modelami AI w sposób bardziej złożony. OpenCode ma dostęp do całej aplikacji, terminala i innych więc może wykonywać więcej i bardziej dokładnie niż webowe odpowiedniki.
+
+Do tego używam <a href="https://github.com/mattpocock/skills" target="_blank">skilli Matta Pococka</a>.
+
+One troszeczkę zmieniają flow działania z OpenCode lub innym agentem, bo wymagają kilku dodatkowych kroków, ale po wykonaniu ich otrzymujemy dużo lepsze rezultaty. Działa to też na plus, ze względu na to, że LLM nie robi researchu co nową "sesję", tylko korzysta z bazy wiedzy, która jest w pliku `CONTEXT.md`. Oszczędza to sporo czasu i tokenów.
+
+---
+
+Ok, do rzeczy. Dlaczego myślę, że jednak nie warto pchać AI wszędzie? Bo w niektórych przypadkach AI spowalnia moją pracę.
+
+## Kiedy spowalnia
+
+### 1. Projektowanie systemu/infrastruktury
+
+Zauważyłem, że przy projektowaniu systemu aplikacji, AI często gubi się przy podstawowych zagadnieniach architektonicznych.
+
+Jeżeli chcemy faktycznie przyspieszyć ten proces, to musimy oddelegować AI implementację danej rzeczy. Ma to pewien ogromny minus: AI idzie po najniższej linii oporu, czyli robi to, co jest najprostsze i najszybsze do implementacji. Na pierwszy rzut oka wygląda to dobrze, ale często w praktyce jest to zlepek "potworków".
+
+Przykład sprzed kilku dni: chciałem zaimplementować system oceniania produktów w mojej aplikacji. Przygotowałem odpowiedni kontekst dla LLM, opisałem założenia i przypadki brzegowe, żeby model mógł poprawnie zrozumieć problem.
+
+Mimo tego zamiast zaprojektować rozwiązanie zgodnie z podstawowymi założeniami architektonicznymi backendu i frontendu, AI wygenerowało implementację mocno uproszczoną i pełną złych decyzji projektowych.
+
+Przykładowo: schemat bazy danych nie wykorzystywał UUID, tak jak pozostała część systemu, tylko zwykły typ text. Warstwa API nie miała middleware ani walidacji. Zamiast obsłużyć odpowiednią logikę w middleware, implementacja najpierw wykonywała zapytanie do API po wartość cookie, a następnie frontend przesyłał to cookie oraz jego wartość ponownie jako parametr do kolejnego requestu.
+
+Dodatkowo warstwa backendowa oparta na ORPC nie miała nawet podstawowego mechanizmu obsługi błędów.
+
+Całość zaprojektowana przez LLM zajęła około 20 minut (nie licząc późniejszego review i testów). Wydaje mi się jednak, że ten czas został w dużej mierze zmarnowany, ponieważ zamiast przyspieszyć pracę, musiałem później poprawiać podstawowe błędy architektoniczne.
+
+Można powiedzieć, że to skill issue, ale czy aby na pewno? Wydaje mi się, że proces programowania z <a href="https://maciej-garncarski.pl/blog/proces-programowania" target="_blank">natury jest i musi być powolny</a>. Myślę, że ekosystem narzędzi sztucznej inteligencji nie jest jeszcze na tyle rozwinięty, żeby w pełni zastępować proces projektowania czegoś. 
+
+### 2. Nie rozumiem problemu, który chcę rozwiązać
+
+Podczas burzy mózgów z AI, często zdarza się, że model nie rozumie problemu, który chcę rozwiązać.
+
+Przykładowo: chciałem dodać rate limiting do mojej aplikacji. Zaproponowałem użycie gotowej biblioteki, która implementuje rate limiting w Node.js. Niestety, LLM nie uwzględnił mojego założenia i zaproponował implementację własnego mechanizmu rate limiting. Po przeczytaniu logach rozumowania modelu, okazało się, że przeszukiwał `pnpm-lock.yaml` oraz `pnpm-workspace.yaml`, nie znalazł go, ale zauważył, że mam ustawiony minimalny wiek paczki, więc stwierdził, że nie może zainstalować biblioteki, bo jest zbyt nowa.
+
+Zamiast zapytać mnie o to, model postanowił samodzielnie stworzyć rate limiting.
+
+Bardzo szybko zrozumiałem, że to na nic i postanowiłem zaimplementować podstawowy rate limiting, co zajęło mi dużo mniej czasu niż promptowanie, opisywanie zadania, wyjaśnianie kontekstu.
+
+Problem polega na tym, że sztuczna inteligencja często skupia się na rozwiązaniu technicznym, a nie na rzeczywistym celu, który chcę osiągnąć. Model widzi nazwę funkcjonalności i automatycznie przechodzi do implementacji, zamiast najpierw zweryfikować założenia oraz ograniczenia.
+
+W praktyce oznacza to, że AI potrafi wygenerować poprawnie działający kod, który jednak rozwiązuje inny problem niż ten, który faktycznie próbowałem rozwiązać.
+
+
+### 3. Kod jest rozbity na wiele modułów
+
+Największą bolączką LLM jest brak pełnego zrozumienia aplikacji.
+
+Współczesne aplikacje są zazwyczaj podzielone na wiele modułów, warstw oraz paczek. Backend, frontend, biblioteki współdzielone, konfiguracja infrastruktury czy schemat bazy danych często znajdują się w różnych miejscach. Człowiek pracujący nad projektem przez dłuższy czas ma w głowie pewien model mentalny całej aplikacji, czyli wie, jakie decyzje zostały podjęte wcześniej, jakie są ograniczenia oraz jakie rozwiązania są preferowane.
+
+AI natomiast często pracuje tylko na wycinku kodu, który aktualnie widzi. Nawet jeżeli dostarczymy mu dużo kontekstu, nadal może nie posiadać pełnego obrazu zależności i założeń projektu.
+
+Problem ten jest szczególnie widoczny w większych codebase'ach, gdzie jakość rozwiązania zależy nie tylko od samej implementacji, ale również od zachowania spójności z istniejącą architekturą.
+
+Powoduje to sytuację, w której model generuje rozwiązanie poprawne lokalnie, ale niekoniecznie poprawne w skali całej aplikacji. Może stworzyć nową abstrakcję, która wygląda sensownie w jednym module, ale jest sprzeczna z istniejącymi wzorcami w pozostałej części systemu.
+
+W efekcie model często optymalizuje pod lokalny problem: "jak najszybciej napisać działający kod", zamiast pod globalny cel: "jak napisać zrozumiały i utrzymywany kod, który pasuje do całej aplikacji".
+
+Wiadomo, jeżeli chcemy stworzyć slop, no to możemy to zrobić w 5 minut, ale trzeba znać swoje priorytety.
+
+
+## Kiedy przyspiesza
+
+### 1. Implementacja małego, dobrze zdefiniowanego zadania
+
+Jeżeli zadanie jest jasno opisane, ma wąski zakres i nie wymaga znajomości całej architektury aplikacji, AI radzi sobie zaskakująco dobrze. Wystarczy podać konkretny input, oczekiwany output i ewentualne przypadki brzegowe, a model generuje działający kod w kilka sekund. W takich sytuacjach czas na napisanie promptu jest naprawdę krótszy niż czas ręcznej implementacji.
+
+### 2. Tłumaczenie z języka na język
+
+To zadanie, w którym LLM praktycznie się nie myli, nawet przy dużych plikach czy specyficznym słownictwie technicznym. Nie trzeba tłumaczyć kontekstu biznesowego, wystarczy tekst źródłowy i docelowy język, więc cała interakcja sprowadza się do jednego promptu. Oszczędność czasu jest tu ogromna, zwłaszcza przy tłumaczeniu dokumentacji czy komunikatów w aplikacji.
+
+### 3. Refaktoryzacja kodu
+
+Przy refaktoryzacji AI ma jasno określony punkt wyjścia, czyli istniejący kod, więc nie musi zgadywać założeń architektonicznych od zera. Świetnie radzi sobie z takimi rzeczami jak zmiana nazw zmiennych, wydzielanie funkcji, upraszczanie warunków czy zamiana jednego wzorca na inny w wielu plikach naraz. Ryzyko "pójścia po najmniejszej linii oporu" jest tu dużo mniejsze, bo struktura rozwiązania już istnieje i model ją po prostu przekształca.
+
+Chronią nas również testy jednostkowe, które weryfikują, czy refaktoryzacja nie zepsuła istniejącej funkcjonalności.
+
+### 4. Code review własnego kodu
+
+AI potrafi szybko wyłapać oczywiste błędy, nieużywane importy, brakującą obsługę wyjątków czy niespójności w nazewnictwie, zanim jeszcze otworzę pull requesta. Jako pierwszy filtr przed właściwym review działa bardzo dobrze. To też dobry sposób na złapanie literówek i drobnych niedopatrzeń, które łatwo przeoczyć po dłuższej sesji kodowania.
+
+### 5. Prototypowanie i eksperymentowanie z nowymi technologiami
+
+Kiedy chcę szybko sprawdzić, czy dana biblioteka lub podejście w ogóle ma sens, AI pozwala mi ominąć etap czytania całej dokumentacji od podstaw. Mogę poprosić o prosty przykład użycia i w kilka minut mam działający prototyp, na którym widzę, czy warto iść dalej w tym kierunku. Tu nie zależy mi na jakości produkcyjnej, więc typowe wady AI, czyli uproszczenia i skróty, akurat nie przeszkadzają.
+
+### 6. Tworzenie dokumentacji (nie zawsze, ale często)
+
+Dokumentacja to zadanie, w którym AI ma dostęp do gotowego kodu i "tylko" musi go opisać, więc teoretycznie nie zgaduje założeń, tylko je odczytuje. W praktyce bywa różnie, bo czasem model opisuje kod zbyt dosłownie albo pomija kontekst biznesowy, który dla mnie jest oczywisty, ale nigdzie nie jest zapisany. Mimo to jako punkt wyjścia, który potem poprawiam, oszczędza mi to sporo czasu przy README czy opisach endpointów API. Bo po co 20 razy mam pisać "endpoint returns X, Y", skoro AI może zrobić to za mnie w kilka sekund?
+
+### 7. Generowanie testów jednostkowych (nie zawsze, ale często)
+
+Mając gotową implementację funkcji, AI potrafi sensownie wygenerować zestaw przypadków testowych, w tym te brzegowe, o których sam bym pewnie zapomniał przy pierwszym podejściu. Nie zawsze trafia w konwencję testów używaną w projekcie, ale poprawienie struktury jest szybsze niż pisanie wszystkiego od zera. Największą wartość widzę przy prostych funkcjach czystych, gdzie nie trzeba mockować pół aplikacji.
+
+Mimo wszystko trzeba uważać, bo często tworzy testy, które nic nie testują, np. testują bibliotekę, która jest już dobrze przetestowana, albo generuje testy, które sprawdzają tylko happy path.
+
+## Wnioski
+
+AI najlepiej sprawdza się tam, gdzie zadanie jest wąskie, dobrze opisane i nie wymaga szerokiego kontekstu całej aplikacji. Tam gdzie potrzebna jest znajomość architektury, historii decyzji projektowych czy zależności między modułami, model wciąż często idzie po najmniejszej linii oporu i generuje rozwiązanie, które trzeba potem poprawiać. Kluczem jest więc świadome dobieranie zadań pod AI, a nie automatyczne delegowanie wszystkiego, bo w praktyce to właśnie ta selekcja decyduje, czy narzędzie faktycznie przyspiesza pracę, czy tylko przenosi czas z pisania kodu na jego poprawianie.
+
+import { AIChart } from "@/components/blog/ai-a-szybkosc-pracy/chart";
+
+<AIChart />
