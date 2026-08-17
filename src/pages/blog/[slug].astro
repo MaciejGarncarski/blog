@@ -8,6 +8,7 @@ import SEO from "@components/seo.astro";
 import Layout from "@layouts/layout.astro";
 import { getPosts } from "@/lib/get-posts";
 import BlogRelatedMobile from "@/components/blog/blog-related-mobile.astro";
+import { getPostsSorted } from "@/lib/get-posts-sorted";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -20,6 +21,10 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<"blog"> & { readingTime: number };
 const post = Astro.props;
+const sortedPosts = await getPostsSorted();
+const currentIndex = sortedPosts.findIndex((p) => p.id === post.id);
+const previousPost = sortedPosts[currentIndex + 1];
+const nextPost = sortedPosts[currentIndex - 1];
 const { Content } = await render(post);
 const canonicalUrl = `/blog/${post.id}`;
 const postUrl = new URL(canonicalUrl, Astro.site).toString();
@@ -75,6 +80,46 @@ const relatedPosts = post.data.relatedPosts || [];
       </div>
     </div>
   </article>
+
+  <nav
+    aria-label="Nawigacja między wpisami"
+    class="mr-auto flex w-full md:w-[54rem] flex-col md:flex-row md:justify-between gap-4 px-4 pt-6 pb-16 md:px-16"
+  >
+    {
+      previousPost ? (
+        <a
+          href={`/blog/${previousPost.id}`}
+          class="group flex flex-col gap-1 rounded-lg px-4 py-3 transition-colors bg-accent/4 border border-accent/5 hover:bg-accent/5"
+        >
+          <span class="text-foreground-secondary text-xs uppercase tracking-[0.12em]">
+            Poprzedni post
+          </span>
+          <span class="text-sm font-medium text-pretty group-hover:text-accent">
+            {previousPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      nextPost ? (
+        <a
+          href={`/blog/${nextPost.id}`}
+          class="group flex flex-col items-end gap-1 rounded-lg px-4 py-3 text-right transition-colors bg-accent/4 border border-accent/5 hover:bg-accent/5"
+        >
+          <span class="text-foreground-secondary text-xs uppercase tracking-[0.12em]">
+            Nastepny post
+          </span>
+          <span class="text-sm font-medium text-pretty group-hover:text-accent">
+            {nextPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
 </Layout>
 
 <script>
