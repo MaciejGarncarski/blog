@@ -37,8 +37,8 @@
       "rehype-pretty-code": "^0.14.3",
       "remark-gfm": "^4.0.1",
       "remark-parse": "^11.0.0",
+      "satori": "^0.33.0",
       "sharp": "^0.35.3",
-      "takumi-js": "^2.4.0",
       "unified": "^11.0.5"
    },
    "devDependencies": {

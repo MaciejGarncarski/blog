@@ -1,12 +1,12 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { fromJsx } from "takumi-js/helpers/jsx";
-import ImageResponse from "takumi-js/response";
-import type { ImageSource, Node } from "takumi-js";
+import type { ReactElement } from "react";
+import satori from "satori";
+import sharp from "sharp";
 import { capitalizeFirst, getTitleFontSize } from "@/lib/utils";
 
-function loadFontBuffer(filePath: string): Uint8Array {
-   return new Uint8Array(readFileSync(filePath));
+function loadFontBuffer(filePath: string): Buffer {
+   return readFileSync(filePath);
 }
 
 function getFonts() {
@@ -28,8 +28,6 @@ function getFonts() {
    ];
 }
 
-const FAVICON_URL =
-   "https://raw.githubusercontent.com/MaciejGarncarski/maciej-garncarski.pl/refs/heads/main/public/favicon.svg";
 const TITLE_CHAR_LIMIT = 110;
 const OG_WIDTH = 1200;
 const OG_HEIGHT = 630;
@@ -43,33 +41,23 @@ const LOGO_SVG = `
 </svg>
 `;
 
-function getImageSources(): ImageSource[] {
-   return [
-      {
-         src: FAVICON_URL,
-         data: Buffer.from(LOGO_SVG),
-      },
-   ];
-}
+const LOGO_DATA_URI = `data:image/svg+xml;base64,${Buffer.from(LOGO_SVG).toString("base64")}`;
 
-async function createOgResponse(node: Node, stylesheets: string[]) {
-   const res = await new ImageResponse(node, {
+function createOgResponse(element: ReactElement) {
+   return satori(element, {
       fonts: getFonts(),
       width: OG_WIDTH,
       height: OG_HEIGHT,
-      format: "png",
-      stylesheets,
-      images: getImageSources(),
-   });
-
-   return res.arrayBuffer();
+   }).then((svg) => sharp(Buffer.from(svg)).png().toBuffer());
 }
 
 export async function generateWebsiteOgImage() {
-   const { node, stylesheets } = await fromJsx(
+   return createOgResponse(
       <div
-         tw="flex flex-col relative"
          style={{
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
             width: OG_WIDTH,
             height: OG_HEIGHT,
             color: "white",
@@ -82,28 +70,28 @@ export async function generateWebsiteOgImage() {
       >
          <GradientBackground />
          <div
-            tw="absolute"
             style={{
+               position: "absolute",
                top: 0,
                left: "15%",
                right: "15%",
                height: 3,
-               background: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.5), transparent)`,
+               backgroundImage: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.5), transparent)`,
             }}
          />
          <div
-            tw="absolute"
             style={{
+               position: "absolute",
                bottom: 0,
                left: "25%",
                right: "25%",
                height: 3,
-               background: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.3), transparent)`,
+               backgroundImage: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.3), transparent)`,
             }}
          />
 
          <img
-            src={FAVICON_URL}
+            src={LOGO_DATA_URI}
             width={150}
             height={150}
             alt=""
@@ -111,8 +99,8 @@ export async function generateWebsiteOgImage() {
          />
 
          <span
-            tw="flex"
             style={{
+               display: "flex",
                fontSize: 64,
                fontWeight: 700,
                lineHeight: 1.15,
@@ -124,8 +112,8 @@ export async function generateWebsiteOgImage() {
          </span>
 
          <span
-            tw="flex"
             style={{
+               display: "flex",
                fontSize: 24,
                fontWeight: 500,
                color: ACCENT_COLOR,
@@ -137,8 +125,6 @@ export async function generateWebsiteOgImage() {
          </span>
       </div>,
    );
-
-   return createOgResponse(node, stylesheets);
 }
 
 type OgImage = {
@@ -158,10 +144,12 @@ export async function generateBlogOGImage({ title, date, tags }: OgImage) {
    const adjustedTitle =
       title.length > TITLE_CHAR_LIMIT ? `${title.slice(0, TITLE_CHAR_LIMIT)}...` : title;
 
-   const { node, stylesheets } = await fromJsx(
+   return createOgResponse(
       <div
-         tw="flex flex-col relative"
          style={{
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
             width: OG_WIDTH,
             height: OG_HEIGHT,
             color: "white",
@@ -172,17 +160,43 @@ export async function generateBlogOGImage({ title, date, tags }: OgImage) {
          }}
       >
          <GradientBackground />
-         <GradientBorders />
+         <div
+            style={{
+               position: "absolute",
+               top: 0,
+               left: "15%",
+               right: "15%",
+               height: 3,
+               backgroundImage: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.5), transparent)`,
+            }}
+         />
+         <div
+            style={{
+               position: "absolute",
+               bottom: 0,
+               left: "25%",
+               right: "25%",
+               height: 3,
+               backgroundImage: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.3), transparent)`,
+            }}
+         />
 
-         <div tw="flex flex-row" style={{ flexWrap: "wrap", gap: 12 }}>
+         <div
+            style={{
+               display: "flex",
+               flexDirection: "row",
+               flexWrap: "wrap",
+               gap: 12,
+            }}
+         >
             {tags.map((tag) => (
                <span
                   key={tag}
-                  tw="flex"
                   style={{
+                     display: "flex",
                      fontSize: 22,
                      color: "rgba(220, 229, 242, 0.9)",
-                     background: "rgba(99, 151, 238, 0.15)",
+                     backgroundColor: "rgba(99, 151, 238, 0.15)",
                      border: "1px solid rgba(99, 151, 238, 0.1)",
                      borderRadius: 999,
                      padding: "6px 18px",
@@ -194,8 +208,9 @@ export async function generateBlogOGImage({ title, date, tags }: OgImage) {
          </div>
 
          <div
-            tw="flex flex-1"
             style={{
+               display: "flex",
+               flex: 1,
                paddingTop: 40,
                paddingBottom: 20,
                alignItems: "flex-start",
@@ -207,24 +222,31 @@ export async function generateBlogOGImage({ title, date, tags }: OgImage) {
                   fontWeight: 700,
                   lineHeight: 1.3,
                   color: TEXT_COLOR,
-                  textWrap: "pretty",
+                  textWrap: "balance",
                }}
             >
                {adjustedTitle}
             </span>
          </div>
 
-         <div tw="flex flex-row items-center" style={{ gap: 32 }}>
+         <div
+            style={{
+               display: "flex",
+               flexDirection: "row",
+               alignItems: "center",
+               gap: 32,
+            }}
+         >
             <img
-               src={FAVICON_URL}
+               src={LOGO_DATA_URI}
                width={60}
                height={60}
                alt=""
                style={{ borderRadius: 8, display: "flex" }}
             />
             <span
-               tw="flex"
                style={{
+                  display: "flex",
                   fontSize: 26,
                   color: "rgba(220, 229, 242, 0.9)",
                }}
@@ -234,8 +256,6 @@ export async function generateBlogOGImage({ title, date, tags }: OgImage) {
          </div>
       </div>,
    );
-
-   return createOgResponse(node, stylesheets);
 }
 
 export async function generateJournalOg({ title, date }: OgImage) {
@@ -244,10 +264,12 @@ export async function generateJournalOg({ title, date }: OgImage) {
    const adjustedTitle =
       title.length > TITLE_CHAR_LIMIT ? `${title.slice(0, TITLE_CHAR_LIMIT)}...` : title;
 
-   const { node, stylesheets } = await fromJsx(
+   return createOgResponse(
       <div
-         tw="flex flex-col relative"
          style={{
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
             width: OG_WIDTH,
             height: OG_HEIGHT,
             color: "white",
@@ -258,15 +280,41 @@ export async function generateJournalOg({ title, date }: OgImage) {
          }}
       >
          <GradientBackground />
-         <GradientBorders />
+         <div
+            style={{
+               position: "absolute",
+               top: 0,
+               left: "15%",
+               right: "15%",
+               height: 3,
+               backgroundImage: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.5), transparent)`,
+            }}
+         />
+         <div
+            style={{
+               position: "absolute",
+               bottom: 0,
+               left: "25%",
+               right: "25%",
+               height: 3,
+               backgroundImage: `linear-gradient(to right, transparent, rgba(99, 151, 238, 0.3), transparent)`,
+            }}
+         />
 
-         <div tw="flex flex-row" style={{ flexWrap: "wrap", gap: 12 }}>
+         <div
+            style={{
+               display: "flex",
+               flexDirection: "row",
+               flexWrap: "wrap",
+               gap: 12,
+            }}
+         >
             <span
-               tw="flex"
                style={{
+                  display: "flex",
                   fontSize: 22,
                   color: "rgba(220, 229, 242, 0.9)",
-                  background: "rgba(99, 151, 238, 0.15)",
+                  backgroundColor: "rgba(99, 151, 238, 0.15)",
                   border: "1px solid rgba(99, 151, 238, 0.1)",
                   borderRadius: 999,
                   padding: "6px 18px",
@@ -277,8 +325,9 @@ export async function generateJournalOg({ title, date }: OgImage) {
          </div>
 
          <div
-            tw="flex flex-1"
             style={{
+               display: "flex",
+               flex: 1,
                paddingTop: 40,
                paddingBottom: 20,
                alignItems: "flex-start",
@@ -290,24 +339,31 @@ export async function generateJournalOg({ title, date }: OgImage) {
                   fontWeight: 700,
                   lineHeight: 1.3,
                   color: TEXT_COLOR,
-                  textWrap: "pretty",
+                  textWrap: "balance",
                }}
             >
                {adjustedTitle}
             </span>
          </div>
 
-         <div tw="flex flex-row items-center" style={{ gap: 32 }}>
+         <div
+            style={{
+               display: "flex",
+               flexDirection: "row",
+               alignItems: "center",
+               gap: 32,
+            }}
+         >
             <img
-               src={FAVICON_URL}
+               src={LOGO_DATA_URI}
                width={60}
                height={60}
                alt=""
                style={{ borderRadius: 8, display: "flex" }}
             />
             <span
-               tw="flex"
                style={{
+                  display: "flex",
                   fontSize: 26,
                   color: "rgba(220, 229, 242, 0.9)",
                }}
@@ -317,46 +373,19 @@ export async function generateJournalOg({ title, date }: OgImage) {
          </div>
       </div>,
    );
-
-   return createOgResponse(node, stylesheets);
 }
 
 function GradientBackground() {
    return (
       <div
-         tw="absolute"
          style={{
-            inset: 0,
-            background: `linear-gradient(135deg, #12141c 0%, #12141c 50%, #1e2a4a 100%)`,
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundImage: `linear-gradient(135deg, #12141c 0%, #12141c 50%, #1e2a4a 100%)`,
          }}
       />
-   );
-}
-
-function GradientBorders() {
-   return (
-      <>
-         <div
-            tw="absolute"
-            style={{
-               top: 0,
-               left: 0,
-               right: "15%",
-               height: 6,
-               background: `linear-gradient(to right, rgba(99, 151, 238, 0.5), transparent)`,
-            }}
-         />
-
-         <div
-            tw="absolute"
-            style={{
-               top: 6,
-               bottom: "15%",
-               left: 0,
-               width: 6,
-               background: `linear-gradient(to bottom, rgba(99, 151, 238, 0.5), transparent)`,
-            }}
-         />
-      </>
    );
 }

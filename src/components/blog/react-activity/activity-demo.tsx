@@ -41,7 +41,7 @@ export function ActivityDemo() {
                    isActive
                       ? "bg-background text-accent shadow-accent-sm ring-1 ring-border"
                       : "text-foreground-secondary hover:text-foreground hover:bg-background-secondary/70"
-                }
+}
               `}
                   >
                      <span>{tab.icon}</span>
