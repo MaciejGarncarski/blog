@@ -30,7 +30,7 @@ function lastBySeries(rows: readonly AIComparisonRow[]): readonly AIComparisonRo
       .filter((row): row is AIComparisonRow => row !== undefined);
 }
 
-const colors = ["#2563eb", "#dc2626"];
+const colors = ["#F4BB44", "#4d84df"];
 
 const aiChart = defineChart({
    marks: [
@@ -52,21 +52,23 @@ const aiChart = defineChart({
       }),
    ],
 
-   x: {
-      scale: scaleLinear,
-      nice: true,
-      grid: true,
-      axis: {
-         label: "Skomplikowanie zadania",
+   scales: {
+      x: {
+         scale: scaleLinear,
+         nice: true,
+         grid: true,
+         axis: {
+            label: "Skomplikowanie zadania",
+         },
       },
-   },
 
-   y: {
-      scale: scaleLinear,
-      nice: true,
-      grid: true,
-      axis: {
-         label: "Czas wykonania (min)",
+      y: {
+         scale: scaleLinear,
+         nice: true,
+         grid: true,
+         axis: {
+            label: "Czas wykonania (min)",
+         },
       },
    },
 
@@ -77,8 +79,8 @@ const aiChart = defineChart({
    },
 
    margin: {
-      left: 50,
-      right: 40,
+      left: 30,
+      right: 30,
    },
 });
 

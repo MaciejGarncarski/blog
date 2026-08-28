@@ -190,7 +190,11 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
                                     {String(h.h2Index).padStart(2, "0")}
                                  </span>
                               )}
-                              <span className={`wrap-break-word text-pretty ${h.level === "h3" ? "line-clamp-1" : ""}`}>{h.text}</span>
+                              <span
+                                 className={`wrap-break-word text-pretty ${h.level === "h3" ? "line-clamp-1" : ""}`}
+                              >
+                                 {h.text}
+                              </span>
                            </a>
                         </li>
                      );
