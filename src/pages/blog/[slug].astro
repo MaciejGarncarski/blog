@@ -3,12 +3,13 @@ import "@/styles/codeblock.css";
 import "@/styles/blog.css";
 import { type CollectionEntry, render } from "astro:content";
 import BlogHero from "@components/blog/blog-hero.astro";
-import BlogAside from "@components/blog/blog-aside.astro";
+import { BlogAside } from "@components/blog/blog-aside";
 import SEO from "@components/seo.astro";
 import Layout from "@layouts/layout.astro";
 import { getPosts } from "@/lib/get-posts";
 import BlogRelatedMobile from "@/components/blog/blog-related-mobile.astro";
 import { getPostsSorted } from "@/lib/get-posts-sorted";
+import { getRelatedPosts, getRelatedProjects } from "@/lib/get-related-content";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -36,6 +37,9 @@ const breadcrumbs = [
 
 const relatedProjects = post.data.relatedProjects || [];
 const relatedPosts = post.data.relatedPosts || [];
+const relatedPostData =
+  relatedPosts.length > 0 ? await getRelatedPosts(relatedPosts) : [];
+const relatedProjectData = getRelatedProjects(relatedProjects);
 ---
 
 <Layout>
@@ -60,8 +64,9 @@ const relatedPosts = post.data.relatedPosts || [];
     <div class="relative w-full max-w-full lg:max-w-[76ch]">
       <div class="anim-toc">
         <BlogAside
-          relatedPosts={relatedPosts}
-          relatedProjects={relatedProjects}
+          relatedPostData={relatedPostData}
+          relatedProjectData={relatedProjectData}
+          client:load
         />
       </div>
 
