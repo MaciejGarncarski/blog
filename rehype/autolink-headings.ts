@@ -1,7 +1,6 @@
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-
-import type { RehypeNode } from "./types";
 import type { RehypePlugins } from "@astrojs/markdown-remark";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import type { RehypeNode } from "./types";
 
 const headingAnchorIcon: RehypeNode[] = [
    {

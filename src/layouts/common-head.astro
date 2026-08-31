@@ -84,6 +84,12 @@ const { faviconScript = "default" } = Astro.props;
       const faviconLightMode = "/favicon-light-theme.png";
       const faviconDarkMode = "/favicon-dark-theme.png";
 
+      function getCurrentTheme() {
+        const stored = localStorage.getItem("theme");
+        if (stored === "light" || stored === "dark") return stored;
+        return systemThemeQuery.matches ? "dark" : "light";
+      }
+
       const updateFaviconColor = (isDark) => {
         document.querySelector("link[data-theme-favicon]")?.remove();
         const link = document.createElement("link");
@@ -94,14 +100,13 @@ const { faviconScript = "default" } = Astro.props;
         document.head.appendChild(link);
       };
 
-      const sync = () => updateFaviconColor(systemThemeQuery.matches);
+      const sync = () => updateFaviconColor(getCurrentTheme() === "dark");
 
       document.addEventListener("astro:after-swap", sync, { once: true });
       sync();
 
-      systemThemeQuery.addEventListener("change", () =>
-        updateFaviconColor(systemThemeQuery.matches),
-      );
+      systemThemeQuery.addEventListener("change", sync);
+      window.addEventListener("theme-changed", sync);
     </script>
   )
 }

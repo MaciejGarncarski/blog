@@ -80,17 +80,22 @@
       });
     });
 
-    function getEffectiveTheme(): Theme {
-      const stored = localStorage.getItem("theme");
-      if (stored === "light" || stored === "dark") return stored;
-
+    function getSystemTheme(): Theme {
       return window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
     }
 
+    function getStoredTheme(): Theme | null {
+      const stored = localStorage.getItem("theme");
+      return stored === "light" || stored === "dark" ? stored : null;
+    }
+
+    function getEffectiveTheme(): Theme {
+      return getStoredTheme() ?? getSystemTheme();
+    }
+
     function updateIcon(theme: Theme) {
-      // Sun exits rotating clockwise, moon exits rotating counter-clockwise
       icons.sun?.classList.add("opacity-0", "scale-0", "rotate-90");
       icons.sun?.classList.remove("opacity-100", "scale-100", "rotate-0");
 
@@ -116,10 +121,8 @@
       document.head.appendChild(style);
 
       document.documentElement.className = theme;
-      localStorage.setItem("theme", theme);
       updateIcon(theme);
 
-      // Remove after the browser has painted the new theme
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           style.remove();
@@ -129,7 +132,17 @@
 
     function toggleTheme() {
       const current = getEffectiveTheme();
-      setTheme(current === "light" ? "dark" : "light");
+      const target = current === "light" ? "dark" : "light";
+      const osTheme = getSystemTheme();
+
+      if (target === osTheme) {
+        localStorage.removeItem("theme");
+      } else {
+        localStorage.setItem("theme", target);
+      }
+
+      setTheme(target);
+      window.dispatchEvent(new CustomEvent("theme-changed"));
     }
 
     updateIcon(getEffectiveTheme());

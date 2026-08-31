@@ -1,6 +1,6 @@
 import type { APIContext, APIRoute } from "astro";
-import { generateJournalOg } from "@/lib/og";
 import { getJournals } from "@/lib/get-journals";
+import { generateJournalOg } from "@/lib/og";
 
 export const GET: APIRoute = async ({ props }: APIContext) => {
    const { post } = props as Props;

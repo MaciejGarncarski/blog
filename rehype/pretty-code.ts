@@ -1,14 +1,13 @@
+import type { RehypePlugins } from "@astrojs/markdown-remark";
 import {
    transformerMetaHighlight,
    transformerNotationDiff,
    transformerNotationFocus,
 } from "@shikijs/transformers";
 import rehypePrettyCode from "rehype-pretty-code";
-
+import { customAttributesTransformer } from "./attrubiute-transformer";
 import type { RehypeNode } from "./types";
 import { getNodeProperties } from "./types";
-import type { RehypePlugins } from "@astrojs/markdown-remark";
-import { customAttributesTransformer } from "./attrubiute-transformer";
 
 export const prettyCodePlugin: RehypePlugins[number] = [
    rehypePrettyCode,

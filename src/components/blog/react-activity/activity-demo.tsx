@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <Its demo component> */
-import { Activity, useState, useEffect } from "react";
+import { Activity, useEffect, useState } from "react";
 
 const TABS = [
    { id: "sales", label: "Sprzedaż", icon: "💰" },

@@ -1,5 +1,5 @@
-import { generateWebsiteOgImage } from "@/lib/og";
 import type { APIRoute } from "astro";
+import { generateWebsiteOgImage } from "@/lib/og";
 
 export const GET: APIRoute = async () => {
    const imageBuffer = await generateWebsiteOgImage();

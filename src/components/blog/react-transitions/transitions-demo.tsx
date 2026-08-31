@@ -1,4 +1,4 @@
-import { useState, useTransition, type ChangeEvent } from "react";
+import { type ChangeEvent, useState, useTransition } from "react";
 
 const PRODUCTS = ["lampa", "poduszka", "lodówka", "biurko", "krzesło", "szafa"];
 

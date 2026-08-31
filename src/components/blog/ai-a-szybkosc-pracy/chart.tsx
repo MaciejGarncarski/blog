@@ -1,9 +1,9 @@
-import { scaleLinear } from "@tanstack/charts-scales/linear";
-import { defineChart, lineY, dot, text, d3Curve } from "@tanstack/charts";
-import { curveMonotoneX } from "d3-shape";
-import { group } from "d3-array";
+import { d3Curve, defineChart, dot, lineY, text } from "@tanstack/charts";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { scaleLinear } from "@tanstack/charts-scales/linear";
 import { Chart } from "@tanstack/react-charts";
+import { group } from "d3-array";
+import { curveMonotoneX } from "d3-shape";
 
 interface AIComparisonRow {
    complexity: number;

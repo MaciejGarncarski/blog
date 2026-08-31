@@ -1,4 +1,4 @@
-import { rehypeHeadingIds, type RehypePlugins } from "@astrojs/markdown-remark";
+import { type RehypePlugins, rehypeHeadingIds } from "@astrojs/markdown-remark";
 
 import { autolinkHeadingsPlugin } from "./autolink-headings";
 import { rehypeNormalizeHeadingIds } from "./normalize-heading-ids";

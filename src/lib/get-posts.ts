@@ -1,5 +1,5 @@
-import { addReadingTime, sortTags } from "@/lib/utils";
 import { getCollection } from "astro:content";
+import { addReadingTime, sortTags } from "@/lib/utils";
 
 export type PostEntry = Awaited<ReturnType<typeof getCollection>>[number];
 export type PostWithReadingTime = PostEntry & { readingTime: number };
