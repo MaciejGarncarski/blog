@@ -77,33 +77,33 @@ Wiadomo, jeżeli chcemy stworzyć slop, no to możemy to zrobić w 5 minut, ale 
 
 ## Kiedy przyspiesza
 
-### 1. Implementacja małego, dobrze zdefiniowanego zadania
+### Implementacja małego zadania
 
 Jeżeli zadanie jest jasno opisane, ma wąski zakres i nie wymaga znajomości całej architektury aplikacji, AI radzi sobie zaskakująco dobrze. Wystarczy podać konkretny input, oczekiwany output i ewentualne przypadki brzegowe, a model generuje działający kod w kilka sekund. W takich sytuacjach czas na napisanie promptu jest naprawdę krótszy niż czas ręcznej implementacji.
 
-### 2. Tłumaczenie z języka na język
+### Tłumaczenie z języka na język
 
 To zadanie, w którym LLM praktycznie się nie myli, nawet przy dużych plikach czy specyficznym słownictwie technicznym. Nie trzeba tłumaczyć kontekstu biznesowego, wystarczy tekst źródłowy i docelowy język, więc cała interakcja sprowadza się do jednego promptu. Oszczędność czasu jest tu ogromna, zwłaszcza przy tłumaczeniu dokumentacji czy komunikatów w aplikacji.
 
-### 3. Refaktoryzacja kodu
+### Refaktoryzacja
 
 Przy refaktoryzacji AI ma jasno określony punkt wyjścia, czyli istniejący kod, więc nie musi zgadywać założeń architektonicznych od zera. Świetnie radzi sobie z takimi rzeczami jak zmiana nazw zmiennych, wydzielanie funkcji, upraszczanie warunków czy zamiana jednego wzorca na inny w wielu plikach naraz. Ryzyko "pójścia po najmniejszej linii oporu" jest tu dużo mniejsze, bo struktura rozwiązania już istnieje i model ją po prostu przekształca.
 
 Chronią nas również testy jednostkowe, które weryfikują, czy refaktoryzacja nie zepsuła istniejącej funkcjonalności.
 
-### 4. Code review własnego kodu
+### Code review
 
 AI potrafi szybko wyłapać oczywiste błędy, nieużywane importy, brakującą obsługę wyjątków czy niespójności w nazewnictwie, zanim jeszcze otworzę pull requesta. Jako pierwszy filtr przed właściwym review działa bardzo dobrze. To też dobry sposób na złapanie literówek i drobnych niedopatrzeń, które łatwo przeoczyć po dłuższej sesji kodowania.
 
-### 5. Prototypowanie i eksperymentowanie z nowymi technologiami
+### Prototypowanie
 
 Kiedy chcę szybko sprawdzić, czy dana biblioteka lub podejście w ogóle ma sens, AI pozwala mi ominąć etap czytania całej dokumentacji od podstaw. Mogę poprosić o prosty przykład użycia i w kilka minut mam działający prototyp, na którym widzę, czy warto iść dalej w tym kierunku. Tu nie zależy mi na jakości produkcyjnej, więc typowe wady AI, czyli uproszczenia i skróty, akurat nie przeszkadzają.
 
-### 6. Tworzenie dokumentacji (nie zawsze, ale często)
+### Tworzenie dokumentacji (nie zawsze)
 
 Dokumentacja to zadanie, w którym AI ma dostęp do gotowego kodu i "tylko" musi go opisać, więc teoretycznie nie zgaduje założeń, tylko je odczytuje. W praktyce bywa różnie, bo czasem model opisuje kod zbyt dosłownie albo pomija kontekst biznesowy, który dla mnie jest oczywisty, ale nigdzie nie jest zapisany. Mimo to jako punkt wyjścia, który potem poprawiam, oszczędza mi to sporo czasu przy README czy opisach endpointów API. Bo po co 20 razy mam pisać "endpoint returns X, Y", skoro AI może zrobić to za mnie w kilka sekund?
 
-### 7. Generowanie testów jednostkowych (nie zawsze, ale często)
+### Generowanie testów jednostkowych (nie zawsze)
 
 Mając gotową implementację funkcji, AI potrafi sensownie wygenerować zestaw przypadków testowych, w tym te brzegowe, o których sam bym pewnie zapomniał przy pierwszym podejściu. Nie zawsze trafia w konwencję testów używaną w projekcie, ale poprawienie struktury jest szybsze niż pisanie wszystkiego od zera. Największą wartość widzę przy prostych funkcjach czystych, gdzie nie trzeba mockować pół aplikacji.
 

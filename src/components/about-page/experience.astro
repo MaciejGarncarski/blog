@@ -10,7 +10,8 @@ type Highlight = {
 };
 
 type Experience = {
-  period: string;
+  periodStart: string;
+  periodEnd: string;
   company: string;
   description: string;
   role: string;
@@ -23,7 +24,8 @@ function capitalize(str: string) {
 
 const experiences: Experience[] = [
   {
-    period: "lis. 2023 — lip. 2026",
+    periodStart: "2023-11",
+    periodEnd: "2026-07",
     company: "Kokscraft",
     role: "Full Stack Developer",
     description:
@@ -68,6 +70,31 @@ const experiences: Experience[] = [
     ],
   },
 ];
+
+const months = [
+  "stycznia",
+  "lutego",
+  "marca",
+  "kwietnia",
+  "maja",
+  "czerwca",
+  "lipca",
+  "sierpnia",
+  "września",
+  "października",
+  "listopada",
+  "grudnia",
+];
+
+function formatPeriod(start: string, end: string) {
+  const [startYear, startMonth] = start.split("-");
+  const [endYear, endMonth] = end.split("-");
+
+  return {
+    start: `od ${months[Number(startMonth) - 1]} ${startYear}`,
+    end: `do ${months[Number(endMonth) - 1]} ${endYear}`,
+  };
+}
 ---
 
 <section class="flex flex-col gap-6" aria-labelledby="doswiadczenie">
@@ -76,17 +103,19 @@ const experiences: Experience[] = [
     experiences.map((exp) => (
       <div class="flex flex-col gap-4 md:flex-row md:gap-10">
         <div class="flex shrink-0 flex-col gap-1 md:w-28 md:pt-1">
-          <p class="text-[0.8125rem] font-semibold leading-snug">
-            {exp.company}
-          </p>
-          <p class="text-foreground-secondary text-[0.6875rem] uppercase tracking-[0.1em]">
-            {exp.period}
+          <p class="text-sm font-semibold leading-snug">{exp.company}</p>
+
+          <p class="text-foreground-secondary text-xs md:tracking-tight">
+            <span>{formatPeriod(exp.periodStart, exp.periodEnd).start}</span>
+            <span class="block">
+              {formatPeriod(exp.periodStart, exp.periodEnd).end}
+            </span>
           </p>
         </div>
 
         <div class="flex flex-col gap-4">
           <h3 class="text-lg font-semibold">{exp.role}</h3>
-          <div class="border-border/50 relative flex flex-col gap-2 rounded-md border bg-gradient-to-br from-background-secondary/40 to-background-secondary/20 px-4 py-3 backdrop-blur-sm">
+          <div class="border-border/50 relative flex flex-col gap-2 rounded-md border bg-linear-to-br from-background-secondary/40 to-background-secondary/20 px-4 py-3 backdrop-blur-sm">
             <AccentShimmer opacity={15} />
             <p class="text-foreground-body text-sm leading-relaxed text-pretty">
               {exp.description}
@@ -94,7 +123,7 @@ const experiences: Experience[] = [
           </div>
           <div class="grid gap-2.5 sm:grid-cols-2 sm:auto-rows-fr">
             {exp.highlights.map(({ title, description, tags }) => (
-              <div class="border-border/50 relative flex flex-col gap-1.5 rounded-md border bg-background-secondary/30 px-3.5 py-3">
+              <div class="border-border/50 relative flex flex-col gap-1.5 rounded-md border bg-background-secondary/30 px-3.5 py-3 transition-all hover:-translate-y-0.5 hover:border-accent/30">
                 <AccentShimmer opacity={20} />
                 <span class="text-[0.8125rem] font-semibold text-foreground">
                   {title}

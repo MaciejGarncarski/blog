@@ -1,6 +1,7 @@
 import coincontrol from "@assets/projects/coincontrol.png";
 import kanban from "@assets/projects/kanban.png";
 import landing from "@assets/projects/landing.png";
+import snackRate from "@assets/projects/snack-rate.png";
 import twitchChatBot from "@assets/projects/twitch-chat-bot.png";
 import type { ImageMetadata } from "astro";
 
@@ -18,14 +19,14 @@ type Project = {
 export const projects: Project[] = [
    {
       id: "snack-rate",
-      title: "Snack Rate [Work in Progress]",
+      title: "Snack Rate (w trakcie tworzenia)",
       description:
          "Snack Rate to aplikacja do oceniania przekąsek, umożliwiająca użytkownikom dzielenie się opiniami na temat różnych produktów spożywczych.",
       descriptionSecondary:
          "Projekt skoncentrowany na prostocie i użyteczności, ale z pełnym zestawem narzędzi observability. Aplikacja zbudowana jest w TanStack Start - framework Fullstack, oraz ORPC dla łatwej komunikacji.",
       github: "https://github.com/MaciejGarncarski/snack-rate",
       tags: ["TanStack Start", "ORPC", "React", "Tailwind CSS", "OpenTelemetry", "PostgreSQL"],
-      thumbnail: null,
+      thumbnail: snackRate,
    },
    {
       id: "coin-control",
