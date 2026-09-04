@@ -25,6 +25,7 @@ export const projects: Project[] = [
       descriptionSecondary:
          "Projekt skoncentrowany na prostocie i użyteczności, ale z pełnym zestawem narzędzi observability. Aplikacja zbudowana jest w TanStack Start - framework Fullstack, oraz ORPC dla łatwej komunikacji.",
       github: "https://github.com/MaciejGarncarski/snack-rate",
+      demo: "https://snacks.maciejg.dev/",
       tags: ["TanStack Start", "ORPC", "React", "Tailwind CSS", "OpenTelemetry", "PostgreSQL"],
       thumbnail: snackRate,
    },
@@ -36,6 +37,7 @@ export const projects: Project[] = [
       descriptionSecondary:
          "Skoncentrowana na wydajności aplikacja Fullstack, wykorzystująca BullMQ do asynchronicznego przetwarzania zadań w tle oraz Prismę do bezpiecznego zarządzania bazą danych. Frontend zbudowany w React z wykorzystaniem Tailwind CSS i Zustand do zarządzania stanem, zapewniając płynne i responsywne doświadczenie użytkownika.",
       github: "https://github.com/MaciejGarncarski/coin-control",
+      demo: "https://coincontrol.maciejg.dev/",
       tags: ["React", "Tailwind CSS", "Zustand", "Express", "BullMQ", "Prisma"],
       thumbnail: coincontrol,
    },
@@ -46,6 +48,7 @@ export const projects: Project[] = [
          "Bot na platformę Twitch, którego głównym zadaniem jest obsługa systemu song request. Projekt charakteryzuje się modułową budową, co umożliwia bezproblemowe implementowanie kolejnych funkcjonalności.",
       descriptionSecondary:
          "Zbudowany z wykorzystaniem nowoczesnego runtime'u Bun oraz frameworka Elysia dla maksymalnej szybkości. Komunikacja z czatem odbywa się przez WebSockety, a modularna struktura pozwala na łatwe dodawanie nowych modułów, takich jak systemy punktowe czy mini-gry.",
+      demo: "https://bot.maciejg.dev/",
       github: "https://github.com/MaciejGarncarski/twitch-chat-bot",
       tags: ["Bun", "Elysia", "React", "WebSocket"],
       thumbnail: twitchChatBot,

@@ -8,7 +8,7 @@ export const GET: APIRoute = async (context) => {
    return rss({
       title: "Blog - Maciej Garncarski",
       description: "Najnowsze wpisy z bloga.",
-      site: context.site?.toString() || "https://maciej-garncarski.pl",
+      site: context.site?.toString() || "https://maciejg.dev",
       items: posts.map((post) => ({
          title: post.data.title,
          categories: post.data.tags,

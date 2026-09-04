@@ -17,7 +17,7 @@ export default defineConfig({
       },
    ],
    prefetch: true,
-   site: "https://maciej-garncarski.pl",
+   site: "https://maciejg.dev",
    integrations: [
       sitemap({
          entryLimit: 1000,

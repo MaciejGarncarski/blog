@@ -1,10 +1,10 @@
-# maciej-garncarski.pl
+# Personal page - blog - portfolio
 
 Personal portfolio and blog built with Astro, React, and Tailwind CSS. Deployed on Vercel.
 
 ## Live
 
-https://maciej-garncarski.pl/
+https://maciejg.dev
 
 ## Getting started
 

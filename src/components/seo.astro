@@ -67,7 +67,7 @@ const publisherSchema = {
   sameAs: socialProfiles,
   logo: {
     "@type": "ImageObject",
-    url: "https://maciej-garncarski.pl/favicon.svg",
+    url: "https://maciejg.dev/favicon.svg",
   },
 };
 
@@ -215,7 +215,7 @@ const structuredData = [
   publishedDate && (
     <>
       <meta property="article:published_time" content={formattedDate} />
-      <meta property="article:author" content="https://maciej-garncarski.pl" />
+      <meta property="article:author" content="https://maciejg.dev" />
       <meta property="article:section" content={category} />
       {tags.map((tag) => (
         <meta property="article:tag" content={tag} />
