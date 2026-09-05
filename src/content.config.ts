@@ -18,16 +18,6 @@ const blog = defineCollection({
       }),
 });
 
-const dzienniki = defineCollection({
-   loader: glob({ base: "./src/content/dzienniki", pattern: "**/*.{md,mdx}" }),
-   schema: () =>
-      z.object({
-         title: z.string(),
-         public: z.coerce.boolean().optional().default(true),
-         draft: z.coerce.boolean().optional().default(false),
-         publishedDate: z.coerce.date(),
-         updatedDate: z.coerce.date().optional(),
-      }),
-});
 
-export const collections = { blog, dzienniki };
+
+export const collections = { blog };

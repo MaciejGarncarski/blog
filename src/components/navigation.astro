@@ -20,10 +20,6 @@ const navigationData: Array<Link> = [
     url: "/blog",
   },
   {
-    text: "Dzienniki",
-    url: "/dzienniki",
-  },
-  {
     text: "Projekty",
     url: "/projekty",
   },
@@ -84,7 +80,7 @@ const isBlogPostPage =
         </div>
       </a>
 
-      <ul class="relative hidden items-center gap-6 md:flex">
+      <ul class="relative hidden items-center gap-6 md:gap-8 md:flex">
         {
           navigationData.map((n) => {
             const isActive =
