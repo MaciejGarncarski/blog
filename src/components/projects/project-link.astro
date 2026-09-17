@@ -9,7 +9,7 @@ const { link, type } = Astro.props;
 
 <a
   href={link}
-  class="border border-accent/10 bg-accent/15 text-foreground/80 hover:bg-accent/25 focus:bg-accent/25 flex gap-2 items-center px-3 py-1 rounded-xl transition-all motion-reduce:transition-none active:scale-97 hover:scale-103 focus:scale-103"
+  class="border border-accent/10 bg-accent/15 text-foreground/80 hover:bg-accent/25 focus:bg-accent/25 flex gap-2 items-center px-3 py-1 rounded-2xl transition-all motion-reduce:transition-none active:scale-97 hover:scale-103 focus:scale-103"
   target="_blank"
 >
   {
@@ -48,5 +48,5 @@ const { link, type } = Astro.props;
       </svg>
     )
   }
-  {type === "demo" ? "Demo" : "GitHub"}
+  {type === "demo" ? "Zobacz projekt" : "GitHub"}
 </a>
