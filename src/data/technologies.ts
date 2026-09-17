@@ -243,7 +243,8 @@ export const groups: TechnologyGroup[] = [
          {
             name: "Better Auth",
             color: "#ffffff",
-            iconColor: "#ffffff",
+            iconColor: "#000000",
+            darkIconColor: "#ffffff",
             icon: betterAuth,
             link: "https://better-auth.com",
          },
