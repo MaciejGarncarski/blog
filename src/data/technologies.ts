@@ -58,6 +58,11 @@ import typescript from "@components/technologies/typescript.astro";
 import vite from "@components/technologies/vite.astro";
 import vitest from "@components/technologies/vitest.astro";
 import zod from "@components/technologies/zod.astro";
+import betterAuth from "@components/technologies/betterauth.astro";
+import mysql from "@components/technologies/mysql.astro";
+import biome from "@components/technologies/biome.astro";
+import vercel from "@components/technologies/vercel.astro";
+import cloudflare from "@components/technologies/cloudflare.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 type Technology = {
@@ -235,6 +240,13 @@ export const groups: TechnologyGroup[] = [
             icon: socketio,
             link: "https://socket.io",
          },
+         {
+            name: "Better Auth",
+            color: "#ffffff",
+            iconColor: "#ffffff",
+            icon: betterAuth,
+            link: "https://better-auth.com",
+         },
       ],
    },
    {
@@ -311,6 +323,14 @@ export const groups: TechnologyGroup[] = [
             icon: postgresql,
             link: "https://www.postgresql.org",
          },
+         {
+            name: "MySQL",
+            color: "#4479A1",
+            iconColor: "#4479A1",
+            icon: mysql,
+            link: "https://www.mysql.com",
+         },
+
          {
             name: "Redis",
             color: "#FF4438",
@@ -423,6 +443,13 @@ export const groups: TechnologyGroup[] = [
             link: "https://prettier.io",
          },
          {
+            name: "Biome",
+            color: "#60A5FA",
+            iconColor: "#60A5FA",
+            icon: biome,
+            link: "https://biomejs.dev",
+         },
+         {
             name: "Oxc",
             color: "#32f3e9",
             iconColor: "#32f3e9",
@@ -524,6 +551,21 @@ export const groups: TechnologyGroup[] = [
    {
       label: "Infrastruktura",
       techs: [
+         {
+            name: "Cloudflare",
+            color: "#F38020",
+            iconColor: "#F38020",
+            icon: cloudflare,
+            link: "https://www.cloudflare.com",
+         },
+         {
+            name: "Vercel",
+            color: "#000000",
+            iconColor: "#000000",
+            darkIconColor: "#ffffff",
+            icon: vercel,
+            link: "https://vercel.com",
+         },
          {
             name: "Docker",
             color: "#2496ED",
