@@ -19,11 +19,11 @@ type Project = {
 export const projects: Project[] = [
    {
       id: "snack-rate",
-      title: "Snack Rate (w trakcie tworzenia)",
+      title: "Snack Rate",
       description:
-         "Snack Rate to aplikacja do oceniania przekąsek, umożliwiająca użytkownikom dzielenie się opiniami na temat różnych produktów spożywczych.",
+         "Fullstackowa aplikacja do oceniania przekąsek (katalog, oceny 1-10, komentarze, reakcje, moderacja, upload zdjęć do S3). Monorepo: TanStack Start, oRPC, Drizzle + PostgreSQL, Garage (S3), pg-boss.",
       descriptionSecondary:
-         "Projekt skoncentrowany na prostocie i użyteczności, ale z pełnym zestawem narzędzi observability. Aplikacja zbudowana jest w TanStack Start - framework Fullstack, oraz ORPC dla łatwej komunikacji.",
+         "Nacisk na produkcyjność: tracing (OpenTelemetry → Alloy → Tempo), metryki (Prometheus), logi (Loki), dashboardy i alerty w Grafanie, trzy środowiska (dev/staging/prod) na Docker Compose + Caddy, backupy, testy jednostkowe i integracyjne.",
       github: "https://github.com/MaciejGarncarski/snack-rate",
       demo: "https://snacks.maciejg.dev/",
       tags: ["TanStack Start", "ORPC", "React", "Tailwind CSS", "OpenTelemetry", "PostgreSQL"],
