@@ -15,7 +15,7 @@ function highlightReact(text: string, normalizedQuery: string): ReactNode {
          parts.push(text.slice(cursor, index));
       }
       parts.push(
-         <mark key={`${index}-${cursor}`} className="bg-amber-400 rounded-xs">
+         <mark key={`${index}-${cursor}`} className="bg-amber-400 rounded-sm">
             {text.slice(index, index + normalizedQuery.length)}
          </mark>,
       );

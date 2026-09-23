@@ -28,7 +28,7 @@ export function DemoComponent() {
       <div className="flex flex-col items-center justify-center my-2">
          <input
             type="text"
-            className="border px-3 py-1 w-54 bg-background-secondary rounded-sm border-accent/30 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-transparent"
+            className="border px-3 py-1 w-54 bg-background-secondary rounded-lg border-accent/30 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-transparent"
             value={query}
             onChange={handleSearch}
             placeholder="Szukaj produktów..."

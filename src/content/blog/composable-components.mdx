@@ -84,7 +84,7 @@ interface ChildrenOnly {
 
 // 1. Tworzymy reużywalne pod-komponenty, które mają jedną odpowiedzialność
 const ProfileRoot = ({ children, className }: Props) => (
-  <div className={`flex gap-4 p-4 border rounded ${className}`}>{children}</div>
+  <div className={`flex gap-4 p-4 border rounded-sm ${className}`}>{children}</div>
 );
 
 const ProfileAvatar = ({ src }: { src: string }) => (
