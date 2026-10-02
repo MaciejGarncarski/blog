@@ -11,7 +11,10 @@ const recentPosts = allBlogPosts.slice(0, 3);
 <section class="flex flex-col gap-6" aria-labelledby="ostatnie-posty">
   <SectionHeading title="Ostatnie posty" id="ostatnie-posty" />
 
-  <div class="grid gap-4 md:gap-6">
+  <ul
+    class="shadow-accent-sm border-border bg-background-secondary/30 relative flex flex-col overflow-hidden rounded-xl border backdrop-blur-xs"
+  >
+    <AccentShimmer opacity={30} insetX="0%" />
     {
       recentPosts.map((post) => {
         const slug = post.id;
@@ -19,25 +22,42 @@ const recentPosts = allBlogPosts.slice(0, 3);
         const date = formatPostDate(updatedDate ? updatedDate : publishedDate);
 
         return (
-          <a
-            class="shadow-accent-sm bg-background-secondary/30 backdrop-blur-xs border-border relative hover:border-accent/16 group flex flex-col gap-3 rounded-xl border p-4 transition-colors sm:p-5"
-            href={`/blog/${slug}`}
-          >
-            <AccentShimmer opacity={25} />
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-              <h3 class="text-base font-semibold group-hover:text-accent transition-colors sm:text-lg">
-                {title}
-              </h3>
-              <span class="text-foreground-secondary text-xs font-medium tabular-nums sm:ml-auto sm:text-sm">
-                {date}
-              </span>
-            </div>
-            <p class="text-foreground-body max-w-[65ch] text-[0.938rem] leading-relaxed text-pretty">
-              {description}
-            </p>
-          </a>
+          <li class="border-border/50 border-t first:border-t-0">
+            <a
+              class="group flex flex-col gap-1 p-4 transition-colors outline-none hover:bg-accent/5 focus-visible:bg-accent/5"
+              href={`/blog/${slug}`}
+            >
+              <div class="flex items-center gap-3">
+                <h3 class="text-sm font-semibold transition-colors group-hover:text-accent">
+                  {title}
+                </h3>
+                <span class="ml-auto flex items-center gap-2">
+                  <span class="text-foreground-secondary text-xs font-medium tabular-nums">
+                    {date}
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    class="text-accent size-3.5 shrink-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+              <p class="text-foreground-body line-clamp-2 max-w-[65ch] text-[0.8125rem] leading-relaxed text-pretty">
+                {description}
+              </p>
+            </a>
+          </li>
         );
       })
     }
-  </div>
+  </ul>
 </section>
