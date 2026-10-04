@@ -10,6 +10,8 @@ import { getPosts } from "@/lib/get-posts";
 import BlogRelatedMobile from "@/components/blog/blog-related-mobile.astro";
 import { getPostsSorted } from "@/lib/get-posts-sorted";
 import { getRelatedPosts, getRelatedProjects } from "@/lib/get-related-content";
+import ChevronIcon from "@/components/ui/chevron-icon.astro";
+import AccentShimmer from "@/components/ui/accent-shimmer.astro";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -86,45 +88,65 @@ const relatedProjectData = getRelatedProjects(relatedProjects);
     </div>
   </article>
 
-  <nav
-    aria-label="Nawigacja między wpisami"
-    class="mr-auto flex w-full md:w-[54rem] flex-col md:flex-row md:justify-between gap-4 px-4 pt-6 pb-16 md:px-16"
+  <div
+    class="flex w-full max-w-full lg:max-w-[76ch] flex-col gap-6 pb-16 md:ml-16"
   >
+    <div
+      aria-hidden="true"
+      class="h-px w-full bg-linear-to-r from-accent/15 via-accent/22 to-accent/15"
+    >
+    </div>
+    <nav
+      aria-label="Nawigacja między wpisami"
+      class="grid gap-4 md:gap-5 sm:grid-cols-2"
+    >
     {
       previousPost ? (
         <a
           href={`/blog/${previousPost.id}`}
-          class="group flex flex-col gap-1 rounded-lg px-4 py-3 transition-colors bg-accent/4 border border-accent/5 hover:bg-accent/5"
+          class="group border-border bg-background-secondary/30 md:border-border/70 hover:border-accent/20 relative flex flex-col gap-1.5 overflow-hidden rounded-xl border px-4 py-3.5 shadow-xs transition-all duration-200"
         >
-          <span class="text-foreground-secondary text-xs uppercase tracking-[0.12em]">
-            Poprzedni post
+          <AccentShimmer />
+          <span class="text-foreground-secondary flex items-center gap-1 text-xs">
+            <ChevronIcon
+              size={13}
+              direction="left"
+              customStyles="text-foreground-secondary/50 transition-all duration-200 group-hover:-translate-x-0.5 group-hover:text-accent"
+            />
+            Poprzedni
           </span>
-          <span class="text-sm font-medium text-pretty group-hover:text-accent">
+          <span class="group-hover:text-accent my-auto line-clamp-2 text-sm leading-snug font-semibold text-pretty transition-colors duration-200">
             {previousPost.data.title}
           </span>
         </a>
-      ) : (
-        <span />
-      )
+      ) : null
     }
     {
       nextPost ? (
         <a
           href={`/blog/${nextPost.id}`}
-          class="group flex flex-col items-end gap-1 rounded-lg px-4 py-3 text-right transition-colors bg-accent/4 border border-accent/5 hover:bg-accent/5"
+          class:list={[
+            "group border-border bg-background-secondary/30 md:border-border/70 hover:border-accent/20 relative flex flex-col items-end gap-1.5 overflow-hidden rounded-xl border px-4 py-3.5 text-right shadow-xs transition-all duration-200",
+            !previousPost && "sm:col-start-2",
+          ]}
         >
-          <span class="text-foreground-secondary text-xs uppercase tracking-[0.12em]">
-            Nastepny post
+          <AccentShimmer />
+          <span class="text-foreground-secondary flex items-center gap-1 text-xs">
+            Następny
+            <ChevronIcon
+              size={13}
+              direction="right"
+              customStyles="text-foreground-secondary/50 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+            />
           </span>
-          <span class="text-sm font-medium text-pretty group-hover:text-accent">
+          <span class="group-hover:text-accent my-auto line-clamp-2 text-sm leading-snug font-semibold text-pretty transition-colors duration-200">
             {nextPost.data.title}
           </span>
         </a>
-      ) : (
-        <span />
-      )
+      ) : null
     }
-  </nav>
+    </nav>
+  </div>
 </Layout>
 
 <script>
