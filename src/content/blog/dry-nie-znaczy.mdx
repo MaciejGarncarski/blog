@@ -1,0 +1,69 @@
+---
+title: "DRY nie znaczy nie powtarzaj kodu"
+publishedDate: 2026-10-04
+description: 'Dlaczego mechaniczne usuwanie duplikacji często szkodzi.'
+tags: ["Architektura", "Backend"]
+---
+
+Przez lata rozumiałem DRY jako: "jeśli dwa fragmenty wyglądają podobnie, wyciągnij wspólną część". Prosta zasada, trudno się z nią kłócić. Ale właśnie przez tę prostotę stosowałem ją za często i za mocno. Oto trzy rzeczy, które mnie tego oduczyły.
+
+## Podobny kod to nie ta sama wiedza
+
+W bazie trzymam tylko klucz obiektu z S3, a feed, powiadomienia i panel admina potrzebują trochę innych danych. Więc napisałem jedną funkcję:
+
+```ts
+function mapPost(row: PostRow, opts: { forFeed?: boolean; forNotification?: boolean; forAdmin?: boolean } = {}) {
+  const post: Record<string, unknown> = {
+    id: row.id,
+    caption: row.caption,
+    imageUrl: imageUrl(row.imageKey, "full"),
+  };
+
+  if (opts.forFeed) post.likes = row.likesCount;
+  if (opts.forNotification) post.caption = row.caption.slice(0, 50);
+  if (opts.forAdmin) post.imageKey = row.imageKey;
+
+  return post;
+}
+```
+
+Mało kodu, jedno miejsce, wszystko DRY. Tyle że te trzy ekrany mają wspólne pola przypadkiem. Gdyby feed od początku potrzebował innych danych niż admin, nigdy bym tej funkcji nie napisał.
+
+## Flagi to sygnał, że połączyłem różne rzeczy
+
+Każdy nowy wymóg któregoś ekranu to kolejna flaga i kolejny `if`. Ta sama funkcja zmienia się z trzech niezależnych powodów, a `caption` znaczy raz pełny opis, a raz skrót. Do tego wynik to `Record<string, unknown>`, więc kompilator niczego już nie pilnuje.
+
+Osobne mappery są nudne, ale uczciwe:
+
+```ts
+const toFeedItem = (row: PostRow) => ({
+  id: row.id,
+  caption: row.caption,
+  imageUrl: imageUrl(row.imageKey, "full"),
+  likes: row.likesCount,
+});
+
+const toNotificationItem = (row: PostRow) => ({
+  id: row.id,
+  preview: row.caption.slice(0, 50),
+  thumbUrl: imageUrl(row.imageKey, "thumb"),
+});
+```
+
+Tak, `id` się powtarza. Za to każdy mapper opisuje jeden kontrakt i ma dokładny typ.
+
+## To samo dotyczy typów
+
+Podobnie z `FeedUser`, `NotificationUser` i `AdminUser`. Mają wspólne pola, ale gdy jeden wspólny `User` dostanie `email` na potrzeby admina, ktoś kiedyś wypuści go przez feed. Trzy małe typy kosztują mniej niż jeden wyciek.
+
+## No więc co?
+
+Nie mówię, żeby przestać stosować DRY. Wspólne zostaje to, co naprawdę jest jedną regułą:
+
+```ts
+const imageUrl = (key: string, size: "full" | "thumb") => `${CDN}/${size}/${key}`;
+```
+
+Gdy zmieni się format URL-a, zmieniam go raz. Pytanie, które sobie teraz zadaję: **czy te dwa fragmenty istnieją, bo realizują tę samą regułę, czy tylko dlatego, że dziś wyglądają podobnie?**
+
+Dobra abstrakcja usuwa wspólną wiedzę, zła tworzy wspólną zależność. Czasem powtórzenie jest tańsze niż sprzężenie.
