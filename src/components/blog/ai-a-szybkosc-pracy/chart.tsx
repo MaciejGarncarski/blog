@@ -1,7 +1,7 @@
 import { d3Curve, defineChart, dot, lineY, text } from "@tanstack/charts";
+import { Chart } from "@tanstack/charts/react";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { scaleLinear } from "@tanstack/charts-scales/linear";
-import { Chart } from "@tanstack/react-charts";
 import { group } from "d3-array";
 import { curveMonotoneX } from "d3-shape";
 
