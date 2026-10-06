@@ -8,6 +8,7 @@ import Layout from "@/layouts/layout.astro";
 import { Picture } from "astro:assets";
 import ChevronIcon from "@/components/ui/chevron-icon.astro";
 import AccentShimmer from "@/components/ui/accent-shimmer.astro";
+import { getImagePlaceholder } from "@miyamo2/astro-image-placeholder";
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -19,6 +20,9 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const projectPlaceholder = project.thumbnail
+  ? await getImagePlaceholder(project.thumbnail)
+  : undefined;
 const projectUrl = new URL(`/projekty/${project.id}`, Astro.site).toString();
 const projectImageUrl = project.thumbnail
   ? new URL(project.thumbnail.src, Astro.site).toString()
@@ -85,14 +89,28 @@ const projectSchema = {
       <AccentShimmer opacity={50} />
       {
         project.thumbnail ? (
-          <Picture
-            formats={["avif", "webp"]}
-            layout="full-width"
-            priority={true}
-            src={project.thumbnail}
-            alt={project.title}
-            class="w-full object-contain rounded-xl border border-accent/12 shadow-accent shadow-xs"
-          />
+          <div
+            class="relative isolate w-full overflow-hidden rounded-xl border border-accent/12 bg-background-secondary shadow-accent shadow-xs"
+            style={`aspect-ratio: ${project.thumbnail.width} / ${project.thumbnail.height};`}
+          >
+            {projectPlaceholder && (
+              <img
+                class="absolute inset-0 size-full scale-105 object-cover blur-xl"
+                src={projectPlaceholder}
+                alt=""
+                aria-hidden="true"
+              />
+            )}
+            <Picture
+              formats={["avif", "webp"]}
+              layout="full-width"
+              priority={true}
+              src={project.thumbnail}
+              alt={project.title}
+              pictureAttributes={{ class: "relative z-10 block size-full" }}
+              class="size-full rounded-xl object-contain"
+            />
+          </div>
         ) : (
           <div class="flex h-48 md:h-82 items-center justify-center rounded-xl border border-accent/12 bg-background-secondary/20 text-foreground-secondary">
             Brak podglądu

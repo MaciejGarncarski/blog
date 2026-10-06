@@ -6,12 +6,21 @@ import Seo from "@/components/seo.astro";
 import Tag from "@/components/tag.astro";
 import { projects } from "@/data/projects";
 import AccentShimmer from "@/components/ui/accent-shimmer.astro";
+import { getImagePlaceholder } from "@miyamo2/astro-image-placeholder";
 
 const seoData = {
   title: "Projekty",
   description:
     "Przeglądaj moje najciekawsze projekty programistyczne, które pokazują moje umiejętności i pasję do tworzenia innowacyjnych rozwiązań.",
 };
+const projectsWithPlaceholders = await Promise.all(
+  projects.map(async (project) => ({
+    ...project,
+    placeholder: project.thumbnail
+      ? await getImagePlaceholder(project.thumbnail)
+      : undefined,
+  })),
+);
 ---
 
 <Layout>
@@ -32,23 +41,36 @@ const seoData = {
 
     <ul class="grid gap-6">
       {
-        projects.map((project, idx) => {
+        projectsWithPlaceholders.map((project, idx) => {
           return (
             <li>
               <a href={`/projekty/${project.id}`} class="group block">
                 <article class="project-card shadow-accent-sm bg-background-secondary/50 shadow-sm relative isolate overflow-hidden rounded-xl border border-accent/12 flex flex-col gap-5 p-5 transition-all duration-200 hover:border-accent/30 md:flex-row md:items-center md:gap-8">
                   <AccentShimmer />
                   {project.thumbnail ? (
-                    <Picture
-                      formats={["avif", "webp"]}
-                      src={project.thumbnail}
-                      alt={project.title}
-                      priority={idx < 2}
-                      pictureAttributes={{
-                        class: "shrink-0",
-                      }}
-                      class="border-accent/10 w-full shrink-0 rounded-lg border object-contain md:w-54 lg:w-60"
-                    />
+                    <div
+                      class="relative isolate aspect-auto w-full shrink-0 overflow-hidden rounded-lg bg-background-secondary md:w-54 lg:w-60"
+                      style={`aspect-ratio: ${project.thumbnail.width} / ${project.thumbnail.height};`}
+                    >
+                      {project.placeholder && (
+                        <img
+                          class="absolute inset-0 size-full scale-105 object-cover blur-xl"
+                          src={project.placeholder}
+                          alt=""
+                          aria-hidden="true"
+                        />
+                      )}
+                      <Picture
+                        formats={["avif", "webp"]}
+                        src={project.thumbnail}
+                        alt={project.title}
+                        priority={idx < 2}
+                        pictureAttributes={{
+                          class: "relative z-10 block size-full",
+                        }}
+                        class="border-accent/10 size-full rounded-lg border object-contain"
+                      />
+                    </div>
                   ) : (
                     <div class="border-foreground/10 bg-background flex h-32 w-full shrink-0 items-center justify-center rounded-lg border md:w-54 lg:w-60">
                       <p class="text-foreground-secondary text-xs">
