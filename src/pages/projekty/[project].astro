@@ -86,16 +86,16 @@ const projectSchema = {
     </header>
 
     <div class="relative">
-      <AccentShimmer opacity={50} />
+      <AccentShimmer />
       {
         project.thumbnail ? (
           <div
-            class="relative isolate w-full overflow-hidden rounded-xl border border-accent/12 bg-background-secondary shadow-accent shadow-xs"
-            style={`aspect-ratio: ${project.thumbnail.width} / ${project.thumbnail.height};`}
+            class="relative isolate w-full p-0.5 overflow-hidden rounded-xl border border-accent/12 bg-accent/12 shadow-accent shadow-xs"
+            style="aspect-ratio: 128 / 63;"
           >
             {projectPlaceholder && (
               <img
-                class="absolute inset-0 size-full scale-105 object-cover blur-xl"
+                class="absolute inset-0 size-full object-cover p-1 rounded-xl"
                 src={projectPlaceholder}
                 alt=""
                 aria-hidden="true"
@@ -103,12 +103,17 @@ const projectSchema = {
             )}
             <Picture
               formats={["avif", "webp"]}
-              layout="full-width"
               priority={true}
               src={project.thumbnail}
               alt={project.title}
+              width={1792}
+              height={882}
+              widths={[768, 1280, 1792]}
+              sizes="(max-width: 832px) calc(100vw - 2rem), 50rem"
+              fit="cover"
+              position="center"
               pictureAttributes={{ class: "relative z-10 block size-full" }}
-              class="size-full rounded-xl object-contain"
+              class="size-full rounded-xl object-cover"
             />
           </div>
         ) : (

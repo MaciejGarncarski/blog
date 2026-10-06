@@ -5,8 +5,8 @@ import Layout from "@layouts/layout.astro";
 import Seo from "@/components/seo.astro";
 import Tag from "@/components/tag.astro";
 import { projects } from "@/data/projects";
-import AccentShimmer from "@/components/ui/accent-shimmer.astro";
 import { getImagePlaceholder } from "@miyamo2/astro-image-placeholder";
+import AccentShimmer from "@/components/ui/accent-shimmer.astro";
 
 const seoData = {
   title: "Projekty",
@@ -45,16 +45,16 @@ const projectsWithPlaceholders = await Promise.all(
           return (
             <li>
               <a href={`/projekty/${project.id}`} class="group block">
-                <article class="project-card shadow-accent-sm bg-background-secondary/50 shadow-sm relative isolate overflow-hidden rounded-xl border border-accent/12 flex flex-col gap-5 p-5 transition-all duration-200 hover:border-accent/30 md:flex-row md:items-center md:gap-8">
+                <article class="bg-background-secondary/50 relative flex flex-col gap-5 overflow-hidden rounded-xl border border-accent/12 p-4 transition-all duration-200 hover:border-accent/30 md:min-h-42 md:flex-row md:items-center md:gap-8">
                   <AccentShimmer />
                   {project.thumbnail ? (
                     <div
-                      class="relative isolate aspect-auto w-full shrink-0 overflow-hidden rounded-lg bg-background-secondary md:w-54 lg:w-60"
-                      style={`aspect-ratio: ${project.thumbnail.width} / ${project.thumbnail.height};`}
+                      class="relative isolate w-full shrink-0 overflow-hidden rounded-lg bg-accent/10 border border-accent/10 p-0.5 md:w-54 lg:w-60"
+                      style="aspect-ratio: 128 / 63;"
                     >
                       {project.placeholder && (
                         <img
-                          class="absolute inset-0 size-full scale-105 object-cover blur-xl"
+                          class="absolute inset-0 size-full object-cover"
                           src={project.placeholder}
                           alt=""
                           aria-hidden="true"
@@ -64,11 +64,17 @@ const projectsWithPlaceholders = await Promise.all(
                         formats={["avif", "webp"]}
                         src={project.thumbnail}
                         alt={project.title}
+                        width={1024}
+                        height={504}
+                        widths={[512, 768, 1024]}
+                        sizes="(max-width: 767px) calc(100vw - 3rem), 15rem"
+                        fit="cover"
+                        position="center"
                         priority={idx < 2}
                         pictureAttributes={{
                           class: "relative z-10 block size-full",
                         }}
-                        class="border-accent/10 size-full rounded-lg border object-contain"
+                        class="size-full rounded-lg object-cover"
                       />
                     </div>
                   ) : (
@@ -78,14 +84,14 @@ const projectsWithPlaceholders = await Promise.all(
                       </p>
                     </div>
                   )}
-                  <div class="flex flex-col gap-2">
-                    <h2 class="text-xl font-semibold text-pretty group-hover:text-accent transition-colors">
+                  <div class="min-w-0 flex-1">
+                    <h2 class="text-foreground mb-2 text-xl font-semibold text-pretty transition-colors group-hover:text-accent">
                       {project.title}
                     </h2>
-                    <p class="text-foreground-secondary text-sm leading-relaxed line-clamp-2">
+                    <p class="text-foreground-secondary mb-3 text-sm leading-relaxed line-clamp-2">
                       {project.description}
                     </p>
-                    <div class="flex flex-wrap gap-1.5 pt-1" role="list">
+                    <div class="flex flex-wrap gap-1.5" role="list">
                       {project.tags.slice(0, 4).map((tag) => (
                         <Tag variant="small" role="listitem">
                           {tag}
