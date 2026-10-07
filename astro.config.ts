@@ -3,7 +3,6 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
-import { imagePlaceholderService } from "@miyamo2/astro-image-placeholder";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import { markdownRehypePlugins } from "./rehype/plugins";
@@ -36,8 +35,5 @@ export default defineConfig({
       plugins: [tailwindcss()],
    },
    output: "static",
-   image: {
-      service: imagePlaceholderService,
-   },
    adapter: vercel({ imageService: false, devImageService: "sharp" }),
 });

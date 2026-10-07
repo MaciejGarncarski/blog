@@ -1,7 +1,7 @@
 {
    "headers": [
       {
-         "source": "/_astro/(.*).(png|jpg|jpeg|webp|avif|svg)",
+         "source": "/_astro/(.*).(png|jpg|jpeg|webp|avif|jxl|svg)",
          "headers": [
             {
                "key": "Cache-Control",

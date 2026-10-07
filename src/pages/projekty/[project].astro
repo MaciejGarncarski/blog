@@ -8,7 +8,6 @@ import Layout from "@/layouts/layout.astro";
 import { Picture } from "astro:assets";
 import ChevronIcon from "@/components/ui/chevron-icon.astro";
 import AccentShimmer from "@/components/ui/accent-shimmer.astro";
-import { getImagePlaceholder } from "@miyamo2/astro-image-placeholder";
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -20,9 +19,6 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const projectPlaceholder = project.thumbnail
-  ? await getImagePlaceholder(project.thumbnail)
-  : undefined;
 const projectUrl = new URL(`/projekty/${project.id}`, Astro.site).toString();
 const projectImageUrl = project.thumbnail
   ? new URL(project.thumbnail.src, Astro.site).toString()
@@ -93,16 +89,8 @@ const projectSchema = {
             class="relative isolate w-full p-0.5 overflow-hidden rounded-xl border border-accent/12 bg-accent/12 shadow-accent shadow-xs"
             style="aspect-ratio: 128 / 63;"
           >
-            {projectPlaceholder && (
-              <img
-                class="absolute inset-0 size-full object-cover p-1 rounded-xl"
-                src={projectPlaceholder}
-                alt=""
-                aria-hidden="true"
-              />
-            )}
             <Picture
-              formats={["avif", "webp"]}
+              formats={["jxl", "webp"]}
               priority={true}
               src={project.thumbnail}
               alt={project.title}

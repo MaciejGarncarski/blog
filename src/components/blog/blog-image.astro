@@ -1,6 +1,5 @@
 ---
 import { Picture } from "astro:assets";
-import { getImagePlaceholder } from "@miyamo2/astro-image-placeholder";
 
 type Props = {
   src: ImageMetadata;
@@ -11,8 +10,10 @@ type Props = {
 };
 
 const props = Astro.props;
-const placeholder = await getImagePlaceholder(props.src);
-const maxFrameWidth = Math.min(props.src.width, (38 * 16 * props.src.width) / props.src.height);
+const maxFrameWidth = Math.min(
+  props.src.width,
+  (38 * 16 * props.src.width) / props.src.height,
+);
 ---
 
 <figure
@@ -23,18 +24,8 @@ const maxFrameWidth = Math.min(props.src.width, (38 * 16 * props.src.width) / pr
     class="blog-image-frame"
     style={`width: min(100%, ${maxFrameWidth}px); aspect-ratio: ${props.src.width} / ${props.src.height};`}
   >
-    {
-      placeholder && (
-        <img
-          class="blog-image-placeholder"
-          src={placeholder}
-          alt=""
-          aria-hidden="true"
-        />
-      )
-    }
     <Picture
-      formats={["avif", "webp"]}
+      formats={["jxl", "webp"]}
       data-blog-img
       src={props.src}
       alt={props.alt}
@@ -50,24 +41,14 @@ const maxFrameWidth = Math.min(props.src.width, (38 * 16 * props.src.width) / pr
     width: fit-content;
     max-width: 100%;
     overflow: hidden;
-    border: 1px solid color-mix(in oklab, var(--color-foreground) 12%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--color-foreground) 12%, transparent);
     border-radius: 1rem;
     background: var(--color-background-secondary);
     box-shadow:
       0 18px 44px -24px oklch(0% 0 0 / 0.52),
       0 2px 8px -3px oklch(0% 0 0 / 0.24);
     margin: 2rem auto;
-  }
-
-  .blog-image-placeholder {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: blur(10px);
-    transform: scale(1.04);
   }
 
   .blog-image-frame :global(picture) {

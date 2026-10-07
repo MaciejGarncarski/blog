@@ -5,7 +5,6 @@ import Layout from "@layouts/layout.astro";
 import Seo from "@/components/seo.astro";
 import Tag from "@/components/tag.astro";
 import { projects } from "@/data/projects";
-import { getImagePlaceholder } from "@miyamo2/astro-image-placeholder";
 import AccentShimmer from "@/components/ui/accent-shimmer.astro";
 
 const seoData = {
@@ -13,14 +12,6 @@ const seoData = {
   description:
     "Przeglądaj moje najciekawsze projekty programistyczne, które pokazują moje umiejętności i pasję do tworzenia innowacyjnych rozwiązań.",
 };
-const projectsWithPlaceholders = await Promise.all(
-  projects.map(async (project) => ({
-    ...project,
-    placeholder: project.thumbnail
-      ? await getImagePlaceholder(project.thumbnail)
-      : undefined,
-  })),
-);
 ---
 
 <Layout>
@@ -41,7 +32,7 @@ const projectsWithPlaceholders = await Promise.all(
 
     <ul class="grid gap-6">
       {
-        projectsWithPlaceholders.map((project, idx) => {
+        projects.map((project, idx) => {
           return (
             <li>
               <a href={`/projekty/${project.id}`} class="group block">
@@ -52,16 +43,8 @@ const projectsWithPlaceholders = await Promise.all(
                       class="relative isolate w-full shrink-0 overflow-hidden rounded-lg bg-accent/10 border border-accent/10 p-0.5 md:w-54 lg:w-60"
                       style="aspect-ratio: 128 / 63;"
                     >
-                      {project.placeholder && (
-                        <img
-                          class="absolute inset-0 size-full object-cover"
-                          src={project.placeholder}
-                          alt=""
-                          aria-hidden="true"
-                        />
-                      )}
                       <Picture
-                        formats={["avif", "webp"]}
+                        formats={["jxl", "webp"]}
                         src={project.thumbnail}
                         alt={project.title}
                         width={1024}
