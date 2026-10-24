@@ -1,0 +1,89 @@
+---
+title: "Po co ten cache?"
+publishedDate: 2026-10-24
+description: "Dlaczego w aplikacjach webowych developerzy zaczynają od cache'owania danych i jak to wpływa na wydajność oraz doświadczenie użytkownika."
+tags: ["Frontend", "Backend", "Architektura"]
+---
+
+import { CacheRequestsChart } from "@/components/blog/po-co-ten-cache/chart";
+
+Cache potrafi oszczędzić mnóstwo pracy. Problem zaczyna się wtedy, gdy dodajemy go odruchowo, zanim sprawdzimy, co właściwie ma nam dać.
+
+## Po co ten cache?
+
+Jaki w ogóle jest powód dodawania cache zarówno po stronie klienta jak i serwera?
+
+
+### Kiedy ma sens
+
+Weźmy sklep internetowy z `20 tysiącami` użytkowników. Każdy przegląda średnio 10 stron katalogu, ale tylko raz otwiera swój koszyk.
+
+To daje `200 000 requestów` do katalogu i `20 000 requestów` do koszyka.
+
+<CacheRequestsChart client:visible />
+
+Opisy produktów, zdjęcia czy kategorie zmieniają się stosunkowo rzadko. Wielu użytkowników pobiera dokładnie te same dane, więc cache może oszczędzić dużą część powtarzanej pracy. Koszyk jest indywidualny i po dodaniu produktu użytkownik oczekuje od razu aktualnej zawartości.
+
+Tutaj caching ma wyraźne uzasadnienie: większość odczytów dotyczy wspólnych, rzadko zmienianych danych. Cenę i dostępność trzeba jednak potraktować osobno, a przy zakupie zweryfikować je na serwerze.
+
+
+### Kiedy absolutnie nie ma sensu
+
+Inna aplikacja, teraz z `400` użytkownikami, ale jest to dashboard z przesyłkami sklepu internetowego. Dane zmieniają się bardzo szybko, w mniej niż 30 sekund. Każdy użytkownik ma dostęp do innych danych, więc cache nie przyniesie żadnej oszczędności.
+
+W tym przypadku cache może bardzo namieszać i wprowadzać użytkownika w błąd. Jeśli użytkownik zobaczy nieaktualne dane, może podjąć błędną decyzję.
+
+Oczywiście można gimnastykować się z cache'owaniem, inwalidacją, rewalidacją i innymi mechanizmami, ale jaki jest w tym sens? Oszczędność serwera? Dla takiej aplikacji nie przyniesie to praktycznych korzyści, a wprowadzi ogromny chaos w kodzie i doświadczeniu użytkownika.
+
+W takiej sytuacji można po prostu opierać się na serwerze jako źródle prawdy i mieć spokój. Wydajność zbytnio nie ucierpi.
+
+
+## Cache po stronie klienta
+
+Do tej pory chodziło głównie o cache na serwerze, który pozwala ograniczyć powtarzane odczyty z bazy. Po stronie klienta dochodzi inna korzyść: możemy od razu pokazać wcześniej pobrane dane, a w tle sprawdzić, czy się zmieniły. To poprawia płynność aplikacji, ale wymaga decyzji, kiedy takie dane można jeszcze pokazać, a kiedy użytkownik musi poczekać na aktualną odpowiedź serwera.
+
+I właśnie tutaj mam problem z tym, jak często sięgamy po SWR czy React Query. Samo przechowywanie danych jest proste. Trudniej dopilnować, żeby po zmianach użytkownik widział to, co powinien.
+
+Nie zliczę, ile razy się denerwowałem, bo nie potrafiłem znaleźć klucza do inwalidacji danych. Nie wspominając o tym, że w wielu przypadkach trzeba to robić ręcznie, bo przy mutacjach dane na pewno się zmienią.
+
+Myślę, że w wielu przypadkach można by zastosować "luźniejsze" tagi, które pozwalają na łatwiejszą inwalidację.
+
+Na przykład tag zawierający id użytkownika dla danych, które są specyficzne dla aktualnie zalogowanego użytkownika. Wtedy przy mutacji danych, które dotyczą tego użytkownika, można łatwo wyczyścić cache dla wszystkich zapytań oznaczonych tym tagiem.
+
+Ostatnio zastanawiałem się nad tworzeniem fabryki tagów:
+
+```tsx title="Fabryka tagów dla cache"
+export const userKeys = {
+  all: (userId: string) =>
+    ['user', userId] as const,
+
+  profile: (userId: string) =>
+    [...userKeys.all(userId), 'profile'] as const,
+
+  tasks: (userId: string) =>
+    [...userKeys.all(userId), 'tasks'] as const,
+
+  taskList: (userId: string, status: 'open' | 'done') =>
+    [...userKeys.tasks(userId), { status }] as const,
+};
+```
+
+Użycie:
+
+```tsx title="Użycie fabryki tagów"
+const { data: profile } = useQuery({
+  queryKey: userKeys.profile(userId),
+  queryFn: fetchProfile,
+});
+
+// Wszystkie listy tasków użytkownika:
+queryClient.invalidateQueries({
+  queryKey: userKeys.tasks(userId),
+});
+
+// Wszystkie dane użytkownika:
+queryClient.invalidateQueries({
+  queryKey: userKeys.all(userId),
+});
+```
+
