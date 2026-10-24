@@ -13,19 +13,19 @@
       "clean-build": "rm -rf dist && rm -rf .astro && rm -rf .vercel"
    },
    "dependencies": {
-      "@astrojs/markdown-remark": "^7.3.1",
-      "@astrojs/mdx": "^8.0.2",
-      "@astrojs/react": "^7.0.0",
+      "@astrojs/markdown-remark": "^7.3.4",
+      "@astrojs/mdx": "^8.1.1",
+      "@astrojs/react": "^7.1.1",
       "@astrojs/rss": "^4.0.19",
       "@astrojs/sitemap": "^3.7.4",
-      "@astrojs/vercel": "^11.0.11",
+      "@astrojs/vercel": "^11.0.16",
       "@tailwindcss/vite": "^4.3.3",
       "@tanstack/charts": "^1.0.0",
       "@types/react": "^19.3.0",
       "@types/react-dom": "^19.2.7",
       "@vercel/analytics": "^2.0.1",
       "@vercel/speed-insights": "^2.0.0",
-      "astro": "^7.3.5",
+      "astro": "^7.4.2",
       "clsx": "^2.1.1",
       "d3-array": "^3.2.4",
       "d3-scale": "^4.0.2",
@@ -41,7 +41,7 @@
       "unified": "^11.0.5"
    },
    "devDependencies": {
-      "@astrojs/check": "^0.9.10",
+      "@astrojs/check": "^0.9.12",
       "@biomejs/biome": "2.4.16",
       "@commitlint/cli": "^21.2.2",
       "@commitlint/config-conventional": "^21.2.2",

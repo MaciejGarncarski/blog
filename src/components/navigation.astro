@@ -345,6 +345,15 @@ const isBlogPostPage =
 
     toggle.addEventListener("click", () => setOpen(!isOpen), { signal });
 
+    const desktopLayout = window.matchMedia("(min-width: 48rem)");
+    desktopLayout.addEventListener(
+      "change",
+      (event) => {
+        if (event.matches) setOpen(false);
+      },
+      { signal },
+    );
+
     document.addEventListener(
       "click",
       (e) => {
