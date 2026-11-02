@@ -1,20 +1,31 @@
 ---
 title: "Po co ten cache?"
 publishedDate: 2026-10-24
-description: "Dlaczego w aplikacjach webowych developerzy zaczynają od cache'owania danych i jak to wpływa na wydajność oraz doświadczenie użytkownika."
+description: "Cache potrafi irytować i utrudniać rozumienie aplikacji. Kiedy jego korzyści uzasadniają koszt pilnowania aktualności danych?"
 tags: ["Frontend", "Backend", "Architektura"]
 ---
 
 import { CacheRequestsChart } from "@/components/blog/po-co-ten-cache/chart";
 
-Cache potrafi oszczędzić mnóstwo pracy. Problem zaczyna się wtedy, gdy dodajemy go odruchowo, zanim sprawdzimy, co właściwie ma nam dać.
+Zapisuję zmianę. Serwer odpowiada, że wszystko się udało. Wracam do listy i widzę stare dane. Odświeżam stronę i teraz się zgadza.
 
-## Po co ten cache?
+Jako użytkownik zastanawiam się, czy aplikacja w ogóle działa. Jako developer zaczynam szukać, którego cache'a zapomniałem wyczyścić.
 
-Jaki w ogóle jest powód dodawania cache zarówno po stronie klienta jak i serwera?
+I właśnie dlatego cache mnie denerwuje. Jest nieintuicyjny. W prostym scenariuszu pytam serwer o dane i dostaję odpowiedź. Z cache'em muszę jeszcze wiedzieć, skąd pochodzi ta odpowiedź, kiedy została zapisana i czy po ostatniej zmianie ktoś pamiętał o jej unieważnieniu.
 
+Mam wrażenie, że w aplikacjach webowych za często traktujemy to jako oczywisty punkt wyjścia. Ja chciałbym najpierw wiedzieć: po co nam ten cache?
 
-### Kiedy ma sens
+## Dlaczego nadal widzę stare dane?
+
+Najbardziej irytuje mnie to, że jedna zmiana potrafi dotyczyć kilku miejsc w aplikacji. Edytuję zadanie, ale jego dane są też na liście, w szczegółach, w wynikach wyszukiwania i w liczniku na dashboardzie.
+
+Serwer już wie o zmianie. Teraz trzeba jeszcze dopilnować, żeby dowiedziały się o niej wszystkie przechowywane kopie.
+
+Nie zliczę, ile razy szukałem klucza do inwalidacji albo zastanawiałem się, dlaczego jeden widok się odświeżył, a drugi nadal pokazuje poprzedni stan. Samo pobranie danych było proste. Większość kombinowania zaczęła się dopiero wtedy, gdy trzeba było utrzymać aktualność cache'a.
+
+Można ustalić konwencje kluczy, zrobić ich fabrykę, szerzej unieważniać dane po mutacjach. To pomaga opanować problem, ale nadal trzeba o tym myśleć przy kolejnych zmianach w aplikacji. A gdy czegoś nie dopilnujemy, użytkownik widzi po prostu aplikację, która raz pokazuje jedno, a za chwilę coś innego.
+
+## Kiedy cache ma sens
 
 Weźmy sklep internetowy z `20 tysiącami` użytkowników. Każdy przegląda średnio 10 stron katalogu, ale tylko raz otwiera swój koszyk.
 
@@ -22,68 +33,36 @@ To daje `200 000 requestów` do katalogu i `20 000 requestów` do koszyka.
 
 <CacheRequestsChart client:visible />
 
-Opisy produktów, zdjęcia czy kategorie zmieniają się stosunkowo rzadko. Wielu użytkowników pobiera dokładnie te same dane, więc cache może oszczędzić dużą część powtarzanej pracy. Koszyk jest indywidualny i po dodaniu produktu użytkownik oczekuje od razu aktualnej zawartości.
+W katalogu wielu użytkowników ogląda te same opisy produktów, zdjęcia i kategorie. Jeśli te dane zmieniają się rzadko, wykonywanie tej samej pracy przy każdym odczycie może być zwyczajnie niepotrzebne. Tutaj widzę sens cache'owania.
 
-Tutaj caching ma wyraźne uzasadnienie: większość odczytów dotyczy wspólnych, rzadko zmienianych danych. Cenę i dostępność trzeba jednak potraktować osobno, a przy zakupie zweryfikować je na serwerze.
+Nawet w tym przykładzie nie wrzucałbym jednak wszystkiego do jednego worka. Opis produktu może poczekać na odświeżenie. Cena i dostępność wymagają osobnej decyzji, a przy zakupie trzeba je zweryfikować na serwerze. Koszyk z kolei jest indywidualny i po dodaniu produktu oczekuję, że od razu zobaczę jego aktualną zawartość.
 
+Sam wykres nie mówi jeszcze, ile oszczędzimy. Liczy się też koszt obsługi tych zapytań i to, jak często faktycznie możemy wykorzystać tę samą odpowiedź. Ale przynajmniej mamy konkretny powód, żeby rozważyć cache: wiele powtarzanych odczytów wspólnych danych.
 
-### Kiedy absolutnie nie ma sensu
+## Kiedy cache tylko przeszkadza
 
-Inna aplikacja, teraz z `400` użytkownikami, ale jest to dashboard z przesyłkami sklepu internetowego. Dane zmieniają się bardzo szybko, w mniej niż 30 sekund. Każdy użytkownik ma dostęp do innych danych, więc cache nie przyniesie żadnej oszczędności.
+Teraz inna aplikacja: dashboard do obsługi przesyłek, `400` użytkowników, każdy pracuje na innych danych. Statusy potrafią zmieniać się co kilkanaście sekund, a użytkownicy podejmują na ich podstawie decyzje.
 
-W tym przypadku cache może bardzo namieszać i wprowadzać użytkownika w błąd. Jeśli użytkownik zobaczy nieaktualne dane, może podjąć błędną decyzję.
+Tutaj dużo trudniej mi uzasadnić pokazywanie wcześniej zapisanej odpowiedzi. Chcę wiedzieć, co dzieje się z przesyłką teraz. Jeśli po wykonaniu akcji nadal widzę poprzedni status, to szybkie wyświetlenie widoku niewiele mi daje. Muszę jeszcze sprawdzić, czy mogę mu ufać.
 
-Oczywiście można gimnastykować się z cache'owaniem, inwalidacją, rewalidacją i innymi mechanizmami, ale jaki jest w tym sens? Oszczędność serwera? Dla takiej aplikacji nie przyniesie to praktycznych korzyści, a wprowadzi ogromny chaos w kodzie i doświadczeniu użytkownika.
+Oczywiście sama liczba użytkowników nie przesądza o obciążeniu. Może się okazać, że konkretne zapytanie jest drogie i warto przechowywać jego wynik. Ale bez takiego problemu zaczynałbym od pobierania aktualnych danych z serwera.
 
-W takiej sytuacji można po prostu opierać się na serwerze jako źródle prawdy i mieć spokój. Wydajność zbytnio nie ucierpi.
+Nie przekonuje mnie dokładanie inwalidacji, rewalidacji i reguł wygasania na zapas. Najpierw komplikujemy przepływ danych, a potem poświęcamy czas na to, żeby użytkownik nie zauważył skutków tej komplikacji.
 
+## Szybki widok, nieaktualne dane
 
-## Cache po stronie klienta
+Cache w przeglądarce może sprawić, że powrót do poprzedniego widoku będzie natychmiastowy. Rozumiem tę korzyść. Sam też wolę zobaczyć listę od razu niż kolejny spinner.
 
-Do tej pory chodziło głównie o cache na serwerze, który pozwala ograniczyć powtarzane odczyty z bazy. Po stronie klienta dochodzi inna korzyść: możemy od razu pokazać wcześniej pobrane dane, a w tle sprawdzić, czy się zmieniły. To poprawia płynność aplikacji, ale wymaga decyzji, kiedy takie dane można jeszcze pokazać, a kiedy użytkownik musi poczekać na aktualną odpowiedź serwera.
+Tylko że szybko wyświetlone dane mogą być nieaktualne. Trzeba zdecydować, czy w danym miejscu to akceptujemy, kiedy pobieramy je ponownie i co pokazujemy w trakcie. Po mutacji dochodzi jeszcze pytanie, które widoki powinny dostać nową wersję.
 
-I właśnie tutaj mam problem z tym, jak często sięgamy po SWR czy React Query. Samo przechowywanie danych jest proste. Trudniej dopilnować, żeby po zmianach użytkownik widział to, co powinien.
+Dlatego przy SWR czy React Query chcę świadomie ustalać zasady przechowywania i odświeżania danych. Wygoda biblioteki przy obsłudze zapytań nie odpowiada za mnie na pytanie, jak długo użytkownik może oglądać starą odpowiedź.
 
-Nie zliczę, ile razy się denerwowałem, bo nie potrafiłem znaleźć klucza do inwalidacji danych. Nie wspominając o tym, że w wielu przypadkach trzeba to robić ręcznie, bo przy mutacjach dane na pewno się zmienią.
+W katalogu produktów mogę zaakceptować taki kompromis. W widoku, do którego wracam sprawdzić efekt właśnie wykonanej operacji, oczekuję aktualnego stanu. Chciałbym, żeby to oczekiwanie było punktem wyjścia przy projektowaniu aplikacji.
 
-Myślę, że w wielu przypadkach można by zastosować "luźniejsze" tagi, które pozwalają na łatwiejszą inwalidację.
+## Cache trzeba uzasadnić
 
-Na przykład tag zawierający id użytkownika dla danych, które są specyficzne dla aktualnie zalogowanego użytkownika. Wtedy przy mutacji danych, które dotyczą tego użytkownika, można łatwo wyczyścić cache dla wszystkich zapytań oznaczonych tym tagiem.
+Dla mnie cache wymaga uzasadnienia. Chcę wiedzieć, jaką pracę oszczędza, czy ta oszczędność ma znaczenie i jak długo dane mogą być nieaktualne. Do tego muszę mieć sensowny sposób na ich odświeżenie po zmianie.
 
-Ostatnio zastanawiałem się nad tworzeniem fabryki tagów:
+Jeśli umiem na te pytania odpowiedzieć, mogę zaakceptować dodatkową złożoność. Jeśli jedynym argumentem jest „będzie szybciej”, to za mało. Szczególnie gdy później użytkownik musi ręcznie odświeżać stronę, żeby zobaczyć to, co przed chwilą zapisał.
 
-```tsx title="Fabryka tagów dla cache"
-export const userKeys = {
-  all: (userId: string) =>
-    ['user', userId] as const,
-
-  profile: (userId: string) =>
-    [...userKeys.all(userId), 'profile'] as const,
-
-  tasks: (userId: string) =>
-    [...userKeys.all(userId), 'tasks'] as const,
-
-  taskList: (userId: string, status: 'open' | 'done') =>
-    [...userKeys.tasks(userId), { status }] as const,
-};
-```
-
-Użycie:
-
-```tsx title="Użycie fabryki tagów"
-const { data: profile } = useQuery({
-  queryKey: userKeys.profile(userId),
-  queryFn: fetchProfile,
-});
-
-// Wszystkie listy tasków użytkownika:
-queryClient.invalidateQueries({
-  queryKey: userKeys.tasks(userId),
-});
-
-// Wszystkie dane użytkownika:
-queryClient.invalidateQueries({
-  queryKey: userKeys.all(userId),
-});
-```
-
+Chciałbym rzadziej zastanawiać się, który cache trzeba jeszcze wyczyścić. Dlatego domyślnie wolę prosty przepływ danych, a cache dokładam tam, gdzie potrafię wskazać konkretną korzyść wartą tej całej zabawy.
