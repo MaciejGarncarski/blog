@@ -1,106 +1,42 @@
 ---
 title: "Proces programowania jest powolny"
 publishedDate: 2026-08-01
-updatedDate: 2026-09-17
+updatedDate: 2026-11-04
 description: "Programowanie nie polega tylko na pisaniu kodu. Najwięcej czasu często zajmuje zrozumienie problemu, podejmowanie decyzji i unikanie złych rozwiązań."
 tags: ["Kariera", "Myślenie"]
 relatedPosts: ["wiecej-pracy-daje-gorsze-efekty"]
 ---
 
-import BlogImage from '@/components/blog/blog-image.astro';
-import diagram from '@/assets/blog/proces-programowania/diagram.png';
+Przez długi czas myślałem, że programowanie polega przede wszystkim na pisaniu kodu. Dziś widzę je raczej jako proces zdobywania wiedzy: trzeba zrozumieć problem, poznać ograniczenia, podjąć decyzje i sprawdzić, czy rozwiązanie faktycznie działa.
 
-## Co to jest programowanie?
+Samo pisanie jest tylko jedną z części tej pracy. Dlatego szybsze generowanie kodu nie zawsze oznacza szybsze ukończenie projektu.
 
-**Programowanie to nie pisanie kodu.** To proces rozwiązywania złożonych problemów, który wymaga analizy, planowania, testowania i podejmowania decyzji przed oraz po napisaniu kodu.
+## Najpierw trzeba zrozumieć problem
 
-Samo pisanie kodu jest tylko częścią całego procesu. Duża część pracy odbywa się poza edytorem, bo podczas poznawania problemu, projektowania rozwiązania i sprawdzania, czy obrana droga ma sens.
+Zanim powstanie rozwiązanie, muszę dowiedzieć się, czego potrzebuje użytkownik, jak działa istniejący system i jakie są jego ograniczenia. Często zmiana jednej linijki wymaga najpierw przeczytania kilku modułów i ustalenia, dlaczego kod wygląda właśnie tak.
 
-## Dlaczego tak jest?
+Dokumentacja, rozmowa z osobą znającą system albo mały prototyp potrafią oszczędzić godziny implementacji. Największą oszczędnością bywa odkrycie, że planowana funkcjonalność wcale nie rozwiązuje właściwego problemu.
 
-Odpowiedź jest prosta: programowanie to przede wszystkim proces zdobywania wiedzy, a nie proces produkcyjny.
+Dodanie kolejnej osoby też nie zawsze przyspiesza pracę. Jeśli problem nie jest jeszcze dobrze rozpoznany, nowa osoba musi najpierw zdobyć kontekst, a zespół poświęca więcej czasu na koordynację. Przy dobrze podzielonych zadaniach współpraca oczywiście może pomóc.
 
-Można go przyspieszyć lepszymi narzędziami, doświadczeniem czy dobrą dokumentacją. Nie da się go jednak skalować tak samo jak pracy fizycznej, ponieważ w pewnym momencie dodatkowa osoba zaczyna wymagać więcej koordynacji, niż wnosi realnej wartości.
+## Mój side project
 
-Co dokładnie mam na myśli?
+Swój side project zacząłem w maju. W sierpniu nadal nie miałem MVP, choć na papierze projekt wyglądał prosto. Gdybym tylko pisał kod według pierwszego pomysłu, prawdopodobnie skończyłbym szybciej.
 
-Wyobraź sobie, że projektujesz budynek. Możesz zatrudnić więcej architektów, użyć gotowych elementów konstrukcyjnych albo szybciej tworzyć prototypy. Wszystko to pomaga.
+Dużo czasu zajęły mi jednak pytania: czy ta struktura ma sens, czego naprawdę potrzebuje aplikacja i co stanie się, gdy wymagania się zmienią? Kilka razy zaczynałem część projektu od nowa, bo w trakcie pracy lepiej rozumiałem problem.
 
-Nie unikniesz jednak czasu potrzebnego na zrozumienie, co właściwie budujesz, jakie obciążenia musi wytrzymać konstrukcja, jak rozplanować instalacje, gdzie powinny znajdować się wejścia i jakie ograniczenia trzeba uwzględnić.
+Nie każda taka przebudowa jest konieczna. Plan też można poprawiać w nieskończoność. Dlatego staram się szukać najmniejszej rzeczy, którą mogę sprawdzić w praktyce, zamiast próbować przewidzieć wszystko przed napisaniem kodu.
 
-Możesz podzielić pracę między dziesięciu architektów, ale jeśli nikt jeszcze nie rozumie dokładnie problemu, powstanie po prostu dziesięć różnych wersji tego samego nieporozumienia.
+## Działający kod to nie koniec
 
-Ten sam mechanizm opisuje prawo Brooksa: dodanie kolejnych programistów do opóźnionego projektu często powoduje jego dalsze opóźnienie.
+Kiedy rozwiązanie już powstanie, trzeba mieć powód, żeby mu zaufać. Testy pomagają sprawdzić ważne zachowania i ułatwiają późniejsze zmiany. Czytelny kod, możliwość odtworzenia środowiska i sensowny sposób wdrażania również ograniczają ryzyko, że pozornie mała zmiana zepsuje coś na produkcji.
 
-Nie oznacza to, że większe zespoły są zawsze gorsze. Przy dobrze podzielonych zadaniach współpraca realnie przyspiesza pracę. Problem pojawia się wtedy, gdy największym wyzwaniem nie jest samo wykonanie zadania, ale zrozumienie problemu i podjęcie właściwych decyzji.
+Równie ważna jest komunikacja. Jeśli decyzja ma konsekwencje dla innych osób, warto przekazać im kontekst i ograniczenia. Kilka minut wyjaśnienia może oszczędzić zespołowi dużo zgadywania.
 
-W takiej sytuacji każda nowa osoba musi najpierw zdobyć wiedzę, którą posiada obecny zespół. A zdobywanie tej wiedzy kosztuje czas.
+## Gdzie w tym wszystkim jest AI?
 
-Jest jeszcze jeden powód, dla którego programowanie bywa wolne: informacja jest droga.
+AI potrafi przyspieszyć pisanie powtarzalnego kodu albo przygotowanie prototypu. Zauważyłem jednak, że kiedy generuję dużo kodu naraz, później muszę poświęcić czas na jego przeczytanie, zrozumienie i poprawienie. Szybki wynik nie oznacza automatycznie, że zdobyłem wiedzę potrzebną do utrzymania aplikacji.
 
-Zanim napiszesz dobre rozwiązanie, musisz odkryć, czego naprawdę potrzebuje użytkownik, jak działa istniejący system, jakie są ukryte ograniczenia i jakie decyzje będą miały sens za rok.
+We własnych projektach coraz częściej wybieram zadania, które chcę napisać sam, także dlatego, że sprawia mi to frajdę. AI zostawiam tam, gdzie rzeczywiście oszczędza mi czas. Więcej konkretnych przykładów opisałem we wpisie [Kiedy AI faktycznie przyspiesza moją pracę](/blog/ai-a-szybkosc-pracy).
 
-Największym kosztem w programowaniu często nie jest napisanie rozwiązania. Jest nim skuteczne uniknięcie napisania złego rozwiązania.
-
-A żeby tego uniknąć, trzeba najpierw zdobyć wiedzę, której na początku po prostu nie masz.
-
-<BlogImage 
-  alt='Proces programowania'
-  src={diagram}
-  caption='Czas a złożoność' 
-/>
-
-
-## Dlaczego planowanie jest najbardziej czasochłonne?
-
-Gdybym miał wskazać jeden etap, który zjada najwięcej czasu, byłoby to planowanie, a nie pisanie kodu.
-
-Pisanie kodu ma wyraźny koniec. Działa albo nie działa. Test przechodzi albo nie przechodzi. Planowanie takiego sygnału nie ma. Możesz siedzieć nad strukturą projektu tydzień i wciąż nie wiedzieć, czy to już dobre rozwiązanie, czy tylko wydaje ci się dobre, dopóki nie zaczniesz pisać i nie okaże się, że jednak nie.
-
-Nie ma checkpointu, który powie "koniec, możesz iść dalej". Jedyną realną weryfikacją planu jest zderzenie go z kodem, a ta weryfikacja przychodzi dopiero na końcu, kiedy poprawki są już droższe.
-
-W side projekcie jest to jeszcze trudniejsze, bo nikt nie narzuca ci zadań ani kierunku. W pracy ktoś inny często już podjął część decyzji za ciebie, wyznaczył zakres, ustalił priorytety. We własnym projekcie musisz sam sobie odpowiedzieć nie tylko na pytanie "jak to zbudować", ale też "co w ogóle ma powstać" i "czy to w ogóle ma sens", a to podwaja liczbę decyzji, które musisz podjąć, zanim napiszesz pierwszą linijkę kodu.
-
-## Mój przykład
-
-Mogę to potwierdzić na własnym przykładzie. Swój side project zacząłem w maju. Jest sierpień, a ja nadal nie mam nawet MVP.
-
-Na papierze projekt wyglądał prosto. Gdybym miał tylko pisać kod według pierwszego pomysłu, prawdopodobnie skończyłbym go w kilka weekendów.
-
-Problem w tym, że większość czasu nie spędzam na pisaniu kodu, tylko na podejmowaniu decyzji:
-
-Czy to dobre podejście?
-Czy ta struktura ma sens?
-Czy za pół roku nie będę musiał wszystkiego przebudować?
-
-Kilka razy zaczynałem część projektu od zera, ponieważ w trakcie pracy lepiej rozumiałem problem niż na początku.
-
-To nie oznacza braku postępu. Częścią programowania jest właśnie odkrywanie, co powinno zostać zbudowane.
-
-## Dlaczego odchodzę od AI w side projectach
- 
-Po dłuższym namyśle doszedłem do jednego wniosku: hurtowe "nawalanie" kodu przy pomocy AI jest wyczerpujące.
- 
-Nie chodzi o samo tempo. Chodzi o to, że po takiej sesji często nie mam pojęcia, co właściwie robi moja aplikacja ani jaki realnie zrobiłem postęp. Kod powstaje szybko, ale wiedza o nim nie powstaje wcale, a to właśnie ta wiedza jest sednem programowania, o którym pisałem wyżej.
- 
-Do tego dochodzi zwykła frajda. Pisanie kodu samemu, popełnianie błędów i szukanie rozwiązania daje satysfakcję. Patrzenie, jak model generuje kolejne pliki, tej satysfakcji już nie daje.
- 
-Nie bez znaczenia jest też koszt. Płacenie za AI w side projekcie, który nie generuje żadnego przychodu, po prostu mi się nie spina finansowo. A darmowe opcje też przestały być sensowną alternatywą. Po usunięciu DeepSeeka z opencode, darmowe modele, które zostały, są bardzo słabe i ciężko na nich cokolwiek zbudować.
- 
-Dlatego w side projectach wracam do pisania kodu samemu.
- 
-Choć teraz zastanawiam się, czy to faktycznie jest wolniejsze. Bo jak dostaję output ze słabego modelu, to i tak muszę go dokładnie przeczytać, zrozumieć, co zrobił, a potem najczęściej poprawić. To też kosztuje czas, tylko innego rodzaju. Może więc nie chodzi o to, że sam piszę wolniej, tylko że AI w tym wariancie nie daje mi żadnego realnego przyspieszenia, a i tak trzeba przez ten kod przejść samemu. Nie wiem, na ten moment ciężko jednoznacznie ocenić czy jest to wolniejsze.
-
-## Czy da się to poprawić?
-
-Częściowo tak, ale nie istnieje jedno rozwiązanie, które nagle sprawi, że programowanie stanie się kilka razy szybsze.
-
-* **Lepsze narzędzia** mogą przyspieszyć techniczną część pracy — autouzupełnianie, generowanie boilerplate'u czy AI-asystenci pozwalają szybciej tworzyć kod. Nadal jednak rozwiązują tylko część problemu.
-* **Doświadczenie** pomaga podejmować lepsze decyzje. Doświadczony programista szybciej rozpoznaje wzorce, unika ślepych uliczek i wie, kiedy nie warto poświęcać czasu na przedwczesną optymalizację.
-* **Jasność problemu** jest często największym przyspieszeniem. Im lepiej rozumiesz, co właściwie chcesz zbudować, tym mniej czasu tracisz na późniejsze zmiany i przebudowy.
-
-Nie da się zamienić procesu myślowego w linię produkcyjną.
-
-Można jednak sprawić, że będzie przebiegał sprawniej, dzięki lepszym decyzjom, większej wiedzy i odpowiednim narzędziom.
-
-Programowanie nie jest wolne dlatego, że programiści piszą kod za wolno. Jest wolne dlatego, że dobre rozwiązania wymagają zrozumienia problemu.
+Programowanie bywa powolne, bo dobre decyzje wymagają informacji, których na początku nie mamy. Możemy usprawnić ten proces narzędziami i doświadczeniem, ale nadal musimy zrozumieć, co budujemy i po czym poznamy, że działa.

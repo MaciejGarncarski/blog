@@ -39,17 +39,17 @@ Może kolejny kontener redisa nie będzie potrzebny, bo w praktyce endpoint, kt�
 
 ## Jak rozpoznać overengineering?
 
-Overengineering często nie wygląda jak zły kod. Wręcz przeciwnie — na początku może wyglądać bardzo profesjonalnie. Dużo abstrakcji, wzorce projektowe, osobne warstwy i rozbudowana architektura mogą sprawiać wrażenie przemyślanego rozwiązania.
+Overengineering często nie wygląda jak zły kod. Wręcz przeciwnie - na początku może wyglądać bardzo profesjonalnie. Dużo abstrakcji, wzorce projektowe, osobne warstwy i rozbudowana architektura mogą sprawiać wrażenie przemyślanego rozwiązania.
 
 Problem pojawia się wtedy, gdy poziom skomplikowania nie wynika z realnych potrzeb, tylko z przewidywania problemów, które być może nigdy nie wystąpią.
 
 Kilka sygnałów, że możemy mieć do czynienia z overengineeringiem:
 
-- **Tworzymy rozwiązanie pod hipotetyczny przypadek** — dodajemy możliwość obsługi dziesięciu scenariuszy, mimo że obecnie potrzebujemy jednego.
-- **Abstrakcja pojawia się zanim pojawi się potrzeba** — tworzymy generyczne komponenty, interfejsy czy warstwy "na przyszłość", ale nie mamy jeszcze drugiego przypadku użycia.
-- **Prosty problem wymaga dużo kodu** — jeżeli dodanie małej funkcjonalności wymaga zmiany wielu plików i zrozumienia całej architektury, prawdopodobnie poszliśmy za daleko.
-- **Kod wymaga dodatkowego tłumaczenia** — jeżeli trzeba długo wyjaśniać, dlaczego coś zostało napisane w konkretny sposób, być może rozwiązanie nie jest wystarczająco oczywiste.
-- **Konfiguracja jest większa niż logika biznesowa** — czasami więcej czasu spędzamy na zarządzaniu strukturą systemu niż na rozwiązywaniu właściwego problemu.
+- **Tworzymy rozwiązanie pod hipotetyczny przypadek** - dodajemy możliwość obsługi dziesięciu scenariuszy, mimo że obecnie potrzebujemy jednego.
+- **Abstrakcja pojawia się zanim pojawi się potrzeba** - tworzymy generyczne komponenty, interfejsy czy warstwy "na przyszłość", ale nie mamy jeszcze drugiego przypadku użycia.
+- **Prosty problem wymaga dużo kodu** - jeżeli dodanie małej funkcjonalności wymaga zmiany wielu plików i zrozumienia całej architektury, prawdopodobnie poszliśmy za daleko.
+- **Kod wymaga dodatkowego tłumaczenia** - jeżeli trzeba długo wyjaśniać, dlaczego coś zostało napisane w konkretny sposób, być może rozwiązanie nie jest wystarczająco oczywiste.
+- **Konfiguracja jest większa niż logika biznesowa** - czasami więcej czasu spędzamy na zarządzaniu strukturą systemu niż na rozwiązywaniu właściwego problemu.
 
 Dobrym testem jest zadanie sobie pytania: "Czy gdybym miał usunąć połowę tego kodu, czy nadal spełniałby swoje zadanie?". Jeżeli odpowiedź brzmi "tak", być może mamy za dużo niepotrzebnej złożoności.
 
@@ -61,7 +61,7 @@ Do napisania tego artykułu skłoniło mnie trochę DDD (Domain-Driven Design). 
 
 DDD jest świetnym narzędziem, ale łatwo zapomnieć o jego podstawowej idei. Nie chodzi w nim o tworzenie jak największej liczby warstw, abstrakcji i wzorców. Chodzi o lepsze zrozumienie domeny i stworzenie modelu, który pomaga rozwiązać konkretny problem biznesowy, oraz porozumieć się z klientem.
 
-Paradoksalnie, próba zastosowania DDD wszędzie może prowadzić do dokładnie tego, przed czym powinno chronić — nadmiernej komplikacji.
+Paradoksalnie, próba zastosowania DDD wszędzie może prowadzić do dokładnie tego, przed czym powinno chronić - nadmiernej komplikacji.
 
 Nie każda aplikacja potrzebuje agregatów, encji, value objectów, eventów domenowych czy osobnej warstwy dla każdego elementu systemu. Jeżeli domena jest prosta, rozwiązanie również powinno takie być.
 

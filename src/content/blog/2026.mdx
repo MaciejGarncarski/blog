@@ -1,0 +1,64 @@
+---
+title: "Programowanie w 2026: szybsze narzędzia, nowe oczekiwania"
+publishedDate: 2026-12-06
+draft: true
+description: "Rust w narzędziach JavaScript, dojrzewanie ekosystemu i praca z AI. Co przyspiesza, a co nadal wymaga czasu i uwagi człowieka?"
+tags: ["Frontend", "AI", "Kariera"]
+relatedPosts: ["ai-a-szybkosc-pracy", "proces-programowania"]
+---
+
+Programowanie w 2026 kojarzy mi się z rosnącą różnicą między tempem tworzenia kodu a czasem potrzebnym na jego zrozumienie. Szybsze narzędzia podnoszą oczekiwania wobec tempa pracy, ale zdobywanie wiedzy o projekcie nie przyspiesza równie łatwo.
+
+Widać to na dwóch poziomach: narzędzia JavaScript skracają czas budowania aplikacji, a AI pomaga szybciej przygotować implementację. W obu przypadkach pozostaje pytanie, co zrobimy z odzyskanym czasem i kto oceni, czy gotowy kod rzeczywiście nadaje się do wdrożenia.
+
+## Rust pod maską JavaScriptu
+
+Dobrym przykładem jest wydane w marcu [Vite 8](https://vite.dev/blog/announcing-vite8). Wcześniej Vite korzystało z esbuild i Rollupa do różnych etapów pracy. Teraz bundling opiera się na napisanym w Ruście Rolldownie, a transformacje obsługuje Oxc.
+
+To przykład „rustification”, czyli przenoszenia narzędzi obsługujących JavaScript na implementacje w Ruście. Korzystamy z nich bez zmiany języka samej aplikacji. Ważna jest też spójność: wspólny fundament ma ograniczyć rozbieżności między wcześniejszymi ścieżkami przetwarzania kodu.
+
+Autorzy Vite opisują testowanie kompatybilności z istniejącymi pluginami i frameworkami przed stabilnym wydaniem. Właśnie takiego dojrzewania oczekuję od ekosystemu: szybszych narzędzi, które wymagają mniej pracy przy integracji i utrzymaniu. [Źródło: ogłoszenie Vite 8](https://vite.dev/blog/announcing-vite8).
+
+Krótszy build usuwa część czekania. AI idzie o krok dalej, bo przyspiesza samo powstawanie kodu. Wtedy większa część pracy pozostaje po stronie osoby, która musi ten kod zrozumieć i zaakceptować.
+
+## Piszę mniej, ale nadal muszę rozumieć
+
+W pracy z AI zauważyłem, że część czasu przesuwa się z pisania na czytanie i ocenianie. Model może szybko przygotować implementację, ale muszę sprawdzić jej zgodność z resztą aplikacji, obsługę błędów i założenia, których nie opisałem wprost.
+
+Przy systemie oceniania produktów dostałem między innymi kod niespójny ze schematem bazy i brakującą walidację. Opisałem ten przypadek szerzej we wpisie [Kiedy AI faktycznie przyspiesza moją pracę](/blog/ai-a-szybkosc-pracy). Pierwszy wynik powstał szybko, ale pozostawało jeszcze sporo pracy przed uznaniem zadania za skończone.
+
+To wymaga innego rodzaju skupienia. Pisząc fragment samemu, stopniowo buduję jego obraz w głowie. Czytając gotową zmianę, muszę ten obraz odtworzyć. Przy małym zadaniu bywa to wygodne. Przy dużym łatwo zatwierdzić coś, co wygląda sensownie, zanim naprawdę zrozumiem wszystkie zależności.
+
+## Kto dostaje zaoszczędzony czas?
+
+Najciekawsze pytanie dotyczy dla mnie oczekiwań. Jeśli implementacja zajmuje mniej czasu, co robimy z tą oszczędnością? Możemy lepiej przetestować rozwiązanie, poprawić dokumentację albo wcześniej skończyć pracę. Możemy też od razu dołożyć kolejne zadanie.
+
+Wyobraźmy sobie zespół, który szybciej tworzy pull requesty, ale nie ma więcej czasu na ich sprawdzanie. Liczba gotowych zmian rośnie, a razem z nią kolejka do review. Samo przyspieszenie pisania nie rozwiązuje wtedy problemu dostarczania oprogramowania.
+
+Szybki prototyp łatwo staje się punktem odniesienia dla terminu oddania gotowego produktu. Na demonstracji nie widać wszystkiego, co trzeba zrobić z uprawnieniami, awariami czy migracją danych. Wyjaśnienie, ile pracy zostało za działającym ekranem, staje się częścią zadania programisty.
+
+## Jak zdobywać doświadczenie, kiedy można pominąć próbę?
+
+Jest jeszcze kwestia nauki. Jeśli od razu deleguję zadanie, mogę ominąć moment, w którym musiałbym sam znaleźć błąd, przeczytać dokumentację i zrozumieć, dlaczego pierwsze rozwiązanie nie działało.
+
+AI może też pomóc przejść przez ten proces: wyjaśnić kod, porównać warianty albo podsunąć przypadek, którego nie uwzględniłem. Dużo zależy od tego, czy kończę na otrzymaniu odpowiedzi, czy potrafię ją później samodzielnie uzasadnić i zmienić.
+
+Dlatego zostawiam sobie zadania, które chcę wykonać sam. Czasem dla nauki, czasem dla satysfakcji. Nie każda czynność, którą można zautomatyzować, jest dla mnie wyłącznie kosztem.
+
+## Dlaczego stawiam na wszechstronność
+
+W dyskusjach o karierze wszechstronność bywa przedstawiana jako brak specjalizacji. „Znasz się na wszystkim, czyli na niczym”. Myślę, że w kolejnych latach coraz częściej będzie pożądaną cechą, szczególnie tam, gdzie trzeba przeprowadzić rozwiązanie od rozmowy o problemie do działającego wdrożenia.
+
+Jeśli AI pomaga szybciej wejść w nieznane API lub przygotować pierwszą implementację, większą część przewagi może dawać umiejętność połączenia różnych obszarów. Trzeba rozumieć, jak decyzja w interfejsie wpływa na backend, dane, koszty i pracę użytkownika. Przydaje się też umiejętność rozmowy z kimś, kto opisuje problem bez technicznego słownictwa.
+
+Dobrym przykładem jest **FDE, czyli Forward Deployed Engineer**. W [opisie tej roli w Palantirze](https://jobs.lever.co/palantir/73d1a90c-162d-4cb6-9e0c-4c8de9561ad0) zakres pracy obejmuje bezpośrednią współpracę z klientem, projektowanie architektury, pracę z danymi i tworzenie aplikacji. Inżynier bierze odpowiedzialność za realizację projektu od początku do końca, więc potrzebuje kompetencji wykraczających poza jeden fragment stacku.
+
+Ten zakres odpowiedzialności dobrze pokazuje, po co rozwijać szerokie kompetencje. Rozumienie kilku obszarów pomaga dostrzec zależności, wyjaśnić decyzję klientowi i ustalić, gdzie potrzebna jest pomoc specjalisty. W takiej wszechstronności widzę wartość.
+
+## Gdzie widzę wartość
+
+Backend i cała „otoczka” aplikacji wydają mi się sensownym kierunkiem poszerzania kompetencji. Bazy danych, bezpieczeństwo, infrastruktura, wdrożenia i monitoring pomagają zrozumieć, co dzieje się z aplikacją od wysłania żądania aż po zapis danych i co sprawdzić, kiedy coś przestaje działać.
+
+Widzę w tym realną wartość. Dobrze zaprojektować uprawnienia, przeprowadzić migrację bez utraty danych czy znaleźć przyczynę wolnego endpointu trzeba niezależnie od tego, kto napisał kod. Taka wiedza pomaga podejmować lepsze decyzje i brać odpowiedzialność za większą część rozwiązania.
+
+Skoro przygotowanie implementacji kosztuje coraz mniej czasu, większą wartość widzę w rozumieniu całego rozwiązania i konsekwencji jego wdrożenia. Szybszy bundler skróci oczekiwanie na build, a AI przygotuje kod. Nadal ktoś musi ocenić, co naprawdę jest gotowe, co wymaga jeszcze pracy i dlaczego, zanim szybsze narzędzia zamienią się po prostu w krótszy termin.

@@ -9,5 +9,22 @@
             }
          ]
       }
+   ],
+   "redirects": [
+      {
+         "source": "/blog/programowanie-to-systemy-nie-kod",
+         "destination": "/blog/proces-programowania",
+         "permanent": true
+      },
+      {
+         "source": "/blog/inteligencja-vs-dzialanie-kariera",
+         "destination": "/blog/nikt-nie-wie-co-robi",
+         "permanent": true
+      },
+      {
+         "source": "/blog/ludzie-sie-myla",
+         "destination": "/blog/nie-myl-mapy-z-terenem",
+         "permanent": true
+      }
    ]
 }

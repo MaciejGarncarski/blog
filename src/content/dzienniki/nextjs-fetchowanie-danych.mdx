@@ -11,7 +11,7 @@ Dwie rzeczy o Next.js, które dziś w końcu do mnie dotarły.
 
 Jeśli kilka Server Components w trakcie tego samego renderu odpala `fetch()`
 z tym samym URL-em i opcjami, Next automatycznie to deduplikuje. Nie ważne,
-że masz to w trzech różnych komponentach — request poleci tylko raz.
+że masz to w trzech różnych komponentach - request poleci tylko raz.
 
 ```tsx
 // components/user-name.tsx
@@ -42,7 +42,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
 Mimo że `fetch` odpala się w dwóch niezależnych komponentach, w Network
 zobaczysz tylko jedno żądanie do `/users/:id`. To działa dzięki request
-memoization — cache trzyma się tylko przez czas jednego renderu (server-side
+memoization - cache trzyma się tylko przez czas jednego renderu (server-side
 `fetch` cache w React/Next), nie między requestami.
 
 ## 2. Rewalidacja cache NIE resetuje stanu

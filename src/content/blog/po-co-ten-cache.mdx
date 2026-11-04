@@ -1,7 +1,8 @@
 ---
 title: "Po co ten cache?"
 publishedDate: 2026-10-24
-description: "Cache potrafi irytować i utrudniać rozumienie aplikacji. Kiedy jego korzyści uzasadniają koszt pilnowania aktualności danych?"
+updatedDate: 2026-11-04
+description: "Cache oszczędza pracę serwera i przyspiesza interfejs, ale wymaga zasad aktualizacji danych. Jak ocenić, kiedy korzyść jest warta dodatkowej złożoności?"
 tags: ["Frontend", "Backend", "Architektura"]
 ---
 
@@ -9,60 +10,65 @@ import { CacheRequestsChart } from "@/components/blog/po-co-ten-cache/chart";
 
 Zapisuję zmianę. Serwer odpowiada, że wszystko się udało. Wracam do listy i widzę stare dane. Odświeżam stronę i teraz się zgadza.
 
-Jako użytkownik zastanawiam się, czy aplikacja w ogóle działa. Jako developer zaczynam szukać, którego cache'a zapomniałem wyczyścić.
+Jako użytkownik zastanawiam się, czy aplikacja działa. Jako developer zaczynam szukać, którego cache'a zapomniałem odświeżyć.
 
-I właśnie dlatego cache mnie denerwuje. Jest nieintuicyjny. W prostym scenariuszu pytam serwer o dane i dostaję odpowiedź. Z cache'em muszę jeszcze wiedzieć, skąd pochodzi ta odpowiedź, kiedy została zapisana i czy po ostatniej zmianie ktoś pamiętał o jej unieważnieniu.
+Cache pozwala ponownie wykorzystać wynik wcześniejszej pracy. Może odciążyć bazę albo pokazać widok bez czekania na sieć. W zamian trzeba ustalić, kiedy zapisany wynik przestaje być wystarczająco aktualny. **Decyzja o cache'u powinna obejmować także to, co stanie się po zmianie danych.**
 
-Mam wrażenie, że w aplikacjach webowych za często traktujemy to jako oczywisty punkt wyjścia. Ja chciałbym najpierw wiedzieć: po co nam ten cache?
+## Najpierw ustalmy, który cache
 
-## Dlaczego nadal widzę stare dane?
+Pod jednym słowem kryje się kilka mechanizmów:
 
-Najbardziej irytuje mnie to, że jedna zmiana potrafi dotyczyć kilku miejsc w aplikacji. Edytuję zadanie, ale jego dane są też na liście, w szczegółach, w wynikach wyszukiwania i w liczniku na dashboardzie.
+- **Cache po stronie serwera**, np. wynik zapytania przechowywany w Redisie, pozwala uniknąć ponownego wykonania kosztownej pracy.
+- **Cache HTTP w przeglądarce lub CDN** przechowuje odpowiedzi zgodnie z regułami protokołu. Odpowiedź może pochodzić z pamięci podręcznej albo wymagać sprawdzenia aktualności na serwerze. [Więcej o cache HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching).
+- **Cache danych w aplikacji klienckiej**, np. TanStack Query, pozwala ponownie wykorzystać pobrane dane między widokami i odświeżać je w tle.
 
-Serwer już wie o zmianie. Teraz trzeba jeszcze dopilnować, żeby dowiedziały się o niej wszystkie przechowywane kopie.
+Te warstwy mogą działać jednocześnie. Unieważnienie danych w TanStack Query nie usuwa wpisu z Redisa. Nowy request może więc znowu dostać starą odpowiedź. Dlatego przy debugowaniu chcę najpierw ustalić, która warstwa ją zwróciła.
 
-Nie zliczę, ile razy szukałem klucza do inwalidacji albo zastanawiałem się, dlaczego jeden widok się odświeżył, a drugi nadal pokazuje poprzedni stan. Samo pobranie danych było proste. Większość kombinowania zaczęła się dopiero wtedy, gdy trzeba było utrzymać aktualność cache'a.
+## Kiedy cache oszczędza konkretną pracę
 
-Można ustalić konwencje kluczy, zrobić ich fabrykę, szerzej unieważniać dane po mutacjach. To pomaga opanować problem, ale nadal trzeba o tym myśleć przy kolejnych zmianach w aplikacji. A gdy czegoś nie dopilnujemy, użytkownik widzi po prostu aplikację, która raz pokazuje jedno, a za chwilę coś innego.
+Załóżmy, że w pewnym okresie sklep odwiedza 20 tysięcy użytkowników. Każdy otwiera te same 10 stron katalogu i raz pobiera swój koszyk. Daje to 220 tysięcy requestów HTTP.
 
-## Kiedy cache ma sens
-
-Weźmy sklep internetowy z `20 tysiącami` użytkowników. Każdy przegląda średnio 10 stron katalogu, ale tylko raz otwiera swój koszyk.
-
-To daje `200 000 requestów` do katalogu i `20 000 requestów` do koszyka.
+W uproszczonym modelu każdy request oznacza jedno zapytanie do bazy. Jeśli wspólny cache serwera przechowa każdą stronę katalogu po pierwszym odczycie, bazę zapytamy o katalog tylko 10 razy. Do tego zostaje 20 tysięcy odczytów koszyków. Zakładamy brak wygasania i unieważniania wpisów w tym okresie.
 
 <CacheRequestsChart client:visible />
 
-W katalogu wielu użytkowników ogląda te same opisy produktów, zdjęcia i kategorie. Jeśli te dane zmieniają się rzadko, wykonywanie tej samej pracy przy każdym odczycie może być zwyczajnie niepotrzebne. Tutaj widzę sens cache'owania.
+**Spada liczba zapytań do bazy, a liczba requestów HTTP pozostaje taka sama.** To ilustracja mechanizmu, nie wynik pomiaru aplikacji. W praktyce cache może wygasać, a filtry, języki czy personalizacja tworzyć kolejne warianty odpowiedzi. Liczy się to, jak często wykorzystujemy istniejący wynik i jak kosztowne byłoby jego ponowne obliczenie.
 
-Nawet w tym przykładzie nie wrzucałbym jednak wszystkiego do jednego worka. Opis produktu może poczekać na odświeżenie. Cena i dostępność wymagają osobnej decyzji, a przy zakupie trzeba je zweryfikować na serwerze. Koszyk z kolei jest indywidualny i po dodaniu produktu oczekuję, że od razu zobaczę jego aktualną zawartość.
+Opis produktu może tolerować opóźnienie aktualizacji. Dla ceny i dostępności trzeba ustalić osobne zasady, a przy finalizacji zakupu serwer powinien zweryfikować warunki transakcji. Koszyk też może korzystać z cache'a, ale musi być odizolowany między użytkownikami i odzwierciedlać wykonane przez nich operacje.
 
-Sam wykres nie mówi jeszcze, ile oszczędzimy. Liczy się też koszt obsługi tych zapytań i to, jak często faktycznie możemy wykorzystać tę samą odpowiedź. Ale przynajmniej mamy konkretny powód, żeby rozważyć cache: wiele powtarzanych odczytów wspólnych danych.
+## Co ma się stać po zapisie?
 
-## Kiedy cache tylko przeszkadza
+Edytuję zadanie. Jego dane występują w szczegółach, na liście, w wynikach wyszukiwania i w liczniku na dashboardzie. Zapis do bazy aktualizuje źródło danych, ale nie wszystkie te widoki.
 
-Teraz inna aplikacja: dashboard do obsługi przesyłek, `400` użytkowników, każdy pracuje na innych danych. Statusy potrafią zmieniać się co kilkanaście sekund, a użytkownicy podejmują na ich podstawie decyzje.
+Dla zmiany statusu z „otwarte” na „zamknięte” potrzebuję konkretnego przepływu:
 
-Tutaj dużo trudniej mi uzasadnić pokazywanie wcześniej zapisanej odpowiedzi. Chcę wiedzieć, co dzieje się z przesyłką teraz. Jeśli po wykonaniu akcji nadal widzę poprzedni status, to szybkie wyświetlenie widoku niewiele mi daje. Muszę jeszcze sprawdzić, czy mogę mu ufać.
+1. Serwer zapisuje zmianę i aktualizuje lub unieważnia odpowiednie wpisy swojego cache'a, jeśli go używa.
+2. Widok szczegółów dostaje potwierdzony wynik zapisu albo pobiera dane ponownie.
+3. Lista otwartych zadań i licznik zostają odświeżone, bo zmiana wpływa również na nie.
 
-Oczywiście sama liczba użytkowników nie przesądza o obciążeniu. Może się okazać, że konkretne zapytanie jest drogie i warto przechowywać jego wynik. Ale bez takiego problemu zaczynałbym od pobierania aktualnych danych z serwera.
+Sama podmiana obiektu na liście może nie wystarczyć. Zadanie powinno z niej zniknąć, może zmienić się sortowanie, a przy paginacji także zawartość strony. W takim przypadku ponowne pobranie listy bywa prostsze niż odtwarzanie logiki serwera w przeglądarce.
 
-Nie przekonuje mnie dokładanie inwalidacji, rewalidacji i reguł wygasania na zapas. Najpierw komplikujemy przepływ danych, a potem poświęcamy czas na to, żeby użytkownik nie zauważył skutków tej komplikacji.
+W TanStack Query `invalidateQueries` oznacza pasujące dane jako nieaktualne i domyślnie odświeża aktywne zapytania w tle. Trzeba jednak wskazać właściwe klucze i uwzględnić konfigurację zapytań. Biblioteka nie wywnioskuje sama, że zmiana statusu wpływa także na licznik. [Dokumentacja inwalidacji](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation).
 
-## Szybki widok, nieaktualne dane
+Po zapisie użytkownik powinien widzieć wynik operacji albo informację, że widok nadal się aktualizuje. Jeśli odświeżenie się nie uda, pozostawienie starej listy bez komunikatu tylko zwiększa niepewność.
 
-Cache w przeglądarce może sprawić, że powrót do poprzedniego widoku będzie natychmiastowy. Rozumiem tę korzyść. Sam też wolę zobaczyć listę od razu niż kolejny spinner.
+## Jak długo można ufać poprzedniej odpowiedzi?
 
-Tylko że szybko wyświetlone dane mogą być nieaktualne. Trzeba zdecydować, czy w danym miejscu to akceptujemy, kiedy pobieramy je ponownie i co pokazujemy w trakcie. Po mutacji dochodzi jeszcze pytanie, które widoki powinny dostać nową wersję.
+Powrót do listy bez spinnera jest realną korzyścią. Można od razu pokazać poprzednio pobrane dane i jednocześnie sprawdzić ich aktualność. Ważne, żeby ustalić, gdzie taki kompromis jest akceptowalny.
 
-Dlatego przy SWR czy React Query chcę świadomie ustalać zasady przechowywania i odświeżania danych. Wygoda biblioteki przy obsłudze zapytań nie odpowiada za mnie na pytanie, jak długo użytkownik może oglądać starą odpowiedź.
+W TanStack Query `staleTime` określa, jak długo dane są uznawane za świeże. Upływ tego czasu sam w sobie nie uruchamia requestu. Ponowne pobranie zależy od zdarzeń i konfiguracji, np. zamontowania widoku lub odzyskania fokusu okna. [Domyślne zachowania TanStack Query](https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults).
 
-W katalogu produktów mogę zaakceptować taki kompromis. W widoku, do którego wracam sprawdzić efekt właśnie wykonanej operacji, oczekuję aktualnego stanu. Chciałbym, żeby to oczekiwanie było punktem wyjścia przy projektowaniu aplikacji.
+W dashboardzie przesyłek status może zmienić się przez działanie innego użytkownika lub zewnętrznego systemu. Wyłączenie cache'a nie sprawi, że otwarty ekran sam się zaktualizuje. Nadal potrzebujemy sposobu dostarczania zmian, np. okresowego odpytywania serwera lub powiadomień przez SSE czy WebSocket.
 
-## Cache trzeba uzasadnić
+Zaczynam więc od wymagania: po własnej operacji chcę zobaczyć jej wynik, a dla zmian z zewnątrz ustalam dopuszczalne opóźnienie. Dopiero do tego dobieram sposób pobierania i przechowywania danych.
 
-Dla mnie cache wymaga uzasadnienia. Chcę wiedzieć, jaką pracę oszczędza, czy ta oszczędność ma znaczenie i jak długo dane mogą być nieaktualne. Do tego muszę mieć sensowny sposób na ich odświeżenie po zmianie.
+## Cztery pytania przed dodaniem cache'a
 
-Jeśli umiem na te pytania odpowiedzieć, mogę zaakceptować dodatkową złożoność. Jeśli jedynym argumentem jest „będzie szybciej”, to za mało. Szczególnie gdy później użytkownik musi ręcznie odświeżać stronę, żeby zobaczyć to, co przed chwilą zapisał.
+- **Co oszczędzam?** Koszt zapytania do bazy, wywołanie płatnego API, transfer czy czas oczekiwania na widok?
+- **Czy wynik będzie ponownie użyty?** Jak często i przez kogo, zanim straci aktualność?
+- **Ile nieaktualności akceptuję?** Osobno po własnym zapisie i po zmianach wykonanych gdzie indziej.
+- **Jak obsłużę zmianę?** Które kopie trzeba odświeżyć i co zobaczy użytkownik, jeśli to się nie uda?
 
-Chciałbym rzadziej zastanawiać się, który cache trzeba jeszcze wyczyścić. Dlatego domyślnie wolę prosty przepływ danych, a cache dokładam tam, gdzie potrafię wskazać konkretną korzyść wartą tej całej zabawy.
+Odpowiedzi pozwalają dobrać cache do konkretnego problemu. Potem sprawdzam efekt: czas odpowiedzi, obciążenie źródła danych i częstotliwość trafień w cache. Sprawdzam też scenariusz, od którego zaczął się ten tekst: zapisuję zmianę i wracam do listy.
+
+Cache jest dla mnie udaną optymalizacją wtedy, gdy aplikacja oszczędza pracę, a użytkownik nadal może ufać temu, co widzi. Ręczne odświeżanie strony po każdym zapisie oznacza, że część tej pracy przerzuciliśmy na niego.
