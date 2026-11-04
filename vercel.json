@@ -25,6 +25,21 @@
          "source": "/blog/ludzie-sie-myla",
          "destination": "/blog/nie-myl-mapy-z-terenem",
          "permanent": true
+      },
+      {
+         "source": "/blog/react-activity",
+         "destination": "/blog/handbook-nowoczesnego-reacta",
+         "permanent": true
+      },
+      {
+         "source": "/blog/react-transitions",
+         "destination": "/blog/handbook-nowoczesnego-reacta",
+         "permanent": true
+      },
+      {
+         "source": "/blog/composable-components",
+         "destination": "/blog/handbook-nowoczesnego-reacta",
+         "permanent": true
       }
    ]
 }

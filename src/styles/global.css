@@ -19,7 +19,7 @@
    :root {
       color-scheme: light;
 
-      --background: oklch(98% 0.01 260);
+      --background: oklch(96% 0.01 260);
       --background-secondary: color-mix(
          in oklab,
          oklch(96.913% 0.0104 261.895) 93%,

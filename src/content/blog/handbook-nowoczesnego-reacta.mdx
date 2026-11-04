@@ -1,0 +1,209 @@
+---
+title: "Handbook nowoczesnego Reacta"
+publishedDate: 2026-11-04
+description: "Krótka ściąga z nowoczesnego Reacta: kompozycja, use, Suspense, Transitions, Actions, useOptimistic, Activity i useEffectEvent."
+tags: ["Frontend", "React", "Architektura"]
+relatedPosts: ["po-co-ten-cache", "testy-frontend", "nextjs-env-docker"]
+---
+
+Ściąga do pisania i review kodu: zastosowanie, minimalny przykład, pułapka. Zakładam znajomość podstaw Reacta. Przykłady dotyczą React 19.2+; pomijam importy z `react` oraz implementacje funkcji aplikacji, takich jak `saveName`.
+
+**Jak często spotykane?** Poniższe oznaczenia to orientacyjna ocena, zależna od wersji Reacta i stacku. Punktem odniesienia jest też [State of React 2025](https://2025.stateofreact.com/en-US/features/), ale deklaracja „używałem” w ankiecie nie oznacza częstotliwości użycia w projektach. Popularność nie jest rekomendacją dodawania API na zapas.
+
+## Kompozycja zamiast kolejnych flag
+
+**Często spotykane.** `children` to codzienność; nazwane sloty i Compound Components szczególnie przydają się w bibliotekach UI i design systemach.
+
+Gdy komponent obrasta w `showHeader`, `showFooter` i `isEditable`, przekaż mu gotową treść przez `children` lub nazwane sloty.
+
+```tsx
+function Card({ title, children, footer }: {
+  title: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
+}) {
+  return (
+    <section>
+      <h2>{title}</h2>
+      <div>{children}</div>
+      {footer && <footer>{footer}</footer>}
+    </section>
+  );
+}
+
+<Card title="Profil" footer={<EditButton />}>
+  <Avatar />
+  <UserDetails />
+</Card>
+```
+
+`Tabs.Root`, `Tabs.Trigger` i `Tabs.Panel` mają sens, gdy części współdzielą zachowanie i stan, np. przez Context. Sam zapis z kropką niczego nie zapewnia. Prosty komponent z kilkoma propsami nadal jest w porządku.
+
+## use i Suspense: odczyt zasobu podczas renderowania
+
+**Suspense: często. `use`: bardziej zależne od stacku.** Suspense spotkasz przy lazy loadingu i we frameworkach; `use(promise)` przede wszystkim przy integracji danych z Suspense i RSC.
+
+`use(promise)` odczytuje wynik Promise. W trakcie oczekiwania komponent zawiesza render, a najbliższe `Suspense` pokazuje fallback.
+
+```tsx
+function UserName({ userPromise }: {
+  userPromise: Promise<{ name: string }>;
+}) {
+  const user = use(userPromise);
+  return <p>{user.name}</p>;
+}
+
+<Suspense fallback={<p>Ładowanie profilu...</p>}>
+  <UserName userPromise={userPromise} />
+</Suspense>
+```
+
+- Promise powinien mieć stabilną tożsamość, np. pochodzić z warstwy danych lub Server Component. `use(fetch(...))` tworzące nowy Promise przy każdym renderze klienta to pułapka.
+- Odrzucony Promise obsługuje Error Boundary, nie fallback `Suspense`.
+- `use(Context)` może występować w warunku, ale nadal wewnątrz komponentu lub własnego hooka.
+- `Suspense` obsługuje też `lazy()`. Sam `fetch` w `useEffect` go nie uruchamia.
+
+Dokumentacja: [use](https://react.dev/reference/react/use), [Suspense](https://react.dev/reference/react/Suspense).
+
+## Transitions: mniej pilna aktualizacja
+
+**Spotykane punktowo.** `useTransition` i `startTransition` pojawiają się przy nawigacji, Actions i cięższych widokach, także wewnątrz bibliotek.
+
+`useTransition` wybierz, gdy kontrolujesz zmianę stanu, np. przełączenie ciężkiego widoku. `isPending` pozwala pokazać, że aktualizacja trwa.
+
+```tsx
+const [tab, setTab] = useState('overview');
+const [isPending, startTransition] = useTransition();
+
+function selectTab(nextTab: string) {
+  startTransition(() => setTab(nextTab));
+}
+```
+
+React może przerwać render oznaczony jako Transition na rzecz pilniejszej aktualizacji. Callback `startTransition` wykonuje się jednak od razu: kosztowna synchroniczna pętla w jego środku nadal blokuje główny wątek. Wartość kontrolowanego inputa aktualizuj poza Transition.
+
+**`useDeferredValue`: raczej rzadko.** Przydaje się, gdy chcesz opóźnić użycie wartości, np. przekazanej przez propsy:
+
+```tsx
+// Results jest memoizowanym komponentem z kosztownym renderowaniem.
+const deferredQuery = useDeferredValue(query);
+const isStale = query !== deferredQuery;
+
+<div aria-busy={isStale}>
+  <Results query={deferredQuery} />
+</div>
+```
+
+Nie ustawia stałego opóźnienia ani nie ogranicza automatycznie liczby requestów. Debounce i anulowanie zapytań to osobne decyzje.
+
+Dokumentacja: [useTransition](https://react.dev/reference/react/useTransition), [useDeferredValue](https://react.dev/reference/react/useDeferredValue).
+
+## Actions: formularz, wynik i pending
+
+**Zależne od sposobu obsługi formularzy.** `<form action>` i `useActionState` łatwiej spotkać w projektach używających React Actions niż w SPA opartym na bibliotece formularzy i mutacjach TanStack Query.
+
+`useActionState` zbiera wynik akcji i jej stan oczekiwania. Funkcja otrzymuje poprzedni stan jako pierwszy argument, a dane formularza jako drugi.
+
+```tsx
+async function updateName(previous: string, formData: FormData) {
+  try {
+    await saveName(String(formData.get('name') ?? ''));
+    return 'Zapisano';
+  } catch {
+    return 'Zapis nie powiódł się';
+  }
+}
+
+function ProfileForm() {
+  const [message, action, pending] = useActionState(updateName, '');
+  return (
+    <form action={action}>
+      <input name="name" required />
+      <button disabled={pending}>Zapisz</button>
+      <p role="status">{message}</p>
+    </form>
+  );
+}
+```
+
+`<form action={action}>` zapewnia kontekst Action. Przy ręcznym wywołaniu asynchronicznej akcji użyj `startTransition`. Walidacja i autoryzacja zapisu należą również do serwera.
+
+Jeśli przycisk jest osobnym komponentem, `useFormStatus` z **`react-dom`** pozwala mu odczytać `pending` nadrzędnego formularza. Hook nie obserwuje formularza zwracanego przez ten sam komponent. **Spotykany punktowo**, zwłaszcza we współdzielonych przyciskach formularzy z Actions.
+
+Dokumentacja: [useActionState](https://react.dev/reference/react/useActionState), [useFormStatus](https://react.dev/reference/react-dom/hooks/useFormStatus).
+
+## useOptimistic: wynik przed potwierdzeniem
+
+**Raczej rzadko jako konkretny hook.** Optymistyczny interfejs możesz też spotkać zaimplementowany przez bibliotekę danych albo własny stan.
+
+Dobre do polubień lub zmiany nazwy, gdy można bezpiecznie wycofać zmianę. Poniżej fragment komponentu; `saveLiked` zwraca potwierdzoną wartość z serwera.
+
+```tsx
+const [liked, setLiked] = useState(false);
+const [error, setError] = useState('');
+const [optimisticLiked, setOptimisticLiked] = useOptimistic(liked);
+const [pending, startTransition] = useTransition();
+
+function toggleLike() {
+  const next = !liked;
+  startTransition(async () => {
+    setError('');
+    setOptimisticLiked(next);
+    try {
+      const confirmed = await saveLiked(next);
+      startTransition(() => setLiked(confirmed));
+    } catch {
+      setError('Nie udało się zapisać polubienia');
+    }
+  });
+}
+```
+
+Renderuj `optimisticLiked`, pokaż `error`, a przycisk zablokuj przez `pending`, żeby ten prosty wariant nie wysyłał równoległych zapisów. Po zakończeniu Action stan optymistyczny wraca do wartości bazowej, więc sukces musi ją zaktualizować. Hook sam nie zapisuje danych ani nie unieważnia cache'a.
+
+Dokumentacja: [useOptimistic](https://react.dev/reference/react/useOptimistic).
+
+## Activity: ukryj widok, zachowaj stan
+
+**Raczej rzadko.** Wymaga React 19.2+ i konkretnej potrzeby zachowania ukrytego widoku; nie jest domyślnym sposobem renderowania warunkowego.
+
+Dobre do zakładek i formularzy, do których użytkownik wraca.
+
+```tsx
+<Activity mode={tab === 'editor' ? 'visible' : 'hidden'}>
+  <Editor />
+</Activity>
+```
+
+`hidden` zachowuje stan i DOM, ukrywa zawartość przez `display: none` oraz uruchamia cleanup efektów wewnątrz granicy. Po pokazaniu efekty uruchamiają się ponownie. Ukryte komponenty nadal mogą renderować się przy nowych propsach, z niższym priorytetem. Activity nie zamraża całego drzewa i nadal zajmuje pamięć.
+
+Efekt w komponencie **nad** `Activity` pozostaje aktywny. Timer lub subskrypcję, które mają być sprzątane przy ukryciu, umieść wewnątrz ukrywanego komponentu i zapewnij cleanup.
+
+Dokumentacja: [Activity](https://react.dev/reference/react/Activity).
+
+## useEffectEvent: aktualne dane bez restartowania efektu
+
+**Raczej rzadko.** API z React 19.2; w starszym kodzie podobne przypadki bywają rozwiązywane przez refy lub ponowne uruchamianie efektu.
+
+Gdy callback efektu ma czytać aktualne propsy, ale ich zmiana nie powinna restartować subskrypcji lub timera.
+
+```tsx
+const onTick = useEffectEvent(() => reportCount(count));
+
+useEffect(() => {
+  const id = setInterval(() => onTick(), 1000);
+  return () => clearInterval(id);
+}, []);
+```
+
+`onTick` odczytuje aktualne `count`. Wywołuj Effect Events z logiki efektów, nie z `onClick`, i nie przekazuj ich do innych komponentów. To narzędzie do wydzielania niereaktywnej logiki efektu, a nie sposób na ukrywanie wymaganych zależności.
+
+Dokumentacja: [useEffectEvent](https://react.dev/reference/react/useEffectEvent).
+
+## Jeszcze trzy rzeczy do zapamiętania
+
+- **Ref jako prop.** Spotykany w kodzie na React 19; w starszych komponentach i bibliotekach nadal trafisz na `forwardRef`. W funkcyjnych komponentach React 19 można przekazywać `ref` bez tego opakowania. [Dokumentacja](https://react.dev/reference/react/forwardRef).
+- **React Compiler.** Wciąż nie jest czymś, co można zakładać w dowolnym projekcie. Automatyzuje memoizację po skonfigurowaniu w buildzie. Nie włącza się przez samą aktualizację Reacta. [Dokumentacja](https://react.dev/learn/react-compiler).
+- **Server Components.** Częste w Next.js App Router, nieobecne w klasycznym SPA bez integracji RSC. Wymagają odpowiedniego frameworka lub bundlera. `'use client'` wyznacza granicę modułów klienta, ale nie oznacza automatycznie wyłączenia SSR. [Dokumentacja](https://react.dev/reference/rsc/use-client).
+
+Przy review sprawdzam przede wszystkim: czy input pozostaje responsywny, czy błąd zapisu jest widoczny, czy Promise nie powstaje od nowa przy każdym renderze i czy efekty mają poprawny cleanup.
