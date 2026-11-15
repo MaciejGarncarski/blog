@@ -64,18 +64,6 @@ export const projects: Project[] = [
       tags: ["Next.js", "NestJS", "Drizzle ORM", "Mantine UI", "JWT"],
       thumbnail: kanban,
    },
-   {
-      id: "professional-landing-nextjs",
-      title: "Professional Landing Page",
-      description:
-         "Profesjonalna strona docelowa dla firmy, zaprojektowana w celu skutecznego prezentowania usług i przyciągania klientów.",
-      descriptionSecondary:
-         "Projekt nastawiony na doskonały User Experience i optymalizację SEO. Wykorzystuje bibliotekę Motion (Framer Motion) do płynnych animacji typu 'reveal' oraz Tailwind CSS dla pełnej responsywności, zapewniając błyskawiczne ładowanie strony.",
-      demo: "https://professional-landing-nextjs.vercel.app/",
-      github: "https://github.com/MaciejGarncarski/professional-landing-nextjs",
-      tags: ["Next.js", "Tailwind CSS", "Motion"],
-      thumbnail: landing,
-   },
 ] as const;
 
 export const projectsDict = Object.fromEntries(
