@@ -55,9 +55,8 @@ function scanHeadings(): TocHeading[] {
 }
 
 export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Props) {
-   const [headings, setHeadings] = useState<TocHeading[]>([]);
+   const [headings, setHeadings] = useState<TocHeading[] | null>(null);
    const [activeId, setActiveId] = useState("");
-   const asideRef = useRef<HTMLElement>(null);
    const listRef = useRef<HTMLUListElement>(null);
 
    useEffect(() => {
@@ -66,16 +65,7 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
       const init = () => {
          const result = scanHeadings();
          if (cancelled) return;
-
          setHeadings(result);
-
-         const aside = asideRef.current;
-         if (!aside) return;
-         if (result.length < 2) {
-            aside.classList.add("!hidden");
-         } else {
-            aside.classList.remove("!hidden");
-         }
       };
 
       init();
@@ -87,7 +77,7 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
    }, []);
 
    useEffect(() => {
-      if (headings.length === 0) return;
+      if (!headings || headings.length < 2) return;
 
       const content = document.querySelector<HTMLElement>("[data-blog]");
       if (!content) return;
@@ -156,16 +146,17 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
       link?.scrollIntoView({ block: "nearest" });
    }, [activeId]);
 
+   if (!headings || headings.length < 2) return null;
+
    const hasRelated = relatedPostData.length > 0 || relatedProjectData.length > 0;
 
    return (
       <aside
-         ref={asideRef}
-         className="hidden lg:block absolute top-0 left-full ml-12 xl:ml-26 2xl:ml-29 mt-7 h-full w-[clamp(4rem,15vw,13rem)]"
+         className="hidden lg:block lg:h-full lg:w-52 lg:shrink-0 lg:pt-7"
          data-toc-aside
       >
          <div className="sticky top-30 flex flex-col gap-12 max-h-[calc(100vh-9rem)] overflow-y-auto pr-1 ">
-            <nav className="backdrop-blur-xs" data-toc-nav aria-label="Spis treści">
+            <nav data-toc-nav aria-label="Spis treści">
                <div className="relative mb-3 flex items-center gap-2">
                   <span className="text-foreground-secondary text-[0.65rem] font-semibold uppercase tracking-[0.12em]">
                      Na tej stronie
@@ -173,7 +164,7 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
                   <div className="h-px flex-1 bg-linear-to-r from-accent/20 to-transparent" />
                </div>
 
-               <ul ref={listRef} className="flex flex-col gap-0.5 border-l border-accent/12 pl-2">
+               <ul ref={listRef} className="flex flex-col gap-0.5">
                   {headings.map((h) => {
                      const isActive = activeId === h.id;
                      return (
@@ -183,7 +174,7 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
                               title={h.text}
                               data-toc-link={h.id}
                               aria-current={isActive ? "location" : "false"}
-                              className={`flex items-baseline gap-1.5 rounded-md px-2.5 py-1 text-xs leading-4 font-normal transition-all duration-200 hover:bg-accent/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 ${isActive ? "text-accent font-medium" : "text-foreground-secondary/85"}${h.level === "h3" ? " ml-2.5" : ""}`}
+                              className={`flex items-baseline gap-1.5 rounded-md px-2 py-1 text-xs leading-4 transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 ${isActive ? "text-accent font-medium bg-accent/5" : "text-foreground-secondary/80 hover:bg-accent/[0.03]"}${h.level === "h3" ? " pl-5" : ""}`}
                            >
                               {h.h2Index != null && (
                                  <span className="text-[0.6rem] text-foreground-secondary/40 tabular-nums shrink-0">

@@ -11,7 +11,6 @@ import BlogRelatedMobile from "@/components/blog/blog-related-mobile.astro";
 import { getPostsSorted } from "@/lib/get-posts-sorted";
 import { getRelatedPosts, getRelatedProjects } from "@/lib/get-related-content";
 import ChevronIcon from "@/components/ui/chevron-icon.astro";
-import AccentShimmer from "@/components/ui/accent-shimmer.astro";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -58,12 +57,28 @@ const relatedProjectData = getRelatedProjects(relatedProjects);
     breadcrumbs={breadcrumbs}
   />
 
-  <article class="article-root flex flex-col gap-8 md:px-16">
+  <article class="article-root flex flex-col gap-8 md:px-20">
     <div class="anim-hero">
       <BlogHero post={post} />
     </div>
 
-    <div class="relative w-full max-w-full lg:max-w-[76ch]">
+    <div class="flex w-full flex-col justify-between lg:flex-row lg:gap-12 xl:gap-16">
+      <div class="w-full min-w-0 lg:max-w-[76ch]">
+        <div
+          class="anim-content motion-reduce:animation-none pb-14 text-base leading-7 text-pretty md:text-lg"
+          data-blog
+        >
+          <Content />
+        </div>
+
+        <div class="block lg:hidden">
+          <BlogRelatedMobile
+            relatedProjects={relatedProjects}
+            relatedPosts={relatedPosts}
+          />
+        </div>
+      </div>
+
       <div class="anim-toc">
         <BlogAside
           relatedPostData={relatedPostData}
@@ -71,43 +86,24 @@ const relatedProjectData = getRelatedProjects(relatedProjects);
           client:load
         />
       </div>
-
-      <div
-        class="anim-content motion-reduce:animation-none pb-14 text-base leading-7 text-pretty md:text-lg"
-        data-blog
-      >
-        <Content />
-      </div>
-
-      <div class="block lg:hidden">
-        <BlogRelatedMobile
-          relatedProjects={relatedProjects}
-          relatedPosts={relatedPosts}
-        />
-      </div>
     </div>
   </article>
 
-  <div
-    class="flex w-full max-w-full md:w-[calc(100%-8rem)] lg:w-full lg:max-w-[76ch] flex-col gap-6 pb-16 md:ml-16"
-  >
+  <div class="flex w-full max-w-full md:w-[calc(100%-8rem)] lg:w-full lg:max-w-[76ch] flex-col gap-6 pb-16 md:ml-16">
     <div
       aria-hidden="true"
-      class="h-px w-full bg-linear-to-r from-accent/15 via-accent/22 to-accent/15"
-    >
-    </div>
+      class="h-px w-full bg-linear-to-r from-accent/11 via-accent/15 to-accent/11"
+    ></div>
     <nav
       aria-label="Nawigacja między wpisami"
-      class="grid gap-4 md:gap-5 sm:grid-cols-2"
+      class="grid gap-2 sm:grid-cols-2 sm:gap-6"
     >
-    {
-      previousPost ? (
+      {previousPost ? (
         <a
           href={`/blog/${previousPost.id}`}
-          class="group border-border bg-background-secondary/30 md:border-border/70 hover:border-accent/20 relative flex flex-col gap-1.5 overflow-hidden rounded-xl border px-4 py-3.5 shadow-xs transition-all duration-200"
+          class="group flex flex-col gap-1 rounded-lg py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50"
         >
-          <AccentShimmer />
-          <span class="text-foreground-secondary flex items-center gap-1 text-xs">
+          <span class="text-foreground-secondary/70 group-hover:text-accent flex items-center gap-1 text-xs transition-colors duration-200">
             <ChevronIcon
               size={13}
               direction="left"
@@ -115,23 +111,20 @@ const relatedProjectData = getRelatedProjects(relatedProjects);
             />
             Poprzedni
           </span>
-          <span class="group-hover:text-accent my-auto line-clamp-2 text-sm leading-snug font-semibold text-pretty transition-colors duration-200">
+          <span class="group-hover:text-accent line-clamp-2 text-sm leading-snug font-medium text-pretty text-foreground/90 transition-colors duration-200">
             {previousPost.data.title}
           </span>
         </a>
-      ) : null
-    }
-    {
-      nextPost ? (
+      ) : null}
+      {nextPost ? (
         <a
           href={`/blog/${nextPost.id}`}
           class:list={[
-            "group border-border bg-background-secondary/30 md:border-border/70 hover:border-accent/20 relative flex flex-col items-end gap-1.5 overflow-hidden rounded-xl border px-4 py-3.5 text-right shadow-xs transition-all duration-200",
+            "group flex flex-col items-end gap-1 rounded-lg py-2 text-right transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50",
             !previousPost && "sm:col-start-2",
           ]}
         >
-          <AccentShimmer />
-          <span class="text-foreground-secondary flex items-center gap-1 text-xs">
+          <span class="text-foreground-secondary/70 group-hover:text-accent flex items-center gap-1 text-xs transition-colors duration-200">
             Następny
             <ChevronIcon
               size={13}
@@ -139,12 +132,11 @@ const relatedProjectData = getRelatedProjects(relatedProjects);
               customStyles="text-foreground-secondary/50 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
             />
           </span>
-          <span class="group-hover:text-accent my-auto line-clamp-2 text-sm leading-snug font-semibold text-pretty transition-colors duration-200">
+          <span class="group-hover:text-accent line-clamp-2 text-sm leading-snug font-medium text-pretty text-foreground/90 transition-colors duration-200">
             {nextPost.data.title}
           </span>
         </a>
-      ) : null
-    }
+      ) : null}
     </nav>
   </div>
 </Layout>

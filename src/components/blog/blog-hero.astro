@@ -75,21 +75,19 @@ const isModified = updateDate && updateDate !== publishDate;
         {title}
       </h1>
 
-      <div
-        class="text-foreground-secondary flex flex-col md:flex-row items-start flex-wrap md:items-center gap-x-2 gap-y-1 text-sm md:text-base"
-      >
+      <div class="text-foreground-secondary flex flex-col md:flex-row items-start flex-wrap md:items-center gap-x-2 gap-y-1 text-sm md:text-base">
         <time
           itemprop="datePublished"
           datetime={lastModifiedDateString}
-          title={isModified
-            ? `Data publikacji: ${publishDate}, data ostatniej modyfikacji: ${lastModified}`
-            : `Data publikacji: ${publishDate}`}
-        >
-          {
+          title={
             isModified
-              ? `Aktualizacja: ${lastModified}`
-              : `Publikacja: ${publishDate}`
+              ? `Data publikacji: ${publishDate}, data ostatniej modyfikacji: ${lastModified}`
+              : `Data publikacji: ${publishDate}`
           }
+        >
+          {isModified
+            ? `Aktualizacja: ${lastModified}`
+            : `Publikacja: ${publishDate}`}
         </time>
         <span class="text-accent text-sm hidden md:inline">&bull;</span>
         <span>{readTime} min. czytania</span>
@@ -97,21 +95,16 @@ const isModified = updateDate && updateDate !== publishDate;
         <span>{words} słów</span>
       </div>
     </div>
-    {
-      tags.length > 0 && (
-        <div class="flex mt-auto flex-wrap items-center gap-1.5 md:gap-x-3 md:gap-y-6 lg:max-w-[33%] lg:items-end lg:justify-end">
-          {tags.map((tag) => (
-            <Tag href={`/blog/tag/${normalizeTag(tag)}`}># {tag}</Tag>
-          ))}
-        </div>
-      )
-    }
+    {tags.length > 0 && (
+      <div class="flex mt-auto flex-wrap items-center gap-1.5 md:gap-x-3 md:gap-y-6 lg:max-w-[33%] lg:items-end lg:justify-end">
+        {tags.map((tag) => (
+          <Tag href={`/blog/tag/${normalizeTag(tag)}`}># {tag}</Tag>
+        ))}
+      </div>
+    )}
   </div>
 
-  <div
-    class="w-full h-px bg-linear-to-r from-accent/15 via-accent/22 to-accent/15"
-  >
-  </div>
+  <div class="w-full h-px bg-linear-to-r from-accent/6 via-accent/11 to-accent/6"></div>
 </header>
 
 <script>

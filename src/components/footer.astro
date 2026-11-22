@@ -35,37 +35,30 @@ const socials: Array<Social> = [
   class="mx-auto mt-16 max-w-[63rem] md:mt-28 relative"
   transition:name="footer"
 >
-  <div
-    class="h-px flex-1 bg-linear-to-r from-accent/10 via-accent/25 to-accent/10"
-  >
-  </div>
+  <div class="h-px flex-1 bg-accent/10"></div>
   <div class="py-6">
-    <div
-      class="flex flex-col items-center gap-5 md:flex-row md:justify-between"
-    >
+    <div class="flex flex-col items-center gap-5 md:flex-row md:justify-between">
       <p class="text-foreground-secondary text-[0.8125rem]">
         &copy; {currentYear} Maciej Garncarski
       </p>
 
       <div class="flex items-center gap-1">
-        {
-          socials.map((s) => {
-            const Icon = s.icon;
+        {socials.map((s) => {
+          const Icon = s.icon;
 
-            return (
-              <a
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={s.name}
-                class="text-foreground-secondary hover:text-foreground flex size-8 items-center justify-center rounded-md transition-colors duration-150 hover:bg-foreground/5"
-              >
-                <Icon class="size-[15px] text-foreground" />
-                <span class="sr-only">{s.name}</span>
-              </a>
-            );
-          })
-        }
+          return (
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={s.name}
+              class="text-foreground-secondary hover:text-foreground flex size-8 items-center justify-center rounded-md transition-colors duration-150 hover:bg-foreground/5"
+            >
+              <Icon class="size-[15px] text-foreground" />
+              <span class="sr-only">{s.name}</span>
+            </a>
+          );
+        })}
       </div>
     </div>
   </div>
