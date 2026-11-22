@@ -1,6 +1,6 @@
 ---
 import Experience from "@components/about-page/experience.astro";
-import Header from "@components/about-page/header.astro";
+import Hero from "@components/about-page/hero.astro";
 import OpenSource from "@components/about-page/open-source.astro";
 import Layout from "@layouts/layout.astro";
 import Seo from "@/components/seo.astro";
@@ -18,7 +18,7 @@ const seoData = {
 <Layout>
   <Seo slot="head" description={seoData.description} title={seoData.title} />
   <div class="mx-auto flex w-full max-w-[50rem] flex-col gap-10">
-    <Header />
+    <Hero />
 
     <HomeSectionBorder>
       <Experience />

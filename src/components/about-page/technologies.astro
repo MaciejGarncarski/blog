@@ -1,58 +1,51 @@
 ---
 import SectionHeading from "@/components/about-page/section-heading.astro";
 import { groups } from "@/data/technologies";
-import clsx from "clsx";
+import AccentShimmer from "../ui/accent-shimmer.astro";
 ---
 
 <section class="flex flex-col gap-6" aria-labelledby="technologie">
   <SectionHeading title="Technologie" id="technologie" />
-  <div class="flex flex-col">
-    {
-      groups.map(({ label, techs }, groupIndex) => (
-        <div
-          class={clsx(
-            "flex flex-col gap-3 py-5 md:flex-row md:gap-10",
-            groupIndex !== 0 && "border-t border-border/50",
-            groupIndex === 0 && "pt-0",
-            groupIndex === groups.length - 1 && "pb-0",
-          )}
-        >
-          <h3 class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-foreground-secondary md:w-28 md:pt-2">
-            {label}
-          </h3>
-          <ul class="flex flex-wrap gap-1.5">
-            {techs.map(
-              ({ color, iconColor, darkIconColor, icon: Icon, name, link }) => {
-                const techColor = color === "#000000" ? "var(--accent)" : color;
-                const techIconColor =
-                  color === "#000000"
-                    ? "var(--foreground-secondary)"
-                    : iconColor;
-                const techIconColorDark = darkIconColor ?? techIconColor;
 
-                return (
-                  <li>
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={`--tech-color: ${techColor}; --tech-icon: ${techIconColor}; --tech-icon-dark: ${techIconColorDark}`}
-                      class="group inline-flex items-center gap-2 rounded-full border border-border/70 bg-background-secondary/40 px-3 py-1.5 text-[0.8125rem] font-medium outline-none transition-all duration-200 ease-out hover:border-(--tech-color)/30 hover:bg-(--tech-color)/10 focus-visible:ring-2 focus-visible:ring-accent/40 dark:border-border dark:hover:border-(--tech-color)/35 dark:hover:bg-(--tech-color)/15"
-                    >
-                      <span class="flex size-4 shrink-0 items-center [&>svg]:size-4 text-(--tech-icon) dark:text-(--tech-icon-dark) transition-transform duration-200 group-hover:scale-110">
-                        <Icon />
-                      </span>
-                      <span class="text-foreground-body transition-colors duration-200 group-hover:text-foreground">
-                        {name}
-                      </span>
-                    </a>
-                  </li>
-                );
-              },
-            )}
-          </ul>
-        </div>
-      ))
-    }
+  <div class="flex flex-col gap-2.5">
+    {groups.map(({ label, techs }) => (
+      <div class="border-border/50 relative bg-background-secondary/30 grid gap-3 rounded-xl border px-4 py-3.5 md:grid-cols-[7rem_minmax(0,1fr)] md:gap-x-10">
+        <AccentShimmer opacity={20} />
+        <h3 class="text-foreground text-sm leading-snug font-semibold md:pt-1.5">
+          {label}
+        </h3>
+
+        <ul class="flex flex-wrap gap-1.5">
+          {techs.map(
+            ({ color, iconColor, darkIconColor, icon: Icon, name, link }) => {
+              const techColor = color === "#000000" ? "var(--accent)" : color;
+              const techIconColor =
+                color === "#000000" ? "var(--foreground-secondary)" : iconColor;
+              const techIconColorDark = darkIconColor ?? techIconColor;
+
+              return (
+                <li class="relative">
+                  <AccentShimmer opacity={20} />
+                  <a
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={`--tech-color: ${techColor}; --tech-icon: ${techIconColor}; --tech-icon-dark: ${techIconColorDark}`}
+                    class="group border-border/70 bg-background/40 focus-visible:ring-accent/40 dark:border-border inline-flex items-center gap-2 rounded-xl border px-2.5 py-1.5 text-[0.8125rem] font-medium outline-none transition-colors duration-200 hover:border-(--tech-color)/30 hover:bg-(--tech-color)/10 focus-visible:ring-2 dark:hover:border-(--tech-color)/35 dark:hover:bg-(--tech-color)/15"
+                  >
+                    <span class="flex size-4 shrink-0 items-center text-(--tech-icon) dark:text-(--tech-icon-dark) [&>svg]:size-4">
+                      <Icon />
+                    </span>
+                    <span class="text-foreground-body group-hover:text-foreground transition-colors duration-200">
+                      {name}
+                    </span>
+                  </a>
+                </li>
+              );
+            },
+          )}
+        </ul>
+      </div>
+    ))}
   </div>
 </section>

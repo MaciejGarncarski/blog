@@ -58,7 +58,6 @@ const projectSchema = {
     is:inline
     set:html={JSON.stringify(projectSchema)}
   />
-
   <div class="mx-auto flex w-full max-w-[50rem] flex-col gap-10">
     <a
       href="/projekty"
@@ -83,33 +82,34 @@ const projectSchema = {
 
     <div class="relative">
       <AccentShimmer />
-      {
-        project.thumbnail ? (
-          <div
-            class="relative isolate w-full p-0.5 overflow-hidden rounded-xl border border-accent/12 bg-accent/12 shadow-accent shadow-xs"
-            style="aspect-ratio: 128 / 63;"
-          >
-            <Picture
-              formats={["jxl", "webp"]}
-              priority={true}
-              src={project.thumbnail}
-              alt={project.title}
-              width={1792}
-              height={882}
-              widths={[768, 1280, 1792]}
-              sizes="(max-width: 832px) calc(100vw - 2rem), 50rem"
-              fit="cover"
-              position="center"
-              pictureAttributes={{ class: "relative z-10 block size-full" }}
-              class="size-full rounded-xl object-cover"
-            />
-          </div>
-        ) : (
-          <div class="flex h-48 md:h-82 items-center justify-center rounded-xl border border-accent/12 bg-background-secondary/20 text-foreground-secondary">
-            Brak podglądu
-          </div>
-        )
-      }
+      {project.thumbnail ? (
+        <div
+          class="border-border/50 bg-background-secondary relative w-full overflow-hidden rounded-xl border"
+          style="aspect-ratio: 128 / 63;"
+        >
+          <Picture
+            formats={["jxl", "webp"]}
+            priority={true}
+            src={project.thumbnail}
+            alt={project.title}
+            width={1792}
+            height={882}
+            widths={[768, 1280, 1792]}
+            sizes="(max-width: 832px) calc(100vw - 2rem), 50rem"
+            fit="cover"
+            position="center"
+            pictureAttributes={{ class: "block size-full" }}
+            class="size-full object-cover"
+          />
+        </div>
+      ) : (
+        <div
+          class="border-border/50 bg-background-secondary/30 text-foreground-secondary flex w-full items-center justify-center rounded-xl border text-sm"
+          style="aspect-ratio: 128 / 63;"
+        >
+          Brak podglądu
+        </div>
+      )}
     </div>
 
     <p class="text-foreground-secondary text-lg leading-relaxed">
@@ -119,7 +119,9 @@ const projectSchema = {
     <section class="flex flex-col gap-3" aria-labelledby="technologie">
       <SectionHeading title="Technologie" id="technologie" />
       <div class="flex flex-wrap gap-2" role="list">
-        {project.tags.map((tag) => <Tag role="listitem">{tag}</Tag>)}
+        {project.tags.map((tag) => (
+          <Tag role="listitem">{tag}</Tag>
+        ))}
       </div>
     </section>
 

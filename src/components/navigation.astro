@@ -39,78 +39,64 @@ const isBlogPostPage =
   normalizedPathname.startsWith("/blog/") && normalizedPathname !== "/blog";
 ---
 
-<header
-  class="fixed md:fixed top-0 left-0 right-0 z-50 flex justify-center px-3 pt-4 md:pt-0 md:top-5"
->
-  <div class="w-full max-w-[63rem]">
-    <nav
-      class="border-border/50 border-t-border/30 border-x-border/40 bg-background/90 shadow-xs relative flex items-center justify-between gap-2 overflow-hidden rounded-2xl border px-2.5 py-1.5 md:px-3 md:py-2.5 backdrop-blur-lg"
-    >
-      <div
-        class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-accent/5 to-transparent"
-      >
-      </div>
-      <div
-        class="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-accent/18 to-transparent"
-      >
-      </div>
+<header class="fixed md:fixed top-0 left-0 right-0 z-50 flex justify-center px-3 pt-4 md:pt-0 md:top-5">
+  <div class="w-full max-w-[60rem]">
+    <nav class="border-border/50 border-t-border/30 border-x-border/40 bg-background/70 shadow-sm relative flex items-center justify-between gap-2 overflow-hidden rounded-2xl border px-2.5 py-1.5 md:px-3 md:py-2.5 backdrop-blur-lg">
+      <div class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-accent/5 to-transparent"></div>
+      <div class="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-accent/18 to-transparent"></div>
 
       <a href="/" class="group relative flex shrink-0 items-center gap-2.5">
-        <div
-          class="relative flex h-8 w-auto items-center justify-center overflow-hidden transition-all duration-200"
-        >
+        <div class="relative flex h-8 w-auto items-center justify-center overflow-hidden transition-all duration-200">
           <Picture
             formats={["jxl", "webp"]}
             src={logoDark}
             alt="Maciej Garncarski Logo"
-            height={64}
-            width={64}
+            height={60}
+            width={60}
             priority={true}
-            class="hidden dark:block relative size-9 transition-transform duration-300 group-hover:scale-105 group-active:scale-97"
+            class="hidden dark:block relative size-8 transition-transform duration-300 group-hover:scale-105 group-active:scale-97"
           />
           <Picture
             formats={["jxl", "webp"]}
             src={logoLight}
             alt="Maciej Garncarski Logo"
-            height={64}
-            width={64}
+            height={60}
+            width={60}
             priority={true}
-            class="block dark:hidden relative size-9 transition-transform duration-300 group-hover:scale-105 group-active:scale-97"
+            class="block dark:hidden relative size-8 transition-transform duration-300 group-hover:scale-105 group-active:scale-97"
           />
         </div>
       </a>
 
       <ul class="relative hidden items-center gap-6 md:gap-8 md:flex">
-        {
-          navigationData.map((n) => {
-            const isActive =
-              n.url === normalizedPathname ||
-              n.url === "/" + (subpath?.[0] || "");
-            const isBlogPage = n.url === "/blog";
-            const isBlogPageActive =
-              isBlogPage && /^\/blog(?:\/|$)/.test(normalizedPathname);
-            const active = isActive || isBlogPageActive;
+        {navigationData.map((n) => {
+          const isActive =
+            n.url === normalizedPathname ||
+            n.url === "/" + (subpath?.[0] || "");
+          const isBlogPage = n.url === "/blog";
+          const isBlogPageActive =
+            isBlogPage && /^\/blog(?:\/|$)/.test(normalizedPathname);
+          const active = isActive || isBlogPageActive;
 
-            return (
-              <li>
-                <a
-                  href={n.url}
-                  class={clsx(
-                    "relative rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
-                    active
-                      ? "bg-accent/10 text-foreground"
-                      : "text-foreground-secondary hover:bg-accent/5 hover:text-foreground",
-                  )}
-                >
-                  {n.text}
-                  {active && (
-                    <span class="bg-linear-to-r from-accent/50 via-accent/80 to-accent/50 absolute bottom-1 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full opacity-80" />
-                  )}
-                </a>
-              </li>
-            );
-          })
-        }
+          return (
+            <li>
+              <a
+                href={n.url}
+                class={clsx(
+                  "relative rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
+                  active
+                    ? "bg-accent/10 text-foreground"
+                    : "text-foreground-secondary hover:bg-accent/5 hover:text-foreground",
+                )}
+              >
+                {n.text}
+                {active && (
+                  <span class="bg-linear-to-r from-accent/50 via-accent/80 to-accent/50 absolute bottom-1 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full opacity-80" />
+                )}
+              </a>
+            </li>
+          );
+        })}
       </ul>
 
       <div class="relative flex items-center gap-3">
@@ -157,17 +143,15 @@ const isBlogPostPage =
         </button>
       </div>
 
-      {
-        isBlogPostPage && (
-          <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[2px] rounded-full overflow-hidden">
-            <div
-              data-nav-scroll-indicator
-              style="transform: scaleX(0);"
-              class="h-full origin-left bg-linear-to-r from-accent/15 via-accent/45 to-accent/50 transition-[transform] duration-100 ease-out"
-            />
-          </div>
-        )
-      }
+      {isBlogPostPage && (
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[2px] rounded-full overflow-hidden">
+          <div
+            data-nav-scroll-indicator
+            style="transform: scaleX(0);"
+            class="h-full origin-left bg-linear-to-r from-accent/15 via-accent/45 to-accent/50 transition-[transform] duration-100 ease-out"
+          />
+        </div>
+      )}
     </nav>
 
     <div
@@ -180,50 +164,40 @@ const isBlogPostPage =
           class="relative overflow-hidden rounded-2xl transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
           style="transform: translateY(-0.6rem) scale(0.985);"
         >
-          <div
-            class="border-border/50 bg-background/90 absolute inset-0 rounded-2xl border backdrop-blur-lg"
-          >
-          </div>
-          <div
-            class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-accent/5 to-transparent"
-          >
-          </div>
+          <div class="border-border/50 bg-background/90 absolute inset-0 rounded-2xl border backdrop-blur-lg"></div>
+          <div class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-accent/5 to-transparent"></div>
           <ul class="relative flex flex-col gap-0.5 p-2">
-            {
-              navigationData.map((n, index) => {
-                const isActive =
-                  n.url === normalizedPathname ||
-                  n.url === "/" + (subpath?.[0] || "");
-                const isBlogPage = n.url === "/blog";
-                const isBlogPageActive =
-                  isBlogPage && /^\/blog(?:\/|$)/.test(normalizedPathname);
-                const active = isActive || isBlogPageActive;
+            {navigationData.map((n, index) => {
+              const isActive =
+                n.url === normalizedPathname ||
+                n.url === "/" + (subpath?.[0] || "");
+              const isBlogPage = n.url === "/blog";
+              const isBlogPageActive =
+                isBlogPage && /^\/blog(?:\/|$)/.test(normalizedPathname);
+              const active = isActive || isBlogPageActive;
 
-                return (
-                  <li>
-                    <a
-                      href={n.url}
-                      data-mobile-menu-item
-                      style={`--item-index: ${index}; opacity: 0; transform: translateY(-0.35rem);`}
-                      class={clsx(
-                        "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-[transform,opacity,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                        active
-                          ? "bg-accent/10 text-foreground"
-                          : "text-foreground-secondary hover:bg-accent/8 hover:text-foreground",
-                      )}
-                    >
-                      {active && (
-                        <span class="bg-accent size-1.5 shrink-0 rounded-full" />
-                      )}
-                      {!active && (
-                        <span class="size-1.5 shrink-0 rounded-full" />
-                      )}
-                      {n.text}
-                    </a>
-                  </li>
-                );
-              })
-            }
+              return (
+                <li>
+                  <a
+                    href={n.url}
+                    data-mobile-menu-item
+                    style={`--item-index: ${index}; opacity: 0; transform: translateY(-0.35rem);`}
+                    class={clsx(
+                      "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-[transform,opacity,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                      active
+                        ? "bg-accent/10 text-foreground"
+                        : "text-foreground-secondary hover:bg-accent/8 hover:text-foreground",
+                    )}
+                  >
+                    {active && (
+                      <span class="bg-accent size-1.5 shrink-0 rounded-full" />
+                    )}
+                    {!active && <span class="size-1.5 shrink-0 rounded-full" />}
+                    {n.text}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

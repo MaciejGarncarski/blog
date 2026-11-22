@@ -26,10 +26,10 @@ const experiences: Experience[] = [
   {
     periodStart: "2023-11",
     periodEnd: "2026-07",
-    company: "Kokscraft",
+    company: "Freelance / Kokscraft",
     role: "Full-Stack Developer",
     description:
-      "Był to pierwszy większy projekt, który rozwijałem przez kilka lat. Dzięki niemu zdobyłem doświadczenie w projektowaniu architektury aplikacji, dbaniu o bezpieczeństwo i wydajność oraz rozwijaniu systemu w dłuższej perspektywie. Równocześnie nauczyłem się współpracy z klientem, zbierania wymagań, komunikacji oraz podejmowania decyzji technicznych z uwzględnieniem potrzeb biznesowych, rozwijając przy tym również umiejętności miękkie i organizacyjne.",
+      "Mój pierwszy większy projekt, który rozwijałem samodzielnie przez kilka lat jako freelancer. Dzięki niemu zdobyłem doświadczenie w projektowaniu architektury aplikacji, dbaniu o bezpieczeństwo i wydajność oraz rozwijaniu systemu w dłuższej perspektywie. Pracując bezpośrednio z klientem, nauczyłem się zbierać wymagania, jasno komunikować i podejmować decyzje techniczne z uwzględnieniem potrzeb biznesowych, rozwijając przy tym umiejętności miękkie i organizacyjne.",
     highlights: [
       {
         title: "System Kontroli Dostępu (RBAC)",
@@ -99,51 +99,56 @@ function formatPeriod(start: string, end: string) {
 
 <section class="flex flex-col gap-6" aria-labelledby="doswiadczenie">
   <SectionHeading title="Doświadczenie" id="doswiadczenie" />
-  {
-    experiences.map((exp) => (
-      <div class="flex flex-col gap-4 md:flex-row md:gap-10">
-        <div class="flex shrink-0 flex-col gap-1 md:w-28 md:pt-1">
-          <p class="text-sm font-semibold leading-snug">{exp.company}</p>
 
-          <p class="text-foreground-secondary text-xs md:tracking-tight">
-            <span>{formatPeriod(exp.periodStart, exp.periodEnd).start}</span>
-            <span class="block">
-              {formatPeriod(exp.periodStart, exp.periodEnd).end}
-            </span>
+  {experiences.map((exp) => {
+    const period = formatPeriod(exp.periodStart, exp.periodEnd);
+
+    return (
+      <article class="grid gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-10">
+        <div class="flex flex-col gap-3 md:sticky md:top-24 md:self-start">
+          <p class="text-foreground-secondary text-xs">
+            <span>{period.start}</span>
+            <span> {period.end}</span>
+          </p>
+
+          <div class="flex flex-col gap-0.5">
+            <h3 class="text-lg font-semibold leading-snug md:text-xl">
+              {exp.role}
+            </h3>
+            <p class="text-sm leading-snug text-accent">{exp.company}</p>
+          </div>
+
+          <p class="text-foreground-body text-sm leading-relaxed text-pretty">
+            {exp.description}
           </p>
         </div>
 
-        <div class="flex flex-col gap-4">
-          <h3 class="text-lg md:text-xl font-semibold">{exp.role}</h3>
-          <div class="border-border/50 relative flex flex-col gap-2 rounded-md border bg-linear-to-br from-background-secondary/40 to-background-secondary/20 px-4 py-3 backdrop-blur-sm">
-            <AccentShimmer opacity={15} />
-            <p class="text-foreground-body text-sm leading-relaxed text-pretty">
-              {exp.description}
-            </p>
-          </div>
-          <div class="grid gap-2.5 sm:grid-cols-2 sm:auto-rows-fr">
-            {exp.highlights.map(({ title, description, tags }) => (
-              <div class="border-border/50 relative flex flex-col gap-1.5 rounded-md border bg-background-secondary/30 px-3.5 py-3 transition-all hover:-translate-y-0.5 hover:border-accent/30">
-                <AccentShimmer opacity={20} />
-                <span class="text-[0.8125rem] font-semibold text-foreground">
+        <ul class="flex flex-col gap-2.5">
+          {exp.highlights.map(({ title, description, tags }) => (
+            <li class="border-border/90 bg-background-secondary/50 hover:border-accent/30 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 transition-colors">
+              <AccentShimmer opacity={20} />
+
+              <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-1.5">
+                <span class="text-foreground text-[0.8125rem] font-semibold">
                   {title}
                 </span>
 
-                <span class="text-foreground-body text-[0.8125rem] leading-relaxed text-pretty flex-1">
-                  {capitalize(description)}
-                </span>
                 {tags && tags.length > 0 && (
-                  <div class="flex flex-wrap gap-1 mt-1">
+                  <div class="flex flex-wrap gap-1">
                     {tags.map((tag) => (
                       <Tag variant="small">{tag}</Tag>
                     ))}
                   </div>
                 )}
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    ))
-  }
+
+              <span class="text-foreground-body text-[0.8125rem] leading-relaxed text-pretty">
+                {capitalize(description)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    );
+  })}
 </section>

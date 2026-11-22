@@ -11,53 +11,53 @@ const recentPosts = allBlogPosts.slice(0, 3);
 <section class="flex flex-col gap-6" aria-labelledby="ostatnie-posty">
   <SectionHeading title="Ostatnie posty" id="ostatnie-posty" />
 
-  <ul
-    class="shadow-accent-sm border-border bg-background-secondary/30 relative flex flex-col overflow-hidden rounded-xl border backdrop-blur-xs"
-  >
-    <AccentShimmer opacity={30} insetX="0%" />
-    {
-      recentPosts.map((post) => {
-        const slug = post.id;
-        const { title, description, publishedDate, updatedDate } = post.data;
-        const date = formatPostDate(updatedDate ? updatedDate : publishedDate);
+  <ul class="flex flex-col gap-2.5">
+    {recentPosts.map((post) => {
+      const slug = post.id;
+      const { title, description, publishedDate, updatedDate } = post.data;
+      const date = formatPostDate(updatedDate ? updatedDate : publishedDate);
 
-        return (
-          <li class="border-border/50 border-t first:border-t-0">
-            <a
-              class="group flex flex-col gap-1 p-4 transition-colors outline-none hover:bg-accent/5 focus-visible:bg-accent/5"
-              href={`/blog/${slug}`}
-            >
-              <div class="flex items-center gap-3">
-                <h3 class="text-sm font-semibold transition-colors group-hover:text-accent">
-                  {title}
-                </h3>
-                <span class="ml-auto flex items-center gap-2">
-                  <span class="text-foreground-secondary text-xs font-medium tabular-nums">
-                    {date}
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                    class="text-accent size-3.5 shrink-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-              <p class="text-foreground-body line-clamp-2 max-w-[65ch] text-[0.8125rem] leading-relaxed text-pretty">
-                {description}
-              </p>
-            </a>
-          </li>
-        );
-      })
-    }
+      return (
+        <li>
+          <a
+            class="group border-border/50 bg-background-secondary/30 hover:border-accent/30 focus-visible:border-accent/50 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 outline-none transition-colors"
+            href={`/blog/${slug}`}
+          >
+            <AccentShimmer opacity={20} />
+
+            <div class="flex items-start gap-3">
+              <h3 class="group-hover:text-accent group-focus-visible:text-accent text-sm font-semibold leading-snug transition-colors">
+                {title}
+              </h3>
+              <time class="text-foreground-secondary ml-auto shrink-0 text-xs font-medium tabular-nums">
+                {date}
+              </time>
+            </div>
+
+            <p class="text-foreground-body line-clamp-2 max-w-[65ch] text-[0.8125rem] leading-relaxed text-pretty">
+              {description}
+            </p>
+
+            <span class="text-accent mt-0.5 flex items-center gap-1.5 text-xs font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+              Czytaj
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                class="size-3.5 shrink-0"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </section>

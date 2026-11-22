@@ -1,5 +1,4 @@
 ---
-import ChevronIcon from "@/components/ui/chevron-icon.astro";
 import AccentShimmer from "../ui/accent-shimmer.astro";
 import Tag from "@/components/tag.astro";
 
@@ -20,56 +19,48 @@ type Props = {
 };
 
 const { post, formattedTime, isoDate } = Astro.props;
+const hasTags = post.data.tags && post.data.tags.length > 0;
 ---
 
-<a href={"/blog/" + post.id} class="group block">
-  <article
-    class="border-border relative bg-background-secondary/30 md:border-border/70 hover:border-accent/20 hover:from-accent/6 flex flex-col overflow-hidden rounded-xl border shadow-xs transition-all duration-200"
-  >
-    <AccentShimmer />
-    <div class="flex flex-col gap-1.5 px-4 py-3.5 md:p-6">
-      <div
-        class="flex items-center gap-2 text-foreground-secondary text-xs md:text-sm"
-      >
-        <time datetime={isoDate}>{formattedTime}</time>
-        {
-          post.readingTime ? (
-            <>
-              <span aria-hidden="true">·</span>
-              <span>{Math.ceil(post.readingTime)} min. czytania</span>
-            </>
-          ) : null
-        }
-      </div>
+<a
+  href={"/blog/" + post.id}
+  class="group border-border/50 bg-background-secondary/30 hover:border-accent/30 focus-visible:border-accent/50 relative flex flex-col gap-2 overflow-hidden rounded-xl border px-4 py-3.5 outline-none transition-colors md:px-5 md:py-4"
+>
+  <AccentShimmer opacity={20} />
 
-      <div class="flex items-center justify-between gap-4">
-        <h2
-          class="text-base font-semibold text-pretty group-hover:text-accent transition-colors duration-200 md:text-lg"
-        >
-          {post.data.title}
-        </h2>
-        <ChevronIcon
-          size={18}
-          direction="right"
-          customStyles="shrink-0 mt-0.5 text-foreground-secondary/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-accent"
-        />
-      </div>
+  <div class="flex items-start gap-3">
+    <h2 class="group-hover:text-accent group-focus-visible:text-accent text-base leading-snug font-semibold text-pretty transition-colors duration-200 md:text-lg">
+      {post.data.title}
+    </h2>
+    <time
+      datetime={isoDate}
+      class="text-foreground-secondary mt-1 ml-auto shrink-0 text-xs font-medium tabular-nums"
+    >
+      {formattedTime}
+    </time>
+  </div>
 
-      <p
-        class="text-foreground-secondary max-w-[60ch] text-sm md:text-base leading-relaxed line-clamp-3 text-pretty"
-      >
-        {post.data.description}
-      </p>
+  <p class="text-foreground-body line-clamp-3 max-w-[65ch] text-sm leading-relaxed text-pretty">
+    {post.data.description}
+  </p>
 
-      {
-        post.data.tags && post.data.tags.length > 0 && (
-          <div class="flex flex-wrap gap-1.5 mt-2">
-            {post.data.tags.map((tag) => (
-              <Tag variant="small">{tag}</Tag>
-            ))}
-          </div>
-        )
-      }
+  {(hasTags || post.readingTime) && (
+    <div class="mt-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      {hasTags ? (
+        <div class="flex flex-wrap gap-1.5">
+          {post.data.tags!.map((tag) => (
+            <Tag variant="small">{tag}</Tag>
+          ))}
+        </div>
+      ) : (
+        <span />
+      )}
+
+      {post.readingTime ? (
+        <span class="text-foreground-secondary text-xs">
+          {Math.ceil(post.readingTime)} min czytania
+        </span>
+      ) : null}
     </div>
-  </article>
+  )}
 </a>

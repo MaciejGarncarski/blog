@@ -15,58 +15,20 @@ type Props = {
     };
   }>;
 };
+
 const { posts } = Astro.props;
 ---
 
-<div class="posts-grid">
-  {
-    posts.map((post, index) => {
-      const displayDate = post.data.updatedDate ? post.data.updatedDate : post.data.publishedDate;
-      const formattedTime = formatPostDate(displayDate);
-      const isoDate = displayDate instanceof Date ? displayDate.toISOString() : new Date(displayDate).toISOString();
+<ul class="flex flex-col gap-3">
+  {posts.map((post) => {
+    const displayDate = post.data.updatedDate ?? post.data.publishedDate;
+    const formattedTime = formatPostDate(displayDate);
+    const isoDate = new Date(displayDate).toISOString();
 
-      const delay = index < 8 ? index * 80 : 20;
-
-      return (
-        <div class="post-item" style={`--delay: ${delay}ms`}>
-          <BlogItem post={post} formattedTime={formattedTime} isoDate={isoDate} />
-        </div>
-      );
-    })
-  }
-</div>
-
-<style>
-  .posts-grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  @media (min-width: 768px) {
-    .posts-grid {
-      gap: 1.75rem;
-    }
-  }
-
-  .post-item {
-    opacity: 0;
-    transform: translateY(18px);
-    animation: fadeSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: var(--delay, 0ms);
-  }
-
-  @keyframes fadeSlideUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .post-item {
-    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .post-item:hover {
-    transform: translateY(-3px);
-  }
-</style>
+    return (
+      <li>
+        <BlogItem post={post} formattedTime={formattedTime} isoDate={isoDate} />
+      </li>
+    );
+  })}
+</ul>

@@ -49,7 +49,7 @@ export function BlogSearch({ items }: Props) {
                   Szukaj artykułów po tytule, opisie i tagach...
                </span>
             </span>
-            <span className="hidden md:inline text-foreground-secondary border-border bg-background rounded-lg border px-2 py-1.5 text-xs font-medium">
+            <span className="hidden md:inline text-foreground-secondary border-border bg-background/20 rounded-xl border px-2.5 py-1.5 text-xs">
                Ctrl/Cmd + K
             </span>
          </button>

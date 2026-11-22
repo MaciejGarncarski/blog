@@ -42,7 +42,7 @@
    }
 
    & blockquote:not([data-tab-panel="demo"] *) {
-      @apply border border-accent/12 bg-accent/6 relative my-12 w-full overflow-hidden rounded-lg py-5 pl-6 pr-5 md:py-6 md:pl-8 md:pr-6;
+      @apply border border-accent/12 bg-accent/6 relative my-12 w-full overflow-hidden rounded-xl py-5 pl-6 pr-5 md:py-6 md:pl-8 md:pr-6;
       box-shadow: 0 2px 12px -4px oklch(62% 0.15 260 / 0.08);
 
       &::before {
@@ -57,7 +57,7 @@
 
       &::after {
          content: "";
-         @apply absolute inset-y-0 left-0 w-[2px] rounded-full;
+         @apply absolute inset-y-0 left-0 w-[1px] rounded-full;
          background: linear-gradient(
             to bottom,
             oklch(70% 0.14 260 / 0.07),
