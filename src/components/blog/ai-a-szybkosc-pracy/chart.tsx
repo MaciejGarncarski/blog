@@ -12,7 +12,7 @@ interface AIComparisonRow {
 }
 
 const rawData = [
-   { complexity: 1, withoutAI: 30, withAI: 10 },
+   { complexity: 1, withoutAI: 50, withAI: 10 },
    { complexity: 2, withoutAI: 100, withAI: 60 },
    { complexity: 3, withoutAI: 150, withAI: 160 },
    { complexity: 4, withoutAI: 200, withAI: 260 },
@@ -75,7 +75,7 @@ const aiChart = defineChart(
                scale: scaleLinear,
                nice: true,
                grid: true,
-               axis: { label: "Czas wykonania (min)" },
+               axis: { label: "Czas do działającego rozwiązania (poglądowo)" },
             },
          },
 
