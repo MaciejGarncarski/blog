@@ -19,7 +19,7 @@ const relatedProjectData = relatedProjects.length > 0 ? getRelatedProjects(relat
 {
     isEmpty ? null : (
         <section
-            class="anim-related relative border-border/40 flex flex-col gap-3 bg-background-secondary/20 rounded-xl border p-4"
+            class="anim-related relative border-border/50 flex flex-col gap-3 bg-background-secondary/30 rounded-xl border p-4"
             aria-labelledby="powiazane"
         >
             <AccentShimmer />
@@ -44,7 +44,7 @@ const relatedProjectData = relatedProjects.length > 0 ? getRelatedProjects(relat
                                 >
                                     <a
                                         href={`/blog/${post.id}`}
-                                        class="border-border/45 bg-background hover:border-accent/30 hover:bg-background-secondary/50 block rounded-xl border p-4 transition-colors"
+                                        class="border-border/50 bg-background hover:border-accent/30 hover:bg-background-secondary/50 block rounded-xl border p-4 transition-colors"
                                     >
                                         <p class="text-foreground font-medium">
                                             {post.data.title}
@@ -72,7 +72,7 @@ const relatedProjectData = relatedProjects.length > 0 ? getRelatedProjects(relat
                                 >
                                     <a
                                         href={`/projekty/${project.id}`}
-                                        class="border-border/45 bg-background hover:border-accent/30 hover:bg-background-secondary/50 block rounded-xl border p-4 transition-colors"
+                                        class="border-border/50 bg-background hover:border-accent/30 hover:bg-background-secondary/50 block rounded-xl border p-4 transition-colors"
                                     >
                                         <p class="text-foreground font-medium">
                                             {project.title}

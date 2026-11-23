@@ -54,7 +54,7 @@ export function ResultItem({ result, normalizedQuery }: ResultItemProps) {
          <a
             href={`/blog/${result.id}`}
             data-astro-reload
-            className="border-border bg-background-secondary/45 hover:bg-background-secondary/75 focus-visible:ring-accent/30 group grid grid-cols-1 gap-3 rounded-xl border px-3 py-3 md:p-5 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="border-border/50 bg-background-secondary/30 hover:border-accent/30 hover:bg-background-secondary/50 focus-visible:ring-accent/30 group grid grid-cols-1 gap-3 rounded-xl border px-3 py-3 md:p-5 transition-colors focus-visible:ring-2 focus-visible:outline-none"
          >
             <div className="min-w-0">
                <p className="text-foreground line-clamp-1 text-sm font-semibold md:text-[0.95rem]">
