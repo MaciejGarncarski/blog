@@ -112,7 +112,7 @@ export function BlogSearch({ items }: Props) {
                      <button
                         type="button"
                         onClick={search.closeModal}
-                        className="cursor-pointer border-border bg-background-secondary text-foreground-secondary hover:text-foreground focus-visible:ring-accent/30 inline-flex h-8 w-8 items-center justify-center rounded-lg border transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                        className="cursor-pointer border-border bg-background-secondary text-foreground-secondary hover:text-foreground focus-visible:ring-accent/30 inline-flex h-8 w-8 items-center justify-center rounded-lg border transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
                         aria-label="Zamknij wyszukiwarkę"
                      >
                         <svg
@@ -137,7 +137,7 @@ export function BlogSearch({ items }: Props) {
                         value={results.query}
                         onChange={results.handleQueryChange}
                         onKeyDown={results.handleKeyDown}
-                        className="border-border bg-background-secondary text-foreground placeholder:text-foreground-secondary/80 focus-visible:ring-accent/30 w-full rounded-xl border px-3.5 py-2.5 text-sm outline-none focus-visible:ring-2 md:text-[0.95rem]"
+                        className="border-border bg-background-secondary text-foreground placeholder:text-foreground-secondary/80 focus-visible:ring-accent/30 w-full rounded-xl border px-3.5 py-2.5 text-sm outline-none focus-visible:ring-2 md:text-ui"
                         placeholder="Szukaj po tytule, opisie i tagach"
                         autoComplete="off"
                         spellCheck={false}

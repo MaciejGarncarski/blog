@@ -1,0 +1,455 @@
+---
+type Props = {
+    class?: string;
+    id?: string;
+};
+
+const { class: className = "", id } = Astro.props;
+const uid = id ?? `hero-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+    class:list={["hero-terminal", className]}
+    viewBox="0 0 420 320"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+>
+    <defs>
+        <linearGradient
+            id={`${uid}-panel`}
+            x1="48"
+            y1="34"
+            x2="372"
+            y2="286"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop
+                stop-color="var(--color-background-secondary)"
+                stop-opacity="0.95"
+            />
+            <stop
+                offset="1"
+                stop-color="var(--color-background)"
+                stop-opacity="0.9"
+            />
+        </linearGradient>
+        <linearGradient
+            id={`${uid}-shimmer`}
+            x1="48"
+            y1="34"
+            x2="372"
+            y2="34"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop stop-color="var(--color-accent)" stop-opacity="0" />
+            <stop
+                offset="0.5"
+                stop-color="var(--color-accent)"
+                stop-opacity="0.35"
+            />
+            <stop
+                offset="1"
+                stop-color="var(--color-accent)"
+                stop-opacity="0"
+            />
+        </linearGradient>
+        <radialGradient
+            id={`${uid}-ambient`}
+            cx="214"
+            cy="168"
+            r="150"
+            gradientUnits="userSpaceOnUse"
+            gradientTransform="translate(214 168) scale(1 0.74) translate(-214 -168)"
+        >
+            <stop stop-color="var(--color-accent)" stop-opacity="0.16" />
+            <stop
+                offset="0.6"
+                stop-color="var(--color-accent)"
+                stop-opacity="0.05"
+            />
+            <stop
+                offset="1"
+                stop-color="var(--color-accent)"
+                stop-opacity="0"
+            />
+        </radialGradient>
+        <filter id={`${uid}-glow`} x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="14" />
+        </filter>
+    </defs>
+
+    <ellipse
+        cx="214"
+        cy="168"
+        rx="190"
+        ry="140"
+        fill={`url(#${uid}-ambient)`}
+    />
+    <rect
+        x="56"
+        y="64"
+        width="276"
+        height="206"
+        rx="20"
+        fill="var(--color-accent)"
+        fill-opacity="0.16"
+        filter={`url(#${uid}-glow)`}
+    />
+
+    <!-- Terminal window -->
+    <rect
+        x="48"
+        y="52"
+        width="292"
+        height="214"
+        rx="20"
+        fill={`url(#${uid}-panel)`}
+        stroke="var(--color-border)"
+    />
+    <path
+        d="M48 72C48 60.9543 56.9543 52 68 52H320C331.046 52 340 60.9543 340 72V84H48V72Z"
+        fill="var(--color-accent)"
+        fill-opacity="0.05"
+    />
+    <line x1="48" y1="84" x2="340" y2="84" stroke="var(--color-border)" />
+    <line
+        x1="68"
+        y1="52.5"
+        x2="320"
+        y2="52.5"
+        stroke={`url(#${uid}-shimmer)`}
+    />
+
+    <circle
+        cx="72"
+        cy="68"
+        r="4.5"
+        fill="var(--color-accent)"
+        fill-opacity="0.28"
+    />
+    <circle
+        cx="88"
+        cy="68"
+        r="4.5"
+        fill="var(--color-accent)"
+        fill-opacity="0.18"
+    />
+    <circle
+        cx="104"
+        cy="68"
+        r="4.5"
+        fill="var(--color-accent)"
+        fill-opacity="0.12"
+    />
+    <rect
+        x="148"
+        y="61"
+        width="92"
+        height="14"
+        rx="7"
+        fill="var(--color-accent)"
+        fill-opacity="0.08"
+        stroke="var(--color-border)"
+    />
+    <rect
+        x="165"
+        y="66"
+        width="52"
+        height="4"
+        rx="2"
+        fill="var(--color-foreground-secondary)"
+        fill-opacity="0.4"
+    />
+
+    <!-- Row 1: command -->
+    <path
+        d="M66 103L72 108L66 113"
+        stroke="var(--color-accent)"
+        stroke-opacity="0.9"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+    <rect
+        x="82"
+        y="104"
+        width="52"
+        height="8"
+        rx="4"
+        fill="var(--color-accent)"
+        fill-opacity="0.55"
+    />
+    <rect
+        x="140"
+        y="104"
+        width="38"
+        height="8"
+        rx="4"
+        fill="var(--color-foreground-secondary)"
+        fill-opacity="0.32"
+    />
+    <rect
+        x="184"
+        y="104"
+        width="64"
+        height="8"
+        rx="4"
+        fill="var(--color-accent)"
+        fill-opacity="0.26"
+    />
+
+    <!-- Rows 2-3: output -->
+    <rect
+        x="66"
+        y="124"
+        width="132"
+        height="8"
+        rx="4"
+        fill="var(--color-foreground-secondary)"
+        fill-opacity="0.22"
+    />
+    <rect
+        x="66"
+        y="144"
+        width="96"
+        height="8"
+        rx="4"
+        fill="var(--color-foreground-secondary)"
+        fill-opacity="0.18"
+    />
+
+    <!-- Rows 4-5: checks -->
+    <path
+        d="M66 168L69 171L74 164"
+        stroke="var(--color-accent)"
+        stroke-opacity="0.85"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+    <rect
+        x="82"
+        y="164"
+        width="104"
+        height="8"
+        rx="4"
+        fill="var(--color-foreground-secondary)"
+        fill-opacity="0.28"
+    />
+    <path
+        d="M66 188L69 191L74 184"
+        stroke="var(--color-accent)"
+        stroke-opacity="0.85"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+    <rect
+        x="82"
+        y="184"
+        width="74"
+        height="8"
+        rx="4"
+        fill="var(--color-foreground-secondary)"
+        fill-opacity="0.28"
+    />
+
+    <!-- Row 6: progress -->
+    <rect
+        x="66"
+        y="205"
+        width="200"
+        height="6"
+        rx="3"
+        fill="var(--color-accent)"
+        fill-opacity="0.12"
+    />
+    <rect
+        x="66"
+        y="205"
+        width="146"
+        height="6"
+        rx="3"
+        fill="var(--color-accent)"
+        fill-opacity="0.5"
+    />
+
+    <!-- Row 7: prompt + cursor -->
+    <rect
+        x="85"
+        y="218"
+        width="255"
+        height="20"
+        rx="6"
+        fill="var(--color-accent)"
+        fill-opacity="0.08"
+    />
+    <path
+        d="M66 223L72 228L66 233"
+        stroke="var(--color-accent)"
+        stroke-opacity="0.9"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+    <rect
+        class="cursor"
+        x="82"
+        y="221"
+        width="8"
+        height="14"
+        rx="2"
+        fill="var(--color-accent)"
+        fill-opacity="0.8"
+    />
+
+    <!-- Floating card: git branch -->
+    <g transform="translate(298 24)">
+        <g class="float float-a">
+            <rect
+                x="0.5"
+                y="0.5"
+                width="87"
+                height="58"
+                rx="14"
+                fill="var(--color-background)"
+                fill-opacity="0.92"
+                stroke="var(--color-border)"
+            />
+            <circle
+                cx="30"
+                cy="18"
+                r="4.5"
+                stroke="var(--color-accent)"
+                stroke-opacity="0.9"
+                stroke-width="2.6"
+            />
+            <circle
+                cx="30"
+                cy="42"
+                r="4.5"
+                stroke="var(--color-accent)"
+                stroke-opacity="0.9"
+                stroke-width="2.6"
+            />
+            <circle
+                cx="58"
+                cy="22"
+                r="4.5"
+                stroke="var(--color-foreground-secondary)"
+                stroke-opacity="0.6"
+                stroke-width="2.6"
+            />
+            <path
+                d="M30 23V37"
+                stroke="var(--color-accent)"
+                stroke-opacity="0.9"
+                stroke-width="2.6"
+                stroke-linecap="round"
+            />
+            <path
+                d="M58 27C58 36 30 32 30 37"
+                stroke="var(--color-foreground-secondary)"
+                stroke-opacity="0.6"
+                stroke-width="2.6"
+                stroke-linecap="round"
+            />
+        </g>
+    </g>
+
+    <!-- Floating card: progress ring -->
+    <g transform="translate(258 228)">
+        <g class="float float-b">
+            <rect
+                x="0.5"
+                y="0.5"
+                width="108"
+                height="56"
+                rx="14"
+                fill="var(--color-background)"
+                fill-opacity="0.9"
+                stroke="var(--color-border)"
+            />
+            <circle
+                cx="28"
+                cy="28"
+                r="14"
+                stroke="var(--color-accent)"
+                stroke-opacity="0.15"
+                stroke-width="4"
+            />
+            <circle
+                cx="28"
+                cy="28"
+                r="14"
+                stroke="var(--color-accent)"
+                stroke-opacity="0.8"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-dasharray="66 88"
+                transform="rotate(-90 28 28)"
+            />
+            <path
+                d="M23 28.5L26.5 32L33 24.5"
+                stroke="var(--color-accent)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <rect
+                x="52"
+                y="19"
+                width="44"
+                height="5"
+                rx="2.5"
+                fill="var(--color-foreground-secondary)"
+                fill-opacity="0.4"
+            />
+            <rect
+                x="52"
+                y="30"
+                width="32"
+                height="4"
+                rx="2"
+                fill="var(--color-foreground-secondary)"
+                fill-opacity="0.25"
+            />
+        </g>
+    </g>
+</svg>
+
+<style>
+    .cursor {
+        animation: blink 1.8s steps(1) infinite;
+    }
+
+    .float {
+        animation: float 11s ease-in-out infinite;
+    }
+
+    .float-b {
+        animation-duration: 13s;
+        animation-delay: -4s;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes float {
+        50% {
+            transform: translateY(-4px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .cursor,
+        .float {
+            animation: none;
+        }
+    }
+</style>

@@ -11,6 +11,7 @@ import BlogRelatedMobile from "@/components/blog/blog-related-mobile.astro";
 import { getPostsSorted } from "@/lib/get-posts-sorted";
 import { getRelatedPosts, getRelatedProjects } from "@/lib/get-related-content";
 import ChevronIcon from "@/components/ui/chevron-icon.astro";
+import Hr from "@/components/ui/hr.astro";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -90,10 +91,7 @@ const relatedProjectData = getRelatedProjects(relatedProjects);
   </article>
 
   <div class="flex w-full max-w-full md:w-[calc(100%-8rem)] lg:w-full lg:max-w-[76ch] flex-col gap-6 pb-16 md:ml-16">
-    <div
-      aria-hidden="true"
-      class="h-px w-full bg-linear-to-r from-accent/11 via-accent/15 to-accent/11"
-    ></div>
+    <Hr class="w-full" />
     <nav
       aria-label="Nawigacja między wpisami"
       class="grid gap-2 sm:grid-cols-2 sm:gap-6"

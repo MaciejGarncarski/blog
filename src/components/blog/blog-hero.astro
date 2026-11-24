@@ -2,6 +2,7 @@
 import { calculateReadingTime, normalizeTag, dateFormatter } from "@/lib/utils";
 import Tag from "@/components/tag.astro";
 import ChevronIcon from "@/components/ui/chevron-icon.astro";
+import Hr from "@/components/ui/hr.astro";
 import clsx from "clsx";
 
 type Props = {
@@ -49,7 +50,7 @@ const isModified = updateDate && updateDate !== publishDate;
   <a
     id="back-link"
     href="/blog"
-    class="text-foreground-secondary hover:text-foreground group inline-flex w-fit items-center mb-6 gap-2 text-sm transition-colors"
+    class="text-foreground-secondary hover:text-foreground group inline-flex w-fit items-center mb-6 gap-2 text-sm transition-colors duration-200"
   >
     <ChevronIcon
       size={16}
@@ -104,7 +105,7 @@ const isModified = updateDate && updateDate !== publishDate;
     )}
   </div>
 
-  <div class="w-full h-px bg-linear-to-r from-accent/6 via-accent/11 to-accent/6"></div>
+  <Hr class="w-full" />
 </header>
 
 <script>

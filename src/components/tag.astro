@@ -29,25 +29,26 @@ const sizeClasses = {
   default: "px-3 py-0.5 md:py-1 text-sm",
   filter: "px-3 py-0.75 md:py-1 text-sm",
   small: "px-2.5 py-0.5 text-xs",
-  search: "px-2 py-0.5 text-[11px]",
+  search: "px-2 py-0.5 text-tag",
 } as const;
 
 const variantClasses = {
   default:
-    "border border-accent/10 bg-accent/15 text-foreground/80 hover:bg-accent/25 focus:bg-accent/25",
+    "border border-accent/15 bg-accent/[0.08] text-foreground/80 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--color-accent)_8%,transparent)] hover:border-accent/30 hover:bg-accent/[0.14] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-1 focus-visible:ring-offset-background",
   filter: active
-    ? "border border-accent/10 bg-accent/25 text-foreground"
-    : "border border-accent/7 bg-accent/8 text-foreground/80 hover:bg-accent/30 focus:bg-accent/30",
-  small: "bg-accent/15 text-foreground/70",
+    ? "border border-accent/30 bg-accent/[0.16] text-accent shadow-[inset_0_1px_0_color-mix(in_oklab,var(--color-accent)_12%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-1 focus-visible:ring-offset-background"
+    : "border border-accent/12 bg-accent/[0.06] text-foreground/75 hover:border-accent/25 hover:bg-accent/[0.12] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+  small:
+    "border border-accent/12 bg-accent/[0.07] text-foreground/70 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--color-accent)_6%,transparent)]",
   search:
-    "border border-border bg-accent/9 text-foreground-secondary transition-colors duration-200",
+    "border border-accent/12 bg-accent/[0.06] text-foreground-secondary",
 } as const;
 ---
 
 <Element
   href={isLink ? href : undefined}
   class={clsx(
-    "inline-flex items-center justify-center rounded-full font-medium motion-reduce:transition-none transition-colors duration-300",
+    "inline-flex items-center justify-center rounded-full font-medium whitespace-nowrap motion-reduce:transition-none transition-[color,background-color,border-color,box-shadow] duration-200",
     sizeClasses[variant],
     variantClasses[variant],
     className,

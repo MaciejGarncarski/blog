@@ -27,7 +27,7 @@ export function ActivityDemo() {
             </p>
          </div>
 
-         <nav className="flex bg-background-secondary/30 p-1.5 rounded-xl border border-border/50 shadow-2xl">
+         <nav className="flex bg-card-surface p-1.5 rounded-xl border border-border/50 shadow-2xl">
             {TABS.map((tab) => {
                const isActive = activeTab === tab.id;
                return (
@@ -56,7 +56,7 @@ export function ActivityDemo() {
 
          <div className="w-full max-w-3xl px-6">
             <Activity mode={activeTab === "sales" ? "visible" : "hidden"}>
-               <div className="group relative overflow-hidden p-8 bg-background-secondary/30 border border-border/50 rounded-xl min-h-[320px]">
+               <div className="group relative overflow-hidden p-8 bg-card-surface border border-border/50 rounded-xl min-h-[320px]">
                   <div className="flex justify-between items-start mb-8">
                      <h3 className="text-lg font-medium text-foreground">Raport Sprzedaży</h3>
                      <span className="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded-sm">
@@ -78,14 +78,14 @@ export function ActivityDemo() {
             </Activity>
 
             <Activity mode={activeTab === "inventory" ? "visible" : "hidden"}>
-               <div className="p-8 bg-background-secondary/30 border border-border/50 rounded-xl min-h-[320px] flex flex-col">
+               <div className="p-8 bg-card-surface border border-border/50 rounded-xl min-h-[320px] flex flex-col">
                   <h3 className="text-lg font-medium text-foreground mb-6">Status Magazynowy</h3>
 
                   <div className="grid grid-cols-4 gap-3">
                      {Array.from({ length: 12 }).map((_, i) => (
                         <div
                            key={i}
-                           className="aspect-square bg-background border border-border rounded-xl hover:border-foreground-secondary transition-colors cursor-crosshair"
+                           className="aspect-square bg-background border border-border rounded-xl hover:border-foreground-secondary transition-colors duration-200 cursor-crosshair"
                         />
                      ))}
                   </div>

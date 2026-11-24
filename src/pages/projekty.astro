@@ -31,7 +31,7 @@ const seoData = {
         <li>
           <a
             href={`/projekty/${project.id}`}
-            class="group border-border/50 bg-background-secondary/30 hover:border-accent/30 focus-visible:border-accent/50 relative flex flex-col gap-4 overflow-hidden rounded-xl border p-3.5 outline-none transition-colors md:flex-row md:items-center md:gap-6"
+            class="group border-border/50 bg-card-surface hover:border-accent/30 focus-visible:border-accent/50 relative flex flex-col gap-4 overflow-hidden rounded-xl border p-3.5 outline-none transition-colors duration-200 md:flex-row md:items-center md:gap-6"
           >
             <AccentShimmer opacity={20} />
 
@@ -65,11 +65,11 @@ const seoData = {
             )}
 
             <div class="flex min-w-0 flex-1 flex-col gap-2">
-              <h2 class="text-foreground group-hover:text-accent group-focus-visible:text-accent text-lg font-semibold leading-snug text-pretty transition-colors">
+              <h2 class="text-foreground group-hover:text-accent group-focus-visible:text-accent text-lg font-semibold leading-snug text-pretty transition-colors duration-200">
                 {project.title}
               </h2>
 
-              <p class="text-foreground-body line-clamp-2 text-[0.8125rem] leading-relaxed">
+              <p class="text-foreground-body line-clamp-2 text-caption leading-relaxed">
                 {project.description}
               </p>
 

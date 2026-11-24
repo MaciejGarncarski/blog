@@ -39,11 +39,11 @@ const isBlogPostPage =
   normalizedPathname.startsWith("/blog/") && normalizedPathname !== "/blog";
 ---
 
-<header class="fixed md:fixed top-0 left-0 right-0 z-50 flex justify-center px-3 pt-4 md:pt-0 md:top-5">
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 pt-4 md:top-5 md:pt-0">
   <div class="w-full max-w-[60rem]">
-    <nav class="border-border/50 border-t-border/30 border-x-border/40 bg-background/70 shadow-sm relative flex items-center justify-between gap-2 overflow-hidden rounded-2xl border px-2.5 py-1.5 md:px-3 md:py-2.5 backdrop-blur-lg">
-      <div class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-accent/5 to-transparent"></div>
-      <div class="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-accent/18 to-transparent"></div>
+    <nav class="border-border/50 border-t-border/30 border-x-border/40 bg-background/75 shadow-accent-sm relative flex items-center justify-between gap-2 overflow-hidden rounded-2xl border px-2.5 py-1.5 backdrop-blur-xl md:px-4 md:py-2">
+      <div class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-accent/[0.04] to-transparent"></div>
+      <div class="pointer-events-none absolute inset-x-10 top-0 h-px bg-linear-to-r from-transparent via-accent/20 to-transparent"></div>
 
       <a href="/" class="group relative flex shrink-0 items-center gap-2.5">
         <div class="relative flex h-8 w-auto items-center justify-center overflow-hidden transition-all duration-200">
@@ -68,7 +68,7 @@ const isBlogPostPage =
         </div>
       </a>
 
-      <ul class="relative hidden items-center gap-6 md:gap-8 md:flex">
+      <ul class="relative hidden items-center gap-1 md:flex">
         {navigationData.map((n) => {
           const isActive =
             n.url === normalizedPathname ||
@@ -82,17 +82,15 @@ const isBlogPostPage =
             <li>
               <a
                 href={n.url}
+                aria-current={active ? "page" : undefined}
                 class={clsx(
-                  "relative rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
+                  "relative inline-flex items-center rounded-xl px-3.5 py-2 text-sm font-medium transition-[color,background-color,border-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-1 focus-visible:ring-offset-background",
                   active
-                    ? "bg-accent/10 text-foreground"
-                    : "text-foreground-secondary hover:bg-accent/5 hover:text-foreground",
+                    ? "bg-accent/[0.11] text-accent shadow-[inset_0_1px_0_color-mix(in_oklab,var(--color-accent)_10%,transparent)]"
+                    : "text-foreground-secondary hover:bg-accent/[0.07] hover:text-foreground",
                 )}
               >
                 {n.text}
-                {active && (
-                  <span class="bg-linear-to-r from-accent/50 via-accent/80 to-accent/50 absolute bottom-1 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full opacity-80" />
-                )}
               </a>
             </li>
           );
@@ -180,13 +178,14 @@ const isBlogPostPage =
                 <li>
                   <a
                     href={n.url}
+                    aria-current={active ? "page" : undefined}
                     data-mobile-menu-item
                     style={`--item-index: ${index}; opacity: 0; transform: translateY(-0.35rem);`}
                     class={clsx(
                       "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-[transform,opacity,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
                       active
-                        ? "bg-accent/10 text-foreground"
-                        : "text-foreground-secondary hover:bg-accent/8 hover:text-foreground",
+                        ? "bg-accent/[0.11] text-accent"
+                        : "text-foreground-secondary hover:bg-accent/[0.07] hover:text-foreground",
                     )}
                   >
                     {active && (

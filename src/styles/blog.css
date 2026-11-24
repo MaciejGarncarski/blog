@@ -69,16 +69,16 @@
    }
 
    & kbd:not([data-tab-panel="demo"] *) {
-      @apply text-foreground border-border rounded-md border bg-background-secondary px-2 py-0.5 text-[0.85em] font-medium wrap-break-word;
+      @apply text-foreground border-border rounded-md border bg-background-secondary px-2 py-0.5 text-code-sm font-medium wrap-break-word;
       box-shadow: 0 1px 0 0 var(--color-border);
    }
 
    & blockquote p:not([data-tab-panel="demo"] *) {
-      @apply text-foreground-body relative z-10 m-0 text-[1.05rem] leading-[1.85];
+      @apply text-foreground-body relative z-10 m-0 text-prose leading-[1.85];
    }
 
    & hr:not([data-tab-panel="demo"] *) {
-      @apply my-12 h-px w-full border-none bg-linear-to-r from-accent/15 via-accent/30 to-accent/15;
+      @apply my-12 h-px w-full border-none bg-linear-to-r from-transparent via-accent/25 to-transparent;
    }
 
    & ul:not([data-tab-panel="demo"] *) {

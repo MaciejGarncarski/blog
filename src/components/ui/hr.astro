@@ -1,0 +1,22 @@
+---
+import clsx from "clsx";
+
+type Props = {
+  variant?: "center" | "left";
+  class?: string;
+};
+
+const { variant = "center", class: className } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class={clsx(
+    "h-px shrink-0",
+    variant === "center"
+      ? "bg-linear-to-r from-transparent via-accent/20 to-transparent"
+      : "bg-linear-to-r from-accent/20 to-transparent",
+    className,
+  )}
+>
+</div>

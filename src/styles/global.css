@@ -22,8 +22,19 @@
       --background: oklch(96% 0.01 260);
       --background-secondary: color-mix(
          in oklab,
-         oklch(96.913% 0.0104 261.895) 93%,
-         var(--accent) 7%
+         oklch(95.5% 0.012 260) 90%,
+         var(--accent) 10%
+      );
+
+      --card-bg-from: color-mix(
+         in oklab,
+         color-mix(in oklab, oklch(94.8% 0.006 260) 96%, var(--accent) 4%) 32%,
+         transparent
+      );
+      --card-bg-to: color-mix(
+         in oklab,
+         color-mix(in oklab, oklch(97.4% 0.004 260) 98%, var(--accent) 2%) 28%,
+         transparent
       );
 
       --foreground: oklch(18% 0.02 260);
@@ -43,6 +54,9 @@
 
       --background: oklch(0.1791 0.0104 268.19);
       --background-secondary: color-mix(in oklab, var(--background) 90%, var(--accent) 10%);
+
+      --card-bg-from: color-mix(in oklab, var(--background-secondary) 30%, transparent);
+      --card-bg-to: color-mix(in oklab, var(--background-secondary) 30%, transparent);
 
       --foreground: oklch(92% 0.02 260);
       --foreground-secondary: oklch(72% 0.02 260);
@@ -77,8 +91,21 @@
    }
 }
 
+@utility bg-card-surface {
+   background-image: linear-gradient(to bottom right, var(--card-bg-from), var(--card-bg-to));
+}
+
 @theme {
    --list-style-type-hyphen: "– ";
+
+   --text-3xs: 0.6rem;
+   --text-2xs: 0.65rem;
+   --text-tag: 0.6875rem;
+   --text-caption: 0.8125rem;
+   --text-code-sm: 0.85em;
+   --text-code: 0.88em;
+   --text-ui: 0.95rem;
+   --text-prose: 1.05rem;
 
    --color-code-green: var(--color-code-green);
    --color-code-red: var(--color-code-red);

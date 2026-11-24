@@ -2,7 +2,7 @@
 
 /* ===== Inline code ===== */
 code:not([data-language]) {
-   @apply text-accent bg-accent/8 border-accent/20 rounded-md border px-1.5 py-0.5 text-[0.88em] font-medium wrap-break-word;
+   @apply text-accent bg-accent/8 border-accent/20 rounded-md border px-1.5 py-0.5 text-code font-medium wrap-break-word;
    -webkit-box-decoration-break: clone;
    box-decoration-break: clone;
 }

@@ -1,0 +1,143 @@
+---
+import HeroArchitecture from "./hero-architecture.astro";
+import HeroIllustration from "./hero-illustration.astro";
+import HeroTerminal from "./hero-terminal.astro";
+
+type Props = {
+    class?: string;
+    duration?: number;
+    indicators?: boolean;
+};
+
+const { class: className = "", duration = 7, indicators = false } = Astro.props;
+---
+
+<div class:list={["hero-slider", className]} style={`--d:${duration}s`}>
+    <div class="slides">
+        <div class="slide">
+            <HeroIllustration />
+        </div>
+        <div class="slide">
+            <HeroTerminal />
+        </div>
+        <div class="slide">
+            <HeroArchitecture />
+        </div>
+    </div>
+
+    {indicators && (
+        <div class="indicators" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+        </div>
+    )}
+</div>
+
+<style>
+    .hero-slider {
+        width: 100%;
+    }
+
+    .slides {
+        display: grid;
+    }
+
+    .slide {
+        grid-area: 1 / 1;
+        opacity: 0;
+        animation: slide calc(var(--d) * 3) ease-in-out infinite;
+    }
+
+    .slide:nth-child(2) {
+        animation-delay: var(--d);
+    }
+
+    .slide:nth-child(3) {
+        animation-delay: calc(var(--d) * 2);
+    }
+
+    .slide :global(svg) {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    @keyframes slide {
+        0% {
+            opacity: 0;
+            transform: scale(0.96);
+            filter: blur(4px);
+        }
+        4%,
+        29.33% {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+        }
+        33.33%,
+        100% {
+            opacity: 0;
+            transform: scale(1.03);
+            filter: blur(4px);
+        }
+    }
+
+    .hero-slider:hover .slide,
+    .hero-slider:hover .indicators span {
+        animation-play-state: paused;
+    }
+
+    .indicators {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 0.5rem;
+    }
+
+    .indicators span {
+        width: 18px;
+        height: 3px;
+        border-radius: 2px;
+        background: var(--color-accent);
+        opacity: 0.25;
+        animation: indicator calc(var(--d) * 3) ease-in-out infinite;
+    }
+
+    .indicators span:nth-child(2) {
+        animation-delay: var(--d);
+    }
+
+    .indicators span:nth-child(3) {
+        animation-delay: calc(var(--d) * 2);
+    }
+
+    @keyframes indicator {
+        0% {
+            opacity: 0.25;
+        }
+        4%,
+        29.33% {
+            opacity: 1;
+        }
+        33.33%,
+        100% {
+            opacity: 0.25;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .indicators span {
+            animation: none;
+        }
+
+        .slide:first-child {
+            opacity: 1;
+        }
+
+        .indicators span:first-child {
+            opacity: 1;
+        }
+    }
+</style>

@@ -125,11 +125,11 @@ function formatPeriod(start: string, end: string) {
 
         <ul class="flex flex-col gap-2.5">
           {exp.highlights.map(({ title, description, tags }) => (
-            <li class="border-border/50 bg-background-secondary/30 hover:border-accent/30 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 transition-colors">
+            <li class="border-border/50 bg-card-surface hover:border-accent/30 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 transition-colors duration-200">
               <AccentShimmer opacity={20} />
 
               <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-1.5">
-                <span class="text-foreground text-[0.8125rem] font-semibold">
+                <span class="text-foreground text-caption font-semibold">
                   {title}
                 </span>
 
@@ -142,7 +142,7 @@ function formatPeriod(start: string, end: string) {
                 )}
               </div>
 
-              <span class="text-foreground-body text-[0.8125rem] leading-relaxed text-pretty">
+              <span class="text-foreground-body text-caption leading-relaxed text-pretty">
                 {capitalize(description)}
               </span>
             </li>

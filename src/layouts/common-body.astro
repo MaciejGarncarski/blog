@@ -16,9 +16,7 @@ const { withSpacer = true, mainClass = "" } = Astro.props;
 <BackgroundPattern />
 <Analytics />
 <SpeedInsights />
-<div
-  class="relative z-10 mx-auto flex max-w-[69rem] flex-col gap-6 md:gap-10"
->
+<div class="relative z-10 mx-auto flex max-w-[69rem] flex-col gap-6 md:gap-10">
   {withSpacer && <div class="hidden md:block md:h-14.5"></div>}
   <Navigation />
   <main class={`flex flex-col gap-8 lg:gap-10${mainClass}`}>

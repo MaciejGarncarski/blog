@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { PostWithReadingTime } from "@/lib/get-posts";
+import { Hr } from "@/components/ui/hr";
 
 type RelatedProject = {
    id: string;
@@ -158,10 +159,10 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
          <div className="sticky top-30 flex flex-col gap-12 max-h-[calc(100vh-9rem)] overflow-y-auto pr-1 ">
             <nav data-toc-nav aria-label="Spis treści">
                <div className="relative mb-3 flex items-center gap-2">
-                  <span className="text-foreground-secondary text-[0.65rem] font-semibold uppercase tracking-[0.12em]">
+                  <span className="text-foreground-secondary text-2xs font-semibold uppercase tracking-[0.12em]">
                      Na tej stronie
                   </span>
-                  <div className="h-px flex-1 bg-linear-to-r from-accent/20 to-transparent" />
+                  <Hr variant="left" className="flex-1" />
                </div>
 
                <ul ref={listRef} className="flex flex-col gap-0.5">
@@ -177,7 +178,7 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
                               className={`flex items-baseline gap-1.5 rounded-md px-2 py-1 text-xs leading-4 transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 ${isActive ? "text-accent font-medium bg-accent/5" : "text-foreground-secondary/80 hover:bg-accent/[0.03]"}${h.level === "h3" ? " pl-5" : ""}`}
                            >
                               {h.h2Index != null && (
-                                 <span className="text-[0.6rem] text-foreground-secondary/40 tabular-nums shrink-0">
+                                 <span className="text-3xs text-foreground-secondary/40 tabular-nums shrink-0">
                                     {String(h.h2Index).padStart(2, "0")}
                                  </span>
                               )}
@@ -198,10 +199,10 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
                   {relatedPostData.length > 0 && (
                      <div>
                         <div className="relative mb-3 flex items-center gap-2">
-                           <span className="text-foreground-secondary/70 text-[0.6rem] font-semibold uppercase tracking-[0.12em]">
+                           <span className="text-foreground-secondary/70 text-3xs font-semibold uppercase tracking-[0.12em]">
                               Powiązane wpisy
                            </span>
-                           <div className="h-px flex-1 bg-linear-to-r from-accent/15 to-transparent" />
+                           <Hr variant="left" className="flex-1" />
                         </div>
                         <ul className="flex flex-col gap-0.5">
                            {relatedPostData.map((post) => (
@@ -233,10 +234,10 @@ export function BlogAside({ relatedPostData = [], relatedProjectData = [] }: Pro
                   {relatedProjectData.length > 0 && (
                      <div>
                         <div className="relative mb-3 flex items-center gap-2">
-                           <span className="text-foreground-secondary/70 text-[0.6rem] font-semibold uppercase tracking-[0.12em]">
+                           <span className="text-foreground-secondary/70 text-3xs font-semibold uppercase tracking-[0.12em]">
                               Powiązane projekty
                            </span>
-                           <div className="h-px flex-1 bg-linear-to-r from-accent/15 to-transparent" />
+                           <Hr variant="left" className="flex-1" />
                         </div>
                         <ul className="flex flex-col gap-0.5">
                            {relatedProjectData.map((project) => (

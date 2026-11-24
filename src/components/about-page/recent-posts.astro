@@ -20,13 +20,13 @@ const recentPosts = allBlogPosts.slice(0, 3);
       return (
         <li>
           <a
-            class="group border-border/50 bg-background-secondary/30 hover:border-accent/30 focus-visible:border-accent/50 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 outline-none transition-colors"
+            class="group border-border/50 bg-card-surface hover:border-accent/30 focus-visible:border-accent/50 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 outline-none transition-colors duration-200"
             href={`/blog/${slug}`}
           >
             <AccentShimmer opacity={20} />
 
             <div class="flex items-start gap-3">
-              <h3 class="group-hover:text-accent group-focus-visible:text-accent text-sm font-semibold leading-snug transition-colors">
+              <h3 class="group-hover:text-accent group-focus-visible:text-accent text-sm font-semibold leading-snug transition-colors duration-200">
                 {title}
               </h3>
               <time class="text-foreground-secondary ml-auto shrink-0 text-xs font-medium tabular-nums">
@@ -34,7 +34,7 @@ const recentPosts = allBlogPosts.slice(0, 3);
               </time>
             </div>
 
-            <p class="text-foreground-body line-clamp-2 max-w-[65ch] text-[0.8125rem] leading-relaxed text-pretty">
+            <p class="text-foreground-body line-clamp-2 max-w-[65ch] text-caption leading-relaxed text-pretty">
               {description}
             </p>
 

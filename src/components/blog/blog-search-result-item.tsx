@@ -54,10 +54,10 @@ export function ResultItem({ result, normalizedQuery }: ResultItemProps) {
          <a
             href={`/blog/${result.id}`}
             data-astro-reload
-            className="border-border/50 bg-background-secondary/30 hover:border-accent/30 hover:bg-background-secondary/50 focus-visible:ring-accent/30 group grid grid-cols-1 gap-3 rounded-xl border px-3 py-3 md:p-5 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="border-border/50 bg-card-surface hover:border-accent/30 hover:bg-background-secondary/50 focus-visible:ring-accent/30 group grid grid-cols-1 gap-3 rounded-xl border px-3 py-3 md:p-5 transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
          >
             <div className="min-w-0">
-               <p className="text-foreground line-clamp-1 text-sm font-semibold md:text-[0.95rem]">
+               <p className="text-foreground line-clamp-1 text-sm font-semibold md:text-ui">
                   {highlightReact(result.title, normalizedQuery)}
                </p>
                <p className="text-foreground-secondary text-pretty pr-2 mt-1 line-clamp-2 text-xs leading-relaxed md:text-sm">
@@ -73,7 +73,7 @@ export function ResultItem({ result, normalizedQuery }: ResultItemProps) {
                            key={tag}
                            data-search-tag
                            data-tag-value={tag}
-                           className={`inline-flex items-center justify-center rounded-full font-medium motion-reduce:transition-none transition-colors duration-300 whitespace-nowrap px-2 py-0.5 text-[11px] border border-border ${
+                           className={`inline-flex items-center justify-center rounded-full font-medium motion-reduce:transition-none transition-colors duration-300 whitespace-nowrap px-2 py-0.5 text-tag border border-border ${
                               isMatch
                                  ? "bg-accent/30 text-foreground"
                                  : "bg-accent/9 text-foreground-secondary"

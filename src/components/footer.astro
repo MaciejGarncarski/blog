@@ -3,6 +3,7 @@ import github from "@assets/github.svg";
 import linkedin from "@assets/linkedin.svg";
 import xIcon from "@assets/x.svg";
 import type { SvgComponent } from "astro/types";
+import Hr from "@/components/ui/hr.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -35,10 +36,10 @@ const socials: Array<Social> = [
   class="mx-auto mt-16 max-w-[63rem] md:mt-28 relative"
   transition:name="footer"
 >
-  <div class="h-px flex-1 bg-accent/10"></div>
+  <Hr class="flex-1" />
   <div class="py-6">
     <div class="flex flex-col items-center gap-5 md:flex-row md:justify-between">
-      <p class="text-foreground-secondary text-[0.8125rem]">
+      <p class="text-foreground-secondary text-caption">
         &copy; {currentYear} Maciej Garncarski
       </p>
 

@@ -36,12 +36,12 @@ const data: Contribution[] = [
     </p>
   </div>
 
-  <ul class="shadow-accent-sm md:w-3/4 border-border/50 bg-background-secondary/30 relative flex flex-col overflow-hidden rounded-xl md:rounded-2xl border backdrop-blur-xs w-full">
+  <ul class="shadow-accent-sm md:w-3/4 border-border/50 bg-card-surface relative flex flex-col overflow-hidden rounded-xl md:rounded-2xl border backdrop-blur-xs w-full">
     <AccentShimmer opacity={20} />
     {data.map(({ title, description, prLink }) => (
       <li class="border-border/50 border-t first:border-t-0">
         <a
-          class="group flex flex-row gap-4 items-start p-4 md:p-5 transition-colors outline-none hover:bg-accent/5 focus-visible:bg-accent/5"
+          class="group flex flex-row gap-4 items-start p-4 md:p-5 transition-colors duration-200 outline-none hover:bg-accent/5 focus-visible:bg-accent/5"
           target="_blank"
           rel="noopener noreferrer"
           href={prLink}
@@ -51,7 +51,7 @@ const data: Contribution[] = [
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            class="size-6 mt-1 shrink-0 text-foreground-secondary transition-colors group-hover:text-accent"
+            class="size-6 mt-1 shrink-0 text-foreground-secondary transition-colors duration-200 group-hover:text-accent"
           >
             <path
               fill="currentColor"
@@ -60,7 +60,7 @@ const data: Contribution[] = [
           </svg>
           <div class="flex flex-col w-full">
             <div class="flex items-center gap-2.5 w-full">
-              <h3 class="text-sm font-semibold transition-colors group-hover:text-accent">
+              <h3 class="text-sm font-semibold transition-colors duration-200 group-hover:text-accent">
                 {title}
               </h3>
               <svg
