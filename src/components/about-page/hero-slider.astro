@@ -7,12 +7,13 @@ type Props = {
     class?: string;
     duration?: number;
     indicators?: boolean;
+    randomize?: boolean;
 };
 
-const { class: className = "", duration = 7, indicators = false } = Astro.props;
+const { class: className = "", duration = 7, indicators = false, randomize = false } = Astro.props;
 ---
 
-<div class:list={["hero-slider", className]} style={`--d:${duration}s`}>
+<div class:list={["hero-slider", className]} style={`--d:${duration}s`} data-randomize={randomize || undefined}>
     <div class="slides">
         <div class="slide">
             <HeroIllustration />
@@ -31,6 +32,39 @@ const { class: className = "", duration = 7, indicators = false } = Astro.props;
             <span />
             <span />
         </div>
+    )}
+
+    {randomize && (
+        <script is:inline>
+            (() => {
+                const script = document.currentScript;
+                const slider = script instanceof HTMLScriptElement ? script.closest(".hero-slider") : null;
+                if (!(slider instanceof HTMLElement)) return;
+
+                const slides = slider.querySelector(":scope > .slides");
+                if (!(slides instanceof HTMLElement)) return;
+
+                const slideEls = Array.from(slides.children);
+                if (slideEls.length < 2) return;
+
+                const perm = slideEls.map((_, i) => i);
+                for (let i = perm.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [perm[i], perm[j]] = [perm[j], perm[i]];
+                }
+
+                perm.forEach((i) => slides.appendChild(slideEls[i]));
+
+                const indicators = slider.querySelector(":scope > .indicators");
+                if (indicators instanceof HTMLElement) {
+                    const indicatorEls = Array.from(indicators.children);
+                    perm.forEach((i) => {
+                        const el = indicatorEls[i];
+                        if (el) indicators.appendChild(el);
+                    });
+                }
+            })();
+        </script>
     )}
 </div>
 

@@ -3,6 +3,7 @@ import SectionHeading from "@/components/about-page/section-heading.astro";
 import AccentShimmer from "@/components/ui/accent-shimmer.astro";
 import { formatPostDate } from "@/lib/utils";
 import { getPostsSorted } from "@/lib/get-posts-sorted";
+import ArrowRightIcon from "../ui/arrow-right-icon.astro";
 
 const allBlogPosts = await getPostsSorted();
 const recentPosts = allBlogPosts.slice(0, 3);
@@ -40,20 +41,7 @@ const recentPosts = allBlogPosts.slice(0, 3);
 
             <span class="text-accent mt-0.5 flex items-center gap-1.5 text-xs font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
               Czytaj
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-                class="size-3.5 shrink-0"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
+              <ArrowRightIcon size={14} />
             </span>
           </a>
         </li>

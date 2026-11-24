@@ -1,40 +1,28 @@
 import astroicon from "@components/technologies/astroicon.astro";
-import bun from "@components/technologies/bun.astro";
-import chakraui from "@components/technologies/chakra.astro";
-import chatgpt from "@components/technologies/chatgpt.astro";
-import claude from "@components/technologies/claude.astro";
+import betterAuth from "@components/technologies/betterauth.astro";
 import claudecode from "@components/technologies/claudecode.astro";
+import cloudflare from "@components/technologies/cloudflare.astro";
 import coderabbit from "@components/technologies/coderabbit.astro";
-import codex from "@components/technologies/codex.astro";
 import css from "@components/technologies/css.astro";
 import cursor from "@components/technologies/cursor.astro";
-import cypress from "@components/technologies/cypress.astro";
 import docker from "@components/technologies/docker.astro";
 import drizzle from "@components/technologies/drizzle.astro";
 import eslint from "@components/technologies/eslint.astro";
 import express from "@components/technologies/express.astro";
-import fastify from "@components/technologies/fastify.astro";
-import figma from "@components/technologies/figma.astro";
 import git from "@components/technologies/git.astro";
 import githubactions from "@components/technologies/githubactions.astro";
 import githubcopilot from "@components/technologies/githubcopilot.astro";
 import grafana from "@components/technologies/grafana.astro";
-import hono from "@components/technologies/hono.astro";
 import html from "@components/technologies/html.astro";
 import javascript from "@components/technologies/javascript.astro";
-import jest from "@components/technologies/jest.astro";
 import linux from "@components/technologies/linux.astro";
-import mantine from "@components/technologies/mantine.astro";
 import msw from "@components/technologies/msw.astro";
+import mysql from "@components/technologies/mysql.astro";
 import nestjs from "@components/technologies/nestjs.astro";
 import nextdotjs from "@components/technologies/next.astro";
 import nginx from "@components/technologies/nginx.astro";
 import nodedotjs from "@components/technologies/node.astro";
-import nx from "@components/technologies/nx.astro";
-import openapi from "@components/technologies/openapi.astro";
-import opencode from "@components/technologies/opencode.astro";
 import otel from "@components/technologies/otel.astro";
-import oxc from "@components/technologies/oxc.astro";
 import playwright from "@components/technologies/playwright.astro";
 import pnpm from "@components/technologies/pnpm.astro";
 import postgresql from "@components/technologies/postgresql.astro";
@@ -45,7 +33,6 @@ import python from "@components/technologies/python.astro";
 import react from "@components/technologies/react.astro";
 import redis from "@components/technologies/redis.astro";
 import shadcn from "@components/technologies/shadcnui.astro";
-import socketio from "@components/technologies/socketdotio.astro";
 import sqlite from "@components/technologies/sqlite.astro";
 import storybook from "@components/technologies/storybook.astro";
 import supabase from "@components/technologies/supabase.astro";
@@ -55,14 +42,10 @@ import tanstack from "@components/technologies/tanstack.astro";
 import testinglib from "@components/technologies/testinglibrary.astro";
 import turborepo from "@components/technologies/turborepo.astro";
 import typescript from "@components/technologies/typescript.astro";
+import vercel from "@components/technologies/vercel.astro";
 import vite from "@components/technologies/vite.astro";
 import vitest from "@components/technologies/vitest.astro";
 import zod from "@components/technologies/zod.astro";
-import betterAuth from "@components/technologies/betterauth.astro";
-import mysql from "@components/technologies/mysql.astro";
-import biome from "@components/technologies/biome.astro";
-import vercel from "@components/technologies/vercel.astro";
-import cloudflare from "@components/technologies/cloudflare.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 type Technology = {
@@ -168,20 +151,6 @@ export const groups: TechnologyGroup[] = [
             icon: shadcn,
             link: "https://ui.shadcn.com",
          },
-         {
-            name: "Mantine",
-            color: "#339AF0",
-            iconColor: "#339AF0",
-            icon: mantine,
-            link: "https://mantine.dev",
-         },
-         {
-            name: "Chakra UI",
-            color: "#1BB2A9",
-            iconColor: "#1BB2A9",
-            icon: chakraui,
-            link: "https://chakra-ui.com/",
-         },
       ],
    },
    {
@@ -195,20 +164,11 @@ export const groups: TechnologyGroup[] = [
             link: "https://nodejs.org",
          },
          {
-            name: "Bun",
-            color: "#000000",
-            iconColor: "#000000",
-            darkIconColor: "#fbf0df",
-            icon: bun,
-            link: "https://bun.sh",
-         },
-         {
-            name: "Fastify",
-            color: "#000000",
-            iconColor: "#000000",
-            darkIconColor: "#ffffff",
-            icon: fastify,
-            link: "https://www.fastify.io",
+            name: "NestJS",
+            color: "#E0234E",
+            iconColor: "#E0234E",
+            icon: nestjs,
+            link: "https://nestjs.com",
          },
          {
             name: "Express",
@@ -219,26 +179,12 @@ export const groups: TechnologyGroup[] = [
             link: "https://expressjs.com",
          },
          {
-            name: "Hono",
-            color: "#E36002",
-            iconColor: "#E36002",
-            icon: hono,
-            link: "https://hono.dev",
-         },
-         {
-            name: "NestJS",
-            color: "#E0234E",
-            iconColor: "#E0234E",
-            icon: nestjs,
-            link: "https://nestjs.com",
-         },
-         {
-            name: "Socket.io",
-            color: "#010101",
-            iconColor: "#010101",
+            name: "Prisma",
+            color: "#2D3748",
+            iconColor: "#2D3748",
             darkIconColor: "#ffffff",
-            icon: socketio,
-            link: "https://socket.io",
+            icon: prisma,
+            link: "https://www.prisma.io",
          },
          {
             name: "Better Auth",
@@ -261,12 +207,11 @@ export const groups: TechnologyGroup[] = [
             link: "https://www.cursor.com",
          },
          {
-            name: "OpenCode",
-            color: "#000000",
-            iconColor: "#000000",
-            darkIconColor: "#ffffff",
-            icon: opencode,
-            link: "https://opencode.ai",
+            name: "Claude Code",
+            color: "#D97757",
+            iconColor: "#D97757",
+            icon: claudecode,
+            link: "https://docs.anthropic.com/en/docs/claude-code/overview",
          },
          {
             name: "GitHub Copilot",
@@ -275,35 +220,6 @@ export const groups: TechnologyGroup[] = [
             darkIconColor: "#ffffff",
             icon: githubcopilot,
             link: "https://github.com/features/copilot",
-         },
-         {
-            name: "ChatGPT",
-            color: "#10A37F",
-            iconColor: "#10A37F",
-            icon: chatgpt,
-            link: "https://chatgpt.com",
-         },
-         {
-            name: "Codex",
-            color: "#10A37F",
-            iconColor: "#000",
-            darkIconColor: "#fff",
-            icon: codex,
-            link: "https://openai.com/codex",
-         },
-         {
-            name: "Claude",
-            color: "#D97757",
-            iconColor: "#D97757",
-            icon: claude,
-            link: "https://claude.ai",
-         },
-         {
-            name: "Claude Code",
-            color: "#D97757",
-            iconColor: "#D97757",
-            icon: claudecode,
-            link: "https://docs.anthropic.com/en/docs/claude-code/overview",
          },
          {
             name: "CodeRabbit",
@@ -331,29 +247,12 @@ export const groups: TechnologyGroup[] = [
             icon: mysql,
             link: "https://www.mysql.com",
          },
-
          {
             name: "Redis",
             color: "#FF4438",
             iconColor: "#FF4438",
             icon: redis,
             link: "https://redis.io",
-         },
-         {
-            name: "Prisma",
-            color: "#2D3748",
-            iconColor: "#2D3748",
-            darkIconColor: "#ffffff",
-            icon: prisma,
-            link: "https://www.prisma.io",
-         },
-         {
-            name: "Drizzle",
-            color: "#C5F74F",
-            iconColor: "#000",
-            darkIconColor: "#C5F74F",
-            icon: drizzle,
-            link: "https://orm.drizzle.team",
          },
          {
             name: "SQLite",
@@ -370,25 +269,19 @@ export const groups: TechnologyGroup[] = [
             icon: supabase,
             link: "https://supabase.com",
          },
+         {
+            name: "Drizzle",
+            color: "#C5F74F",
+            iconColor: "#000",
+            darkIconColor: "#C5F74F",
+            icon: drizzle,
+            link: "https://orm.drizzle.team",
+         },
       ],
    },
    {
       label: "Testowanie",
       techs: [
-         {
-            name: "Cypress",
-            color: "#69D3A7",
-            iconColor: "#69D3A7",
-            icon: cypress,
-            link: "https://www.cypress.io",
-         },
-         {
-            name: "Jest",
-            color: "#C21325",
-            iconColor: "#C21325",
-            icon: jest,
-            link: "https://jestjs.io",
-         },
          {
             name: "Vitest",
             color: "#6E9F18",
@@ -444,20 +337,6 @@ export const groups: TechnologyGroup[] = [
             link: "https://prettier.io",
          },
          {
-            name: "Biome",
-            color: "#60A5FA",
-            iconColor: "#60A5FA",
-            icon: biome,
-            link: "https://biomejs.dev",
-         },
-         {
-            name: "Oxc",
-            color: "#32f3e9",
-            iconColor: "#32f3e9",
-            icon: oxc,
-            link: "https://oxc.rs/",
-         },
-         {
             name: "Zod",
             color: "#3E67B1",
             iconColor: "#3E67B1",
@@ -472,25 +351,11 @@ export const groups: TechnologyGroup[] = [
             link: "https://swagger.io",
          },
          {
-            name: "OpenAPI",
-            color: "#6BA539",
-            iconColor: "#6BA539",
-            icon: openapi,
-            link: "https://www.openapis.org",
-         },
-         {
             name: "Storybook",
             color: "#FF4785",
             iconColor: "#FF4785",
             icon: storybook,
             link: "https://storybook.js.org",
-         },
-         {
-            name: "Figma",
-            color: "#F24E1E",
-            iconColor: "#F24E1E",
-            icon: figma,
-            link: "https://www.figma.com",
          },
          {
             name: "pnpm",
@@ -505,14 +370,6 @@ export const groups: TechnologyGroup[] = [
             iconColor: "#FF1E56",
             icon: turborepo,
             link: "https://turbo.build",
-         },
-         {
-            name: "Nx",
-            color: "#143055",
-            iconColor: "#143055",
-            darkIconColor: "#96D8E9",
-            icon: nx,
-            link: "https://nx.dev",
          },
          {
             name: "Git",
@@ -553,21 +410,6 @@ export const groups: TechnologyGroup[] = [
       label: "Infrastruktura",
       techs: [
          {
-            name: "Cloudflare",
-            color: "#F38020",
-            iconColor: "#F38020",
-            icon: cloudflare,
-            link: "https://www.cloudflare.com",
-         },
-         {
-            name: "Vercel",
-            color: "#000000",
-            iconColor: "#000000",
-            darkIconColor: "#ffffff",
-            icon: vercel,
-            link: "https://vercel.com",
-         },
-         {
             name: "Docker",
             color: "#2496ED",
             iconColor: "#2496ED",
@@ -595,6 +437,21 @@ export const groups: TechnologyGroup[] = [
             iconColor: "#009639",
             icon: nginx,
             link: "https://nginx.org",
+         },
+         {
+            name: "Vercel",
+            color: "#000000",
+            iconColor: "#000000",
+            darkIconColor: "#ffffff",
+            icon: vercel,
+            link: "https://vercel.com",
+         },
+         {
+            name: "Cloudflare",
+            color: "#F38020",
+            iconColor: "#F38020",
+            icon: cloudflare,
+            link: "https://www.cloudflare.com",
          },
       ],
    },

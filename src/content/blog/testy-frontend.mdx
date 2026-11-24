@@ -5,6 +5,8 @@ description: "Nowoczesne podejście do kategoryzowania testów frontendowych zam
 tags: ["Frontend", "Testowanie"]
 ---
 
+import ArrowRightIcon from "@/components/ui/arrow-right-icon.astro";
+
 Ten post stworzyłem z potrzeby uporządkowania wiedzy na temat testów frontendowych. W sieci znalazłem wiele artykułów na ten temat, jednak często były one mocno rozproszone lub zbyt ogólne. Postaram się tutaj skategoryzować rodzaje testów, aby ułatwić zrozumienie ich roli i zastosowania.
 
 Mimo wszystko bardzo polecam zapoznać się z <a href="https://kentcdodds.com/blog?q=testing" rel="noopener noreferrer" target="_blank">postami Kenta C. Dodda</a>.
@@ -33,7 +35,7 @@ Według mnie lepszym podejściem jest podział na kategorie oparte na **zakresie
 Tutaj React **nie istnieje**. Testujemy czyste funkcje i moduły odpowiedzialne za logikę biznesową aplikacji.
 
 * **Co:** Funkcje matematyczne, walidatory, transformacje danych, skomplikowane Custom Hooki.
-* **Zasada:** `Input -> Output`. Nie renderujesz tu komponentów.
+* **Zasada:** `Input` <ArrowRightIcon size={14} customStyles="mx-1 text-foreground-secondary" /> `Output`. Nie renderujesz tu komponentów.
 * **Dlaczego:** Są najszybsze i najtańsze w utrzymaniu. Jeśli Twoja funkcja `calculateDiscount()` działa poprawnie tutaj, nie musisz jej "męczyć" w teście komponentu.
 
 
@@ -93,7 +95,7 @@ Testy nie powinny być celem samym w sobie ani "karą" za szybkość iteracji. D
 
 Pamiętaj o tych kategoriach:
 
-* **Izolacja** - logika biznesowa bez UI. (Input -> Output)
+* **Izolacja** - logika biznesowa bez UI. (Input <ArrowRightIcon size={14} customStyles="mx-1 text-foreground-secondary" /> Output)
 * **Zachowanie** - testy komponentów skupione na tym, co widzi użytkownik.
 * **Wizualizacja** - Storybook do sprawdzania wyglądu i stanów komponentów.
 * **Krytyczne ścieżki** - E2E do testowania najważniejszych funkcji aplikacji.

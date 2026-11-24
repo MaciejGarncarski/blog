@@ -59,8 +59,8 @@
       --card-bg-to: color-mix(in oklab, var(--background-secondary) 30%, transparent);
 
       --foreground: oklch(92% 0.02 260);
-      --foreground-secondary: oklch(72% 0.02 260);
-      --foreground-body: oklch(78% 0.02 260);
+      --foreground-secondary: oklch(76% 0.02 260);
+      --foreground-body: oklch(83% 0.02 260);
 
       --accent: oklch(68% 0.14 260);
 

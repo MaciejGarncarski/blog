@@ -32,40 +32,27 @@ const experiences: Experience[] = [
       "Mój pierwszy większy projekt, który rozwijałem samodzielnie przez kilka lat jako freelancer. Dzięki niemu zdobyłem doświadczenie w projektowaniu architektury aplikacji, dbaniu o bezpieczeństwo i wydajność oraz rozwijaniu systemu w dłuższej perspektywie. Pracując bezpośrednio z klientem, nauczyłem się zbierać wymagania, jasno komunikować i podejmować decyzje techniczne z uwzględnieniem potrzeb biznesowych, rozwijając przy tym umiejętności miękkie i organizacyjne.",
     highlights: [
       {
-        title: "System Kontroli Dostępu (RBAC)",
+        title: "Aplikacje SPA",
         description:
-          "Granularny system uprawnień zwiększający bezpieczeństwo danych i precyzję zarządzania rolami użytkowników.",
-        tags: ["Node.js", "MySQL"],
+          "Projektowanie i rozwój aplikacji SPA z wykorzystaniem React, TypeScript i TanStack Router.",
+        tags: ["React", "TypeScript", "TanStack Router"],
       },
       {
-        title: "Komunikacja Real-time",
+        title: "Backend i API",
         description:
-          "Moduły oparte o WebSockets umożliwiające monitorowanie aktywności w czasie rzeczywistym przy minimalnym opóźnieniu.",
-        tags: ["WebSockets"],
+          "Tworzenie API, systemów autoryzacji, architektury backendowej w Node.js oraz implementowanie komunikacji realtime i integracji z zewnętrznymi usługami.",
+        tags: ["Node.js", "Fastify", "WebSocket"],
       },
       {
-        title: "Zaawansowany UI/UX",
+        title: "Bazy Danych",
         description:
-          "Responsywny frontend z komponentami Data Grid, filtrowaniem po stronie serwera i optymalizacją renderowania.",
-        tags: ["React", "TypeScript"],
+          "Projektowanie relacyjnych baz danych, optymalizacja zapytań i zarządzanie danymi.",
+        tags: ["MySQL", "Prisma"],
       },
       {
-        title: "Audyt i Logi",
+        title: "Utrzymanie i Rozwój",
         description:
-          "System logowania zdarzeń zapewniający transparentność działań administratorów i historyczność zmian.",
-        tags: ["Prisma"],
-      },
-      {
-        title: "Zarządzanie Danymi",
-        description:
-          "Optymalizacja zapytań i schematów bazodanowych pod dużym obciążeniem.",
-        tags: ["Prisma", "MySQL"],
-      },
-      {
-        title: "Maintenance & Security",
-        description:
-          "Utrzymanie długu technicznego, automatyzacja aktualizacji zależności i spójność architektury.",
-        tags: ["Dependabot"],
+          "Utrzymanie bezpieczeństwa aplikacji, identyfikowanie potencjalnych podatności, diagnozowanie i usuwanie błędów, optymalizacja wydajności oraz samodzielne prowadzenie projektów od koncepcji, przez wdrożenie, aż po dalsze utrzymanie.",
       },
     ],
   },
@@ -106,7 +93,7 @@ function formatPeriod(start: string, end: string) {
     return (
       <article class="grid gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-10">
         <div class="flex flex-col gap-3 md:sticky md:top-24 md:self-start">
-          <p class="text-foreground-secondary text-xs">
+          <p class="text-foreground-secondary text-sm">
             <span>{period.start}</span>
             <span> {period.end}</span>
           </p>
@@ -127,7 +114,6 @@ function formatPeriod(start: string, end: string) {
           {exp.highlights.map(({ title, description, tags }) => (
             <li class="border-border/50 bg-card-surface hover:border-accent/30 relative flex flex-col gap-1.5 rounded-xl border px-4 py-3 transition-colors duration-200">
               <AccentShimmer opacity={20} />
-
               <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-1.5">
                 <span class="text-foreground text-caption font-semibold">
                   {title}
@@ -142,7 +128,7 @@ function formatPeriod(start: string, end: string) {
                 )}
               </div>
 
-              <span class="text-foreground-body text-caption leading-relaxed text-pretty">
+              <span class="text-foreground-body text-sm leading-relaxed text-pretty">
                 {capitalize(description)}
               </span>
             </li>
